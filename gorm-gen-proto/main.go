@@ -33,14 +33,28 @@ func (o *Generator) UnmarshalFlag(value string) error {
 }
 
 type options struct {
-	Generator Generator `short:"g" long:"gen" description:"Generator (proto, services)" required:"true" default:"proto"`
+	Generator Generator `short:"g" long:"gen" default:"proto" required:"true" description:"generator (proto, services)"`
+	Conf      string    `short:"f" long:"conf" env:"CHEQUE_CONF" default:"../etc/config.yml" description:"config file (yml)"`
 }
 
 var conf *config.Conf
 var templates *template.Template
 
-func init() {
-	c, err := config.Load("var/config.yml")
+// `go run ./main.go` OR `go run ./main.go --gen=proto` OR `go run ./main.go -g proto`
+// `go run ./main.go --gen=services` OR `go run ./main.go -g services`
+func main() {
+	logger := common_log.InitConsoleLogger(slog.LevelDebug)
+	logger.Info("begin")
+
+	var err error
+	var opts options
+	if _, err = flags.Parse(&opts); err != nil {
+		fmt.Println("options parsing", err)
+		os.Exit(1)
+	}
+	logger.Debug("options", slog.Any("opts", opts))
+
+	c, err := config.Load(opts.Conf)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -57,21 +71,6 @@ func init() {
 			Funcs(funcMap).
 			ParseGlob(fmt.Sprintf("%s/*.tmpl", conf.GormGenProto.PathTmpl)),
 	)
-}
-
-// `go run ./main.go` OR `go run ./main.go --gen=proto` OR `go run ./main.go -g proto`
-// `go run ./main.go --gen=services` OR `go run ./main.go -g services`
-func main() {
-	logger := common_log.InitConsoleLogger(slog.LevelDebug)
-	logger.Info("begin")
-
-	var err error
-	var opts options
-	if _, err = flags.Parse(&opts); err != nil {
-		fmt.Println("options parsing", err)
-		os.Exit(1)
-	}
-	logger.Debug("options", slog.String("generator", string(opts.Generator)))
 
 	switch opts.Generator {
 	case "proto":
@@ -104,8 +103,7 @@ func genProto(logger *slog.Logger) error {
 	// generate go files by `protoc`
 	pe := gen.NewProtocExecutor()
 	for _, g := range gg {
-		protoFilePath := g.GetProtoFilePath(conf.GormGenProto)
-		err := pe.Run(conf.GormGenProto.ProtoRoot, protoFilePath)
+		err := pe.Run(conf.GormGenProto.ProtoRoot, g.GetRelProtoDir(), g.GetRelProtoFilePath(conf.GormGenProto))
 		if err != nil {
 			return err
 		}

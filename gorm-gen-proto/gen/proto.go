@@ -19,10 +19,12 @@ type Proto3Generator struct {
 }
 
 type GormForTmpl struct {
-	model         any
-	ProtoFilePath string
-	Package       string
-	Endpoint      string
+	model            any
+	ProtoFilePath    string
+	RelProtoFilePath string
+	RelProtoDir      string
+	Package          string
+	Endpoint         string
 }
 
 type Proto3TmplDataBuilder struct {
@@ -84,7 +86,25 @@ func (o *GormForTmpl) GetProtoFilePath(conf *config.GormGenProtoConfig) string {
 		return o.ProtoFilePath
 	}
 	fs := service.NewFS(conf)
-	return fs.GetProtoFilePath(o.Package, o.Package)
+	o.ProtoFilePath = fs.GetProtoFilePath(o.Package, o.Package)
+	return o.ProtoFilePath
+}
+
+func (o *GormForTmpl) GetRelProtoFilePath(conf *config.GormGenProtoConfig) string {
+	if o.RelProtoFilePath != "" {
+		return o.RelProtoFilePath
+	}
+	fs := service.NewFS(conf)
+	o.RelProtoFilePath = fs.GetRelProtoFilePath(o.GetRelProtoDir(), o.Package)
+	return o.RelProtoFilePath
+}
+
+func (o *GormForTmpl) GetRelProtoDir() string {
+	if o.RelProtoDir != "" {
+		return o.RelProtoDir
+	}
+	o.RelProtoDir = o.Package
+	return o.RelProtoDir
 }
 
 func (o *Proto3Generator) Run(logger *slog.Logger, gm *GormForTmpl) error {

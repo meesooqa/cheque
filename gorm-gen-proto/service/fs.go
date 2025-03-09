@@ -36,9 +36,20 @@ func (o *FS) GetProtoFilePath(dirName, fileStem string) string {
 	if fileStem == "" {
 		return ""
 	}
-	parentDir := o.GetProtoDir(dirName)
-	if parentDir == "/" {
+	relProtoFilePath := o.GetRelProtoFilePath(dirName, fileStem)
+	return fmt.Sprintf("%s/%s", strings.Trim(o.conf.ProtoRoot, "/"), relProtoFilePath)
+}
+
+func (o *FS) GetRelProtoFilePath(dirName, fileStem string) string {
+	if fileStem == "" {
+		return ""
+	}
+	if dirName == "/" {
 		return fmt.Sprintf("/%s.proto", fileStem)
 	}
-	return fmt.Sprintf("%s/%s.proto", parentDir, fileStem)
+	if dirName == "" {
+		return fmt.Sprintf("%s.proto", fileStem)
+	}
+	dirName = strings.Trim(dirName, "/")
+	return fmt.Sprintf("%s/%s.proto", dirName, fileStem)
 }

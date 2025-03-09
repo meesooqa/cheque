@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	tplCmdProtoc = `protoc -I. -I {{.ProtoRoot}}/ --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative --grpc-gateway_out=. --grpc-gateway_opt=paths=source_relative {{.ProtoFilePath}}`
+	tplCmdProtoc = `protoc -I{{.Dir}} -I. --go_out={{.Dir}} --go_opt=paths=source_relative --go-grpc_out={{.Dir}} --go-grpc_opt=paths=source_relative --grpc-gateway_out={{.Dir}} --grpc-gateway_opt=paths=source_relative {{.File}}`
 )
 
 type ProtocExecutor struct{}
@@ -31,8 +31,18 @@ func NewProtocExecutor() *ProtocExecutor {
 	```
 */
 // Run generates Go files using `protoc`
-func (o *ProtocExecutor) Run(protoRoot, protoFilePath string) error {
-	cmdProtoc, err := o.getCmdProtoc(protoRoot, protoFilePath)
+func (o *ProtocExecutor) Run(protoRoot, relDirName, reProtoFilePath string) error {
+	originalDir, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+	defer os.Chdir(originalDir)
+	err = os.Chdir(protoRoot)
+	if err != nil {
+		return err
+	}
+
+	cmdProtoc, err := o.getCmdProtoc(relDirName, reProtoFilePath)
 	if err != nil {
 		return err
 	}
@@ -53,14 +63,14 @@ func (o *ProtocExecutor) Run(protoRoot, protoFilePath string) error {
 	return nil
 }
 
-func (o *ProtocExecutor) getCmdProtoc(protoRoot, protoFilePath string) (string, error) {
+func (o *ProtocExecutor) getCmdProtoc(relDirName, reProtoFilePath string) (string, error) {
 	b := bytes.Buffer{}
 	err := template.Must(template.New("protoc").Parse(tplCmdProtoc)).Execute(&b, struct {
-		ProtoRoot     string
-		ProtoFilePath string
+		Dir  string
+		File string
 	}{
-		ProtoRoot:     protoRoot,
-		ProtoFilePath: protoFilePath,
+		Dir:  relDirName,
+		File: reProtoFilePath,
 	})
 	if err != nil {
 		return "", err
