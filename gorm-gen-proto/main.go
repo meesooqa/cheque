@@ -11,8 +11,9 @@ import (
 
 	"github.com/jessevdk/go-flags"
 
+	_ "cheque-04/common"
+	"cheque-04/common/common_log"
 	"cheque-04/common/config"
-	// _ "cheque-04/gorm-gen-proto/example"
 	"cheque-04/gorm-gen-proto/gen"
 	"cheque-04/gorm-gen-proto/reg"
 )
@@ -61,7 +62,7 @@ func init() {
 // `go run ./main.go` OR `go run ./main.go --gen=proto` OR `go run ./main.go -g proto`
 // `go run ./main.go --gen=services` OR `go run ./main.go -g services`
 func main() {
-	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}))
+	logger := common_log.InitConsoleLogger(slog.LevelDebug)
 	logger.Info("begin")
 
 	var err error
