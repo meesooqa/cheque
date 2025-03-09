@@ -1,0 +1,13 @@
+package {{.Package}}
+
+import (
+	"gorm.io/gorm"
+
+	"{{.ImportServices}}"
+)
+
+func ExampleFilter(value string) services.FilterFunc {
+	return func(db *gorm.DB) *gorm.DB {
+		return db
+	}
+}
