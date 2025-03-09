@@ -24,6 +24,7 @@ message GetListRequest {
   int32 page = 2;
   string sort_by = 3;
   string sort_order = 4;
+  // filters
 {{- if notEmpty .FilterFields}}
   {{- range .FilterFields}}
   {{if notEmpty .Options}}{{.Options}} {{end}}{{.Type}} {{.Name}} = {{.Index}};
