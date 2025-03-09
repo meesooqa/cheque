@@ -1,4 +1,4 @@
-# WIP: gorm-gen-proto
+# See: [meesooqa/gorm-gen-proto](https://github.com/meesooqa/gorm-gen-proto)
 
 1. `etc/config.yml`. Update the configuration by setting the placeholder values: `%path_maps%`, `%path_tmpl%`, and `%proto_root%`.
 
