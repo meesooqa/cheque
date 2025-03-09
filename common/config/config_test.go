@@ -29,6 +29,12 @@ func TestLoad(t *testing.T) {
 	assert.Equal(t, "admin", c.DB.User)
 	assert.Equal(t, "adminpw", c.DB.Password)
 	assert.Equal(t, "app_db", c.DB.DbName)
+
+	assert.IsType(t, &GormGenProtoConfig{}, c.GormGenProto)
+	assert.Equal(t, "example/maps", c.GormGenProto.PathMaps)
+	assert.Equal(t, "example/templates", c.GormGenProto.PathTmpl)
+	assert.Equal(t, "example/proto", c.GormGenProto.ProtoRoot)
+	assert.Equal(t, "example/services", c.GormGenProto.ServicesRoot)
 }
 
 func TestLoadConfigNotFoundFile(t *testing.T) {
