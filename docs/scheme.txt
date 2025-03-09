@@ -1,0 +1,44 @@
++Receipt
+    id* (autoinc)
+    externalId* (string) // _id
+    createdAt* (datetime) // "2020-10-08T17:54:07+00:00"
+    dateTime* (datetime) // 2017-08-04T10:09:00
+    sum* (int) // totalSum
+    fiscalDocumentNumber (string)
+    fiscalDriveNumber (string)
+    fiscalSign (string)
+    kktRegId (string) // trim
+    operator (Operator)
+    sellerPlace (SellerPlace)
++Operator
+    id* (autoinc)
+    name* (string)
++Seller
+    id* (autoinc)
+    name* (string)
+    inn (string)
++SellerPlace
+    id* (autoinc)
+    name* (string)
+    address (string)
+    email (string)
+    seller* (Seller)
++Product
+    id* (autoinc)
+    name* (string)
+    photos (string)
+    categories (Category)
+    brand (Brand)
++Category
+    id* (autoinc)
+    name* (string)
++Brand
+    id* (autoinc)
+    name* (string)
++ReceiptProduct
+    id* (autoinc)
+    price*
+    quantity*
+    sum*
+    product* (Product)
+    receipt* (Receipt)
