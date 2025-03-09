@@ -7,16 +7,37 @@ import (
 )
 
 func init() {
-	reg.RegisterGormData([]*gen.GormForTmpl{
-		gen.NewGormForTmpl(models.Operator{}, "operatorpb", "operators"),
-		gen.NewGormForTmpl(models.Seller{}, "sellerpb", "sellers"),
-		gen.NewGormForTmpl(models.SellerPlace{}, "sellerplacepb", "sellerplaces"),
-		gen.NewGormForTmpl(models.SellerPlace{}, "categorypb", "categories"),
-		gen.NewGormForTmpl(models.Brand{}, "brandpb", "brands"),
-		gen.NewGormForTmpl(models.Product{}, "productpb", "products"),
-		gen.NewGormForTmpl(models.ProductCategory{}, "productcategorypb", "productscategories"),
-		gen.NewGormForTmpl(models.Image{}, "imagepb", "images"),
-		gen.NewGormForTmpl(models.Receipt{}, "receiptpb", "receipts"),
-		gen.NewGormForTmpl(models.ReceiptProduct{}, "receiptproductpb", "receiptsproducts"),
-	})
+	data := []struct {
+		Model            any
+		ModelDeclaration string
+		Endpoint         string
+		PkgProtobuf      string
+		PkgServiceServer string
+	}{
+		{models.Operator{}, "models.Operator", "operators", "operatorpb", "operatorss"},
+		{models.Seller{}, "models.Seller", "sellers", "sellerpb", "sellerss"},
+		{models.SellerPlace{}, "models.SellerPlace", "sellerplaces", "sellerplacepb", "sellerplacess"},
+		{models.Category{}, "models.Category", "categories", "categorypb", "categoryss"},
+		{models.Brand{}, "models.Brand", "brands", "brandpb", "brandss"},
+		{models.Product{}, "models.Product", "products", "productpb", "productss"},
+		{models.ProductCategory{}, "models.ProductCategory", "productscategories", "productcategorypb", "productcategoryss"},
+		{models.Image{}, "models.Image", "images", "imagepb", "imagess"},
+		{models.Receipt{}, "models.Receipt", "receipts", "receiptpb", "receiptss"},
+		{models.ReceiptProduct{}, "models.ReceiptProduct", "receiptsproducts", "receiptproductpb", "receiptproductss"},
+	}
+
+	var gormData []*gen.GormForTmpl
+	for _, d := range data {
+		gormData = append(gormData, gen.NewGormForTmpl(d.Model, d.PkgProtobuf, d.Endpoint))
+	}
+	reg.RegisterGormData(gormData)
+
+	var ssData []*gen.SsTmplData
+	ImportPbPrefix := "cheque-04/common/proto"
+	importModels := "cheque-04/common/models"
+	importServices := "cheque-04/api/services"
+	for _, d := range data {
+		ssData = append(ssData, &gen.SsTmplData{Package: d.PkgServiceServer, DbModel: d.ModelDeclaration, ImportPb: ImportPbPrefix + "/" + d.PkgProtobuf, ImportServices: importServices, ImportModels: importModels})
+	}
+	reg.RegisterSsData(ssData)
 }
