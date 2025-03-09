@@ -1,4 +1,4 @@
-package log
+package common_log
 
 import (
 	"log"
