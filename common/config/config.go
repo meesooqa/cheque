@@ -20,6 +20,7 @@ type GormGenProtoConfig struct {
 	PathMaps     string `yaml:"path_maps"`
 	PathTmpl     string `yaml:"path_tmpl"`
 	ProtoRoot    string `yaml:"proto_root"`
+	ProtocRoot   string `yaml:"protoc_root"`
 	ServicesRoot string `yaml:"services_root"`
 }
 

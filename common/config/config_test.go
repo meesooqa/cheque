@@ -34,6 +34,7 @@ func TestLoad(t *testing.T) {
 	assert.Equal(t, "example/maps", c.GormGenProto.PathMaps)
 	assert.Equal(t, "example/templates", c.GormGenProto.PathTmpl)
 	assert.Equal(t, "example/proto", c.GormGenProto.ProtoRoot)
+	assert.Equal(t, "example/protoc", c.GormGenProto.ProtocRoot)
 	assert.Equal(t, "example/services", c.GormGenProto.ServicesRoot)
 }
 

@@ -16,4 +16,5 @@ gorm_gen_proto:
   path_maps: "data/maps"
   path_tmpl: "data/templates"
   proto_root: "../common/proto"
+  protoc_root: "../api/pb"
   services_root: "../api/services"
