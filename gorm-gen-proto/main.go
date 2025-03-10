@@ -18,7 +18,7 @@ import (
 	"cheque-04/gorm-gen-proto/reg"
 )
 
-var allowedGenerators = []string{"proto", "services"}
+var allowedGenerators = []string{"proto", "protoc", "services"}
 
 type Generator string
 
@@ -33,7 +33,7 @@ func (o *Generator) UnmarshalFlag(value string) error {
 }
 
 type options struct {
-	Generator Generator `short:"g" long:"gen" default:"proto" required:"true" description:"generator (proto, services)"`
+	Generator Generator `short:"g" long:"gen" default:"proto" required:"true" description:"generator (proto, protoc, services)"`
 	Conf      string    `short:"f" long:"conf" env:"CHEQUE_CONF" default:"../etc/config.yml" description:"config file (yml)"`
 }
 
@@ -41,6 +41,7 @@ var conf *config.Conf
 var templates *template.Template
 
 // `go run ./main.go` OR `go run ./main.go --gen=proto` OR `go run ./main.go -g proto`
+// `go run ./main.go --gen=protoc` OR `go run ./main.go -g protoc`
 // `go run ./main.go --gen=services` OR `go run ./main.go -g services`
 func main() {
 	logger := common_log.InitConsoleLogger(slog.LevelDebug)
@@ -75,6 +76,8 @@ func main() {
 	switch opts.Generator {
 	case "proto":
 		err = genProto(logger)
+	case "protoc":
+		err = genProtoc(logger)
 	case "services":
 		err = genServices()
 	default:
@@ -86,7 +89,7 @@ func main() {
 	logger.Info("end")
 }
 
-// genProto generates proto files and runs `protoc`
+// genProto generates proto files
 func genProto(logger *slog.Logger) error {
 	gg := reg.GetGormDataRegistry()
 	if len(gg) == 0 {
@@ -99,6 +102,15 @@ func genProto(logger *slog.Logger) error {
 		if err != nil {
 			return err
 		}
+	}
+	return nil
+}
+
+// genProtoc runs `protoc`
+func genProtoc(logger *slog.Logger) error {
+	gg := reg.GetGormDataRegistry()
+	if len(gg) == 0 {
+		return fmt.Errorf("no gormData available")
 	}
 	// generate go files by `protoc`
 	pe := gen.NewProtocExecutor()
