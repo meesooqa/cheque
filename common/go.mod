@@ -4,7 +4,7 @@ go 1.23.4
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
-	github.com/meesooqa/cheque/gorm-gen-proto v0.0.0-00010101000000-000000000000
+	github.com/meesooqa/cheque/gorm-gen-proto v0.0.0-20250310152002-1b54b4ff29b9
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.71.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -25,5 +25,3 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250303144028-a0af3efb3deb // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 )
-
-replace github.com/meesooqa/cheque/gorm-gen-proto => ../gorm-gen-proto
