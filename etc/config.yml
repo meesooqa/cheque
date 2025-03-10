@@ -1,17 +1,17 @@
 system:
-  data_path: "test/data"
-  upload_path: "test/upload"
+  data_path: "var/data"
+  upload_path: "var/upload"
 server:
-  port: 4321
+  port: 8080
 grpc_server:
-  endpoint: "localhost:11111"
+  endpoint: "localhost:50051"
 db:
-  host: "localhost"
-  port: 1234
+  host: "postgres"
+  port: 5432
   sslmode: "disable"
-  user: "admin"
-  password: "adminpw"
-  dbname: "app_db"
+  user: "user"
+  password: "password"
+  dbname: "receipts_db"
 gorm_gen_proto:
   path_maps: "data/maps"
   path_tmpl: "data/templates"
