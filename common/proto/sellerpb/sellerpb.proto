@@ -19,6 +19,8 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
+  string name = 5;
+  string inn = 6;
 }
 
 message GetListResponse {

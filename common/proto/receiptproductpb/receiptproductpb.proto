@@ -22,6 +22,17 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
+  uint64 productID = 5;
+  uint64 receiptID = 6;
+  int32 price_eq = 7;
+  int32 price_gt = 8;
+  int32 price_lt = 9;
+  double quantity_eq = 10;
+  double quantity_gt = 11;
+  double quantity_lt = 12;
+  int32 sum_eq = 13;
+  int32 sum_gt = 14;
+  int32 sum_lt = 15;
 }
 
 message GetListResponse {

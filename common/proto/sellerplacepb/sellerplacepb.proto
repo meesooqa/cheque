@@ -21,6 +21,10 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
+  uint64 sellerID = 5;
+  string name = 6;
+  string address = 7;
+  string email = 8;
 }
 
 message GetListResponse {

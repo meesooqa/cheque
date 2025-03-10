@@ -26,6 +26,21 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
+  string external_identifier = 5;
+  google.protobuf.Timestamp date_time_start = 6;
+  google.protobuf.Timestamp date_time_end = 7;
+  int64 fiscal_document_number_eq = 8;
+  int64 fiscal_document_number_gt = 9;
+  int64 fiscal_document_number_lt = 10;
+  string fiscal_drive_number = 11;
+  int64 fiscal_sign_eq = 12;
+  int64 fiscal_sign_gt = 13;
+  int64 fiscal_sign_lt = 14;
+  int32 sum_eq = 15;
+  int32 sum_gt = 16;
+  int32 sum_lt = 17;
+  string kkt_reg = 18;
+  string buyer_phone_or_address = 19;
 }
 
 message GetListResponse {

@@ -18,6 +18,8 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
+  string name = 5;
+  uint64 brandID = 6;
 }
 
 message GetListResponse {
