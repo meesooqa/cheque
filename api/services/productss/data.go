@@ -20,7 +20,10 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 }
 
 func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
-	return &DbModel{
+	dbModel := DbModel{
 		Name: pbItem.Name,
 	}
+	uintItemBrandID := uint(pbItem.BrandID)
+	dbModel.BrandID = &uintItemBrandID
+	return &dbModel
 }
