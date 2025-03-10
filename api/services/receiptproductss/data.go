@@ -10,10 +10,21 @@ func NewConverter() *Converter {
 
 func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 	return &pb.Model{
-		Id: uint64(dbItem.ID),
+		Id:        uint64(dbItem.ID),
+		ProductID: uint64(dbItem.ProductID),
+		ReceiptID: uint64(dbItem.ReceiptID),
+		Price:     int32(dbItem.Price),
+		Quantity:  dbItem.Quantity,
+		Sum:       int32(dbItem.Sum),
 	}
 }
 
 func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
-	return &DbModel{}
+	return &DbModel{
+		ProductID: uint(pbItem.ProductID),
+		ReceiptID: uint(pbItem.ReceiptID),
+		Price:     int(pbItem.Price),
+		Quantity:  pbItem.Quantity,
+		Sum:       int(pbItem.Sum),
+	}
 }
