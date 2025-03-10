@@ -1,4 +1,4 @@
-package services
+package api
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-type GrpcServiceServer interface {
+type ServiceServer interface {
 	Register(grpcServer *grpc.Server)
 	RegisterFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) error
 }
