@@ -30,8 +30,7 @@ func NewServiceServerGenerator(conf *config.GormGenProtoConfig, templates *templ
 }
 
 func (o *ServiceServerGenerator) Run(data *SsTmplData) error {
-	//files := []string{"data", "filters", "methods", "service"}
-	files := []string{"service"}
+	files := []string{"data", "filters", "methods", "service"}
 	for _, fileCode := range files {
 		err := o.createFile(fileCode, data)
 		if err != nil {
