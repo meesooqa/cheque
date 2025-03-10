@@ -45,4 +45,5 @@ func (o *GrpcHandler) Handle(mux *http.ServeMux) error {
 	}
 	// router
 	mux.Handle("/api/", apiMux)
+	return nil
 }
