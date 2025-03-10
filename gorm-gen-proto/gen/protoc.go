@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	tplCmdProtoc = `protoc -I{{.Dir}} -I. --go_out={{.Dir}} --go_opt=paths=source_relative --go-grpc_out={{.Dir}} --go-grpc_opt=paths=source_relative --grpc-gateway_out={{.Dir}} --grpc-gateway_opt=paths=source_relative {{.File}}`
+	tplCmdProtoc = `protoc -I. --go_out={{.Dir}} --go_opt=paths=source_relative --go-grpc_out={{.Dir}} --go-grpc_opt=paths=source_relative --grpc-gateway_out={{.Dir}} --grpc-gateway_opt=paths=source_relative {{.File}}`
 )
 
 type ProtocExecutor struct{}
@@ -31,7 +31,7 @@ func NewProtocExecutor() *ProtocExecutor {
 	```
 */
 // Run generates Go files using `protoc`
-func (o *ProtocExecutor) Run(protoRoot, relDirName, reProtoFilePath string) error {
+func (o *ProtocExecutor) Run(protoRoot, protocRoot, pkg, protoFileBaseName string) error {
 	originalDir, err := os.Getwd()
 	if err != nil {
 		return err
@@ -42,7 +42,12 @@ func (o *ProtocExecutor) Run(protoRoot, relDirName, reProtoFilePath string) erro
 		return err
 	}
 
-	cmdProtoc, err := o.getCmdProtoc(relDirName, reProtoFilePath)
+	pbDir := protocRoot + "/" + pkg
+	if err = os.MkdirAll(pbDir, 0755); err != nil {
+		return err
+	}
+
+	cmdProtoc, err := o.getCmdProtoc(pbDir, protoFileBaseName)
 	if err != nil {
 		return err
 	}
@@ -54,23 +59,23 @@ func (o *ProtocExecutor) Run(protoRoot, relDirName, reProtoFilePath string) erro
 	if err != nil {
 		return err
 	}
-	// update deps
-	cmd = exec.CommandContext(context.TODO(), "sh", "-c", "go mod tidy")
-	err = cmd.Run()
-	if err != nil {
-		return err
-	}
+	// update deps (go mod tidy)
+	//cmd = exec.CommandContext(context.TODO(), "sh", "-c", "go mod tidy")
+	//err = cmd.Run()
+	//if err != nil {
+	//	return err
+	//}
 	return nil
 }
 
-func (o *ProtocExecutor) getCmdProtoc(relDirName, reProtoFilePath string) (string, error) {
+func (o *ProtocExecutor) getCmdProtoc(pbDir, protoFileBaseName string) (string, error) {
 	b := bytes.Buffer{}
 	err := template.Must(template.New("protoc").Parse(tplCmdProtoc)).Execute(&b, struct {
 		Dir  string
 		File string
 	}{
-		Dir:  relDirName,
-		File: reProtoFilePath,
+		Dir:  pbDir,
+		File: protoFileBaseName,
 	})
 	if err != nil {
 		return "", err

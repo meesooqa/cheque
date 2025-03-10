@@ -115,7 +115,7 @@ func genProtoc(logger *slog.Logger) error {
 	// generate go files by `protoc`
 	pe := gen.NewProtocExecutor()
 	for _, g := range gg {
-		err := pe.Run(conf.GormGenProto.ProtoRoot, g.GetRelProtoDir(), g.GetRelProtoFilePath(conf.GormGenProto))
+		err := pe.Run(conf.GormGenProto.ProtoRoot, conf.GormGenProto.ProtocRoot, g.Package, g.GetProtoFileBaseName(conf.GormGenProto))
 		if err != nil {
 			return err
 		}
