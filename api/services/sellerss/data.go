@@ -10,10 +10,15 @@ func NewConverter() *Converter {
 
 func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 	return &pb.Model{
-		Id: uint64(dbItem.ID),
+		Id:   uint64(dbItem.ID),
+		Name: dbItem.Name,
+		Inn:  dbItem.Inn,
 	}
 }
 
 func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
-	return &DbModel{}
+	return &DbModel{
+		Name: pbItem.Name,
+		Inn:  pbItem.Inn,
+	}
 }
