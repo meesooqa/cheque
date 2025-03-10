@@ -9,14 +9,14 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	"cheque-04/api"
-	"cheque-04/api-server/grpc"
-	"cheque-04/api-server/web"
-	"cheque-04/api-server/web/handlers"
-	"cheque-04/api-server/web/middlewares"
-	"cheque-04/api-server/web/server"
-	"cheque-04/common/common_log"
-	"cheque-04/common/config"
+	"github.com/meesooqa/cheque/api"
+	"github.com/meesooqa/cheque/api-server/grpc"
+	"github.com/meesooqa/cheque/api-server/web"
+	"github.com/meesooqa/cheque/api-server/web/handlers"
+	"github.com/meesooqa/cheque/api-server/web/middlewares"
+	"github.com/meesooqa/cheque/api-server/web/server"
+	"github.com/meesooqa/cheque/common/common_log"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 func main() {

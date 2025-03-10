@@ -1,6 +1,6 @@
 package imagess
 
-import pb "cheque-04/common/proto/imagepb"
+import pb "github.com/meesooqa/cheque/api/pb/imagepb"
 
 type Converter struct{}
 

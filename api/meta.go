@@ -5,17 +5,17 @@ import (
 
 	"gorm.io/gorm"
 
-	"cheque-04/api/services/brandss"
-	"cheque-04/api/services/categoryss"
-	"cheque-04/api/services/imagess"
-	"cheque-04/api/services/operatorss"
-	"cheque-04/api/services/productcategoryss"
-	"cheque-04/api/services/productss"
-	"cheque-04/api/services/receiptproductss"
-	"cheque-04/api/services/receiptss"
-	"cheque-04/api/services/sellerplacess"
-	"cheque-04/api/services/sellerss"
-	"cheque-04/common/api"
+	"github.com/meesooqa/cheque/api/services/brandss"
+	"github.com/meesooqa/cheque/api/services/categoryss"
+	"github.com/meesooqa/cheque/api/services/imagess"
+	"github.com/meesooqa/cheque/api/services/operatorss"
+	"github.com/meesooqa/cheque/api/services/productcategoryss"
+	"github.com/meesooqa/cheque/api/services/productss"
+	"github.com/meesooqa/cheque/api/services/receiptproductss"
+	"github.com/meesooqa/cheque/api/services/receiptss"
+	"github.com/meesooqa/cheque/api/services/sellerplacess"
+	"github.com/meesooqa/cheque/api/services/sellerss"
+	"github.com/meesooqa/cheque/common/api"
 )
 
 func GetServiceServers(logger *slog.Logger, db *gorm.DB) []api.ServiceServer {

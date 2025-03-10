@@ -3,8 +3,8 @@ package imagess
 import (
 	"context"
 
-	"cheque-04/api/services"
-	pb "cheque-04/common/proto/imagepb"
+	pb "github.com/meesooqa/cheque/api/pb/imagepb"
+	"github.com/meesooqa/cheque/api/services"
 )
 
 func (o *ServiceServer) GetItem(ctx context.Context, req *pb.GetItemRequest) (*pb.GetItemResponse, error) {

@@ -9,8 +9,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"cheque-04/common/api"
-	"cheque-04/common/config"
+	"github.com/meesooqa/cheque/common/api"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 type GrpcHandler struct {

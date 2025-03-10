@@ -4,7 +4,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gorm"
 
-	"cheque-04/api/services"
+	"github.com/meesooqa/cheque/api/services"
 )
 
 func ExternalIdentifierFilter(value string) services.FilterFunc {

@@ -11,11 +11,11 @@ import (
 
 	"github.com/jessevdk/go-flags"
 
-	_ "cheque-04/common"
-	"cheque-04/common/common_log"
-	"cheque-04/common/config"
-	"cheque-04/gorm-gen-proto/gen"
-	"cheque-04/gorm-gen-proto/reg"
+	_ "github.com/meesooqa/cheque/common"
+	"github.com/meesooqa/cheque/common/common_log"
+	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/gorm-gen-proto/gen"
+	"github.com/meesooqa/cheque/gorm-gen-proto/reg"
 )
 
 var allowedGenerators = []string{"proto", "protoc", "services"}

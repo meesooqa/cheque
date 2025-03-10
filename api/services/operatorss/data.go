@@ -1,6 +1,6 @@
 package operatorss
 
-import pb "cheque-04/common/proto/operatorpb"
+import pb "github.com/meesooqa/cheque/api/pb/operatorpb"
 
 type Converter struct{}
 

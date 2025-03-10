@@ -1,6 +1,6 @@
 package brandss
 
-import pb "cheque-04/common/proto/brandpb"
+import pb "github.com/meesooqa/cheque/api/pb/brandpb"
 
 type Converter struct{}
 

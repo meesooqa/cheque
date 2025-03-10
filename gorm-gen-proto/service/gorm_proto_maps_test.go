@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"cheque-04/common/config"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 func TestNewGormProtoDataProvider(t *testing.T) {

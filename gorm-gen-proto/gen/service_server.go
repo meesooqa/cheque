@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"cheque-04/common/config"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 type ServiceServerGenerator struct {

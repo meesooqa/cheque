@@ -1,6 +1,6 @@
 package productcategoryss
 
-import pb "cheque-04/common/proto/productcategorypb"
+import pb "github.com/meesooqa/cheque/api/pb/productcategorypb"
 
 type Converter struct{}
 
