@@ -41,7 +41,16 @@ func (o *ServiceServer) DeleteItem(ctx context.Context, req *pb.DeleteItemReques
 
 func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {
 	filters := []services.FilterFunc{
-		ExampleFilter(""),
+		ExternalIdentifierFilter(req.ExternalIdentifier),
+		DateTimeFilter(req.DateTimeStart, req.DateTimeEnd),
+		OperatorIDFilter(req.OperatorID),
+		SellerPlaceIDFilter(req.SellerPlaceID),
+		FiscalDocumentNumberFilter(req.FiscalDocumentNumberGt, req.FiscalDocumentNumberLt),
+		FiscalDriveNumberFilter(req.FiscalDriveNumber),
+		FiscalSignFilter(req.FiscalSignGt, req.FiscalSignLt),
+		SumFilter(req.SumGt, req.SumLt),
+		KktRegFilter(req.KktReg),
+		BuyerPhoneOrAddressFilter(req.BuyerPhoneOrAddress),
 	}
 	items, total, err := o.BaseService.GetList(filters, req.SortBy, req.SortOrder, int(req.PageSize), int(req.Page))
 	if err != nil {
