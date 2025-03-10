@@ -12,12 +12,14 @@ message Model {
   uint64 id = 1;
   string externalIdentifier = 2;
   google.protobuf.Timestamp dateTime = 3;
-  int64 fiscalDocumentNumber = 4;
-  string fiscalDriveNumber = 5;
-  int64 fiscalSign = 6;
-  int32 sum = 7;
-  string kktReg = 8;
-  string buyerPhoneOrAddress = 9;
+  uint64 operatorID = 4;
+  uint64 sellerPlaceID = 5;
+  int64 fiscalDocumentNumber = 6;
+  string fiscalDriveNumber = 7;
+  int64 fiscalSign = 8;
+  int32 sum = 9;
+  string kktReg = 10;
+  string buyerPhoneOrAddress = 11;
 }
 
 message GetListRequest {
@@ -29,18 +31,17 @@ message GetListRequest {
   string external_identifier = 5;
   google.protobuf.Timestamp date_time_start = 6;
   google.protobuf.Timestamp date_time_end = 7;
-  int64 fiscal_document_number_eq = 8;
-  int64 fiscal_document_number_gt = 9;
-  int64 fiscal_document_number_lt = 10;
-  string fiscal_drive_number = 11;
-  int64 fiscal_sign_eq = 12;
+  uint64 operatorID = 8;
+  uint64 sellerPlaceID = 9;
+  int64 fiscal_document_number_gt = 10;
+  int64 fiscal_document_number_lt = 11;
+  string fiscal_drive_number = 12;
   int64 fiscal_sign_gt = 13;
   int64 fiscal_sign_lt = 14;
-  int32 sum_eq = 15;
-  int32 sum_gt = 16;
-  int32 sum_lt = 17;
-  string kkt_reg = 18;
-  string buyer_phone_or_address = 19;
+  int32 sum_gt = 15;
+  int32 sum_lt = 16;
+  string kkt_reg = 17;
+  string buyer_phone_or_address = 18;
 }
 
 message GetListResponse {
