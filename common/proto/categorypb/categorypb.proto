@@ -9,6 +9,7 @@ option go_package = "./categorypb";
 
 message Model {
   uint64 id = 1;
+  uint64 parentID = 2;
   string name = 3;
 }
 
