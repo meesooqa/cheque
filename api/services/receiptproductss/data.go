@@ -1,6 +1,6 @@
 package receiptproductss
 
-import pb "cheque-04/common/proto/receiptproductpb"
+import pb "github.com/meesooqa/cheque/api/pb/receiptproductpb"
 
 type Converter struct{}
 

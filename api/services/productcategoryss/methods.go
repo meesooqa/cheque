@@ -3,8 +3,8 @@ package productcategoryss
 import (
 	"context"
 
-	"cheque-04/api/services"
-	pb "cheque-04/common/proto/productcategorypb"
+	pb "github.com/meesooqa/cheque/api/pb/productcategorypb"
+	"github.com/meesooqa/cheque/api/services"
 )
 
 func (o *ServiceServer) GetItem(ctx context.Context, req *pb.GetItemRequest) (*pb.GetItemResponse, error) {

@@ -1,6 +1,6 @@
 package sellerss
 
-import pb "cheque-04/common/proto/sellerpb"
+import pb "github.com/meesooqa/cheque/api/pb/sellerpb"
 
 type Converter struct{}
 

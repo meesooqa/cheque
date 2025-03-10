@@ -3,7 +3,7 @@ package receiptss
 import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	pb "cheque-04/common/proto/receiptpb"
+	pb "github.com/meesooqa/cheque/api/pb/receiptpb"
 )
 
 type Converter struct{}

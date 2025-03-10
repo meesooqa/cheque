@@ -1,9 +1,9 @@
 package common
 
 import (
-	"cheque-04/common/models"
-	"cheque-04/gorm-gen-proto/gen"
-	"cheque-04/gorm-gen-proto/reg"
+	"github.com/meesooqa/cheque/common/models"
+	"github.com/meesooqa/cheque/gorm-gen-proto/gen"
+	"github.com/meesooqa/cheque/gorm-gen-proto/reg"
 )
 
 func init() {
@@ -33,9 +33,9 @@ func init() {
 	reg.RegisterGormData(gormData)
 
 	var ssData []*gen.SsTmplData
-	ImportPbPrefix := "cheque-04/api/pb"
-	importModels := "cheque-04/common/models"
-	importServices := "cheque-04/api/services"
+	ImportPbPrefix := "github.com/meesooqa/cheque/api/pb"
+	importModels := "github.com/meesooqa/cheque/common/models"
+	importServices := "github.com/meesooqa/cheque/api/services"
 	for _, d := range data {
 		ssData = append(ssData, &gen.SsTmplData{Package: d.PkgServiceServer, DbModel: d.ModelDeclaration, ImportPb: ImportPbPrefix + "/" + d.PkgProtobuf, ImportServices: importServices, ImportModels: importModels})
 	}

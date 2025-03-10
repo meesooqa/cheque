@@ -1,7 +1,7 @@
 package service
 
 import (
-	"cheque-04/common/config"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 type GormProtoDataProvider struct {

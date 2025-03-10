@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"cheque-04/api-server/web"
-	"cheque-04/common/config"
+	"github.com/meesooqa/cheque/api-server/web"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 type Server struct {

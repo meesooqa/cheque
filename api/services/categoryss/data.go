@@ -1,6 +1,6 @@
 package categoryss
 
-import pb "cheque-04/common/proto/categorypb"
+import pb "github.com/meesooqa/cheque/api/pb/categorypb"
 
 type Converter struct{}
 

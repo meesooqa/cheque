@@ -3,7 +3,7 @@ package categoryss
 import (
 	"gorm.io/gorm"
 
-	"cheque-04/api/services"
+	"github.com/meesooqa/cheque/api/services"
 )
 
 func NameFilter(value string) services.FilterFunc {

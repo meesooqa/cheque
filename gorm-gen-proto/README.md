@@ -21,7 +21,7 @@ git clone https://github.com/googleapis/googleapis.git %proto_root%/google/api
 
 5. Register your GORM models in `example/reg.go` by calling `reg.RegisterGormData()`. Then, add an import statement for your package to ensure initialization:
 ```go
-import _ "cheque-04/gorm-gen-proto/example" // Your package path here
+import _ "github.com/meesooqa/cheque/gorm-gen-proto/example" // Your package path here
 ```
 
 6. Generate the Proto3 files:

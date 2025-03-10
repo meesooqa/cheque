@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"cheque-04/common/config"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 func TestNewFS(t *testing.T) {

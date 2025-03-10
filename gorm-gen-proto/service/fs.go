@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"cheque-04/common/config"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 type FS struct {

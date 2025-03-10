@@ -1,6 +1,6 @@
 package reg
 
-import "cheque-04/gorm-gen-proto/gen"
+import "github.com/meesooqa/cheque/gorm-gen-proto/gen"
 
 var gormDataRegistry []*gen.GormForTmpl
 var ssDataRegistry []*gen.SsTmplData

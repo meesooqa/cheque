@@ -1,6 +1,6 @@
 package productss
 
-import pb "cheque-04/common/proto/productpb"
+import pb "github.com/meesooqa/cheque/api/pb/productpb"
 
 type Converter struct{}
 

@@ -1,4 +1,4 @@
-module cheque-04/gorm-gen-proto
+module github.com/meesooqa/cheque/gorm-gen-proto
 
 go 1.23.4
 

@@ -1,4 +1,4 @@
-module cheque-04/api
+module github.com/meesooqa/cheque/api
 
 go 1.23.4
 
