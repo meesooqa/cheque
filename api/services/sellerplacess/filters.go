@@ -9,7 +9,7 @@ import (
 func SellerIDFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
-			return db.Where("seller_id=?", value)
+			return db.Where("seller_id = ?", value)
 		}
 		return db
 	}
