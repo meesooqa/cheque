@@ -10,7 +10,7 @@ import (
 
 	pb "cheque-04/api/pb/receiptpb"
 	"cheque-04/api/services"
-	
+	"cheque-04/common/models"
 )
 
 type DbModel = models.Receipt
