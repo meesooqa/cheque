@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm"
 
 	"cheque-04/api"
-	"cheque-04/api-server/grpc_server"
+	"cheque-04/api-server/grpc"
 	"cheque-04/api-server/web"
 	"cheque-04/api-server/web/handlers"
 	"cheque-04/api-server/web/middlewares"
@@ -34,7 +34,7 @@ func main() {
 	db = db.WithContext(context.TODO())
 
 	ss := api.GetServiceServers(logger, db)
-	grpcSrv := grpc_server.NewServer(logger, conf.GrpcServer, ss)
+	grpcSrv := grpc.NewServer(logger, conf.GrpcServer, ss)
 	err = grpcSrv.Run()
 	if err != nil {
 		log.Fatal(err)
