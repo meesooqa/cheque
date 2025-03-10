@@ -5,7 +5,12 @@
 docker compose build
 ```
 
-2. 
+2.
+```bash
+docker compose up
+```
+
+3. TODO `host: "localhost"`
 ```bash
 make db_init
 ```
