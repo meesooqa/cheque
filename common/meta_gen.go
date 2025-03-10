@@ -33,7 +33,7 @@ func init() {
 	reg.RegisterGormData(gormData)
 
 	var ssData []*gen.SsTmplData
-	ImportPbPrefix := "cheque-04/common/proto"
+	ImportPbPrefix := "cheque-04/api/pb"
 	importModels := "cheque-04/common/models"
 	importServices := "cheque-04/api/services"
 	for _, d := range data {
