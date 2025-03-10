@@ -14,6 +14,7 @@ func init() {
 		PkgProtobuf      string
 		PkgServiceServer string
 	}{
+		// TODO &models.Operator{}
 		{models.Operator{}, "models.Operator", "operators", "operatorpb", "operatorss"},
 		{models.Seller{}, "models.Seller", "sellers", "sellerpb", "sellerss"},
 		{models.SellerPlace{}, "models.SellerPlace", "sellerplaces", "sellerplacepb", "sellerplacess"},

@@ -1,3 +1,9 @@
+db_init:
+	go run ./tools/db gorm:migrate
+
+db_cleanup:
+	go run ./tools/db cleanup
+
 lint:
 	golangci-lint run ./...
 
@@ -8,4 +14,4 @@ test:
 	go clean -testcache
 	go test ./...
 
-.PHONY: run lint test_race test
+.PHONY: db_init db_cleanup run lint test_race test
