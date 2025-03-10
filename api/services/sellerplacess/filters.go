@@ -18,7 +18,7 @@ func SellerIDFilter(value uint64) services.FilterFunc {
 func NameFilter(value string) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
-			return db.Where("value ILIKE ?", "%"+value+"%")
+			return db.Where("name ILIKE ?", "%"+value+"%")
 		}
 		return db
 	}
