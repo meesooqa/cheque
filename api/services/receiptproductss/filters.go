@@ -62,5 +62,3 @@ func QuantityFilter(valueGt, valueLt float64) services.FilterFunc {
 		return db
 	}
 }
-
-// api - receiptsproducts - data, filters
