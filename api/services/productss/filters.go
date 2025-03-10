@@ -6,8 +6,20 @@ import (
 	"cheque-04/api/services"
 )
 
-func ExampleFilter(value string) services.FilterFunc {
+func BrandIDFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
+		if value != 0 {
+			return db.Where("brand_id = ?", value)
+		}
+		return db
+	}
+}
+
+func NameFilter(value string) services.FilterFunc {
+	return func(db *gorm.DB) *gorm.DB {
+		if value != "" {
+			return db.Where("name ILIKE ?", "%"+value+"%")
+		}
 		return db
 	}
 }
