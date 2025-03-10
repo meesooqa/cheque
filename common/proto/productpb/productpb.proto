@@ -10,7 +10,7 @@ option go_package = "./productpb";
 message Model {
   uint64 id = 1;
   string name = 2;
-  string brandID = 3;
+  uint64 brandID = 3;
 }
 
 message GetListRequest {
