@@ -8,9 +8,9 @@ import (
 	"google.golang.org/grpc"
 	"gorm.io/gorm"
 
+	pb "cheque-04/api/pb/receiptproductpb"
 	"cheque-04/api/services"
-	"cheque-04/common/models"
-	pb "cheque-04/common/proto/receiptproductpb"
+	
 )
 
 type DbModel = models.ReceiptProduct

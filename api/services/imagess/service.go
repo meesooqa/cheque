@@ -8,9 +8,9 @@ import (
 	"google.golang.org/grpc"
 	"gorm.io/gorm"
 
+	pb "cheque-04/api/pb/imagepb"
 	"cheque-04/api/services"
-	"cheque-04/common/models"
-	pb "cheque-04/common/proto/imagepb"
+	
 )
 
 type DbModel = models.Image
