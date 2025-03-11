@@ -28,6 +28,6 @@ db_cleanup:
 	docker compose run --rm db_tools_cleanup
 
 import:
-	go run ./import
+	docker compose run --rm import
 
 .PHONY: run lint test_race test db_scheme db_cleanup import

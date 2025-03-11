@@ -27,6 +27,18 @@ services:
     volumes:
       - ./etc:/srv/etc
 
+  import:
+    build:
+      context: ./import
+    container_name: cheque04_import
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./etc/config.yml:/etc/config.yml
+      - ./var/data:/var/data
+    command: ["/usr/local/bin/import"]
+
   db_tools_scheme:
     build:
       context: ./tools/db
