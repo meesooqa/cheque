@@ -4,8 +4,8 @@ go 1.23.4
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
-	github.com/meesooqa/cheque/api v0.1.0
-	github.com/meesooqa/cheque/common v0.1.0
+	github.com/meesooqa/cheque/api v1.11.1
+	github.com/meesooqa/cheque/common v1.11.1
 	google.golang.org/grpc v1.71.0
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12

@@ -4,7 +4,7 @@ go 1.23.4
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
-	github.com/meesooqa/cheque/gorm-gen-proto v0.1.0
+	github.com/meesooqa/cheque/gorm-gen-proto v1.11.1
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.71.0
 	gopkg.in/yaml.v3 v3.0.1
