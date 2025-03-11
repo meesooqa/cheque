@@ -10,12 +10,31 @@ docker compose build
 docker compose up
 ```
 
-3. TODO `host: "localhost"`
+3.
 ```bash
-make db_init
+make db_scheme
 ```
 
-3. TODO `host: "localhost"`
+4. Add `var/data/extract.json`.
+
+5.
 ```bash
 make import
+```
+
+6. Check. Available common params: `page_size`, `page`, `sort_by`, `sort_order`.
+- http://localhost:8080/api/v1/receipts
+- http://localhost:8080/api/v1/operators
+- http://localhost:8080/api/v1/sellers
+- http://localhost:8080/api/v1/sellerplaces
+- http://localhost:8080/api/v1/categories
+- http://localhost:8080/api/v1/brands
+- http://localhost:8080/api/v1/products
+- http://localhost:8080/api/v1/productscategories
+- http://localhost:8080/api/v1/images
+- http://localhost:8080/api/v1/receiptsproducts
+
+7.
+```bash
+docker compose down --remove-orphans
 ```
