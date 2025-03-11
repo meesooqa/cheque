@@ -13,6 +13,7 @@ version:
 		echo "E.g.: make version v1.22.33"; \
 		exit 1; \
 	fi
+	git tag $(word 2,$(MAKECMDGOALS))
 	git tag api/$(word 2,$(MAKECMDGOALS))
 	git tag api-server/$(word 2,$(MAKECMDGOALS))
 	git tag common/$(word 2,$(MAKECMDGOALS))
