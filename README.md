@@ -1,5 +1,7 @@
 # WIP: Cheque
 
+## Getting Started and Using
+
 1.
 ```bash
 docker compose build
@@ -38,3 +40,14 @@ make import
 ```bash
 docker compose down --remove-orphans
 ```
+
+## Dev: Frontend
+1. `npx create-refine-app@latest cheque_frontend`
+   - Vite
+   - REST API
+   - Ant Design
+   - Example Yes
+   - Auth None
+   - Npm
+   - Email No
+2. package.json > projectId, search > projectId: `uuidgen`
