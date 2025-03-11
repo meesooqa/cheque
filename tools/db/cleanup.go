@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/meesooqa/cheque/common/common_db"
+)
 
 func cleanup() {
-	db := getDd()
+	db := common_db.GetDB()
 	var tables []string
 	db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Pluck("tablename", &tables)
 	for _, table := range tables {

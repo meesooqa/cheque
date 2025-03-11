@@ -3,11 +3,12 @@ package main
 import (
 	"log"
 
+	"github.com/meesooqa/cheque/common/common_db"
 	"github.com/meesooqa/cheque/common/models"
 )
 
 func gormMigrate() {
-	db := getDd()
+	db := common_db.GetDB()
 	err := db.AutoMigrate(
 		&models.Operator{},
 		&models.Seller{},
