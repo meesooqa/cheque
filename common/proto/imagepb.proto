@@ -87,6 +87,10 @@ service ModelService {
     option (google.api.http) = {
       post: "/api/v1/images/{id}"
       body: "item"
+      additional_bindings {
+        patch: "/api/v1/images/{id}"
+        body: "item"
+      }
     };
   }
   rpc DeleteItem (DeleteItemRequest) returns (DeleteItemResponse) {
