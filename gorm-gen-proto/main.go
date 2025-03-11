@@ -34,7 +34,6 @@ func (o *Generator) UnmarshalFlag(value string) error {
 
 type options struct {
 	Generator Generator `short:"g" long:"gen" default:"proto" required:"true" description:"generator (proto, protoc, services)"`
-	Conf      string    `short:"f" long:"conf" env:"CHEQUE_CONF" default:"../etc/config.yml" description:"config file (yml)"`
 }
 
 var conf *config.Conf
@@ -55,7 +54,7 @@ func main() {
 	}
 	logger.Debug("options", slog.Any("opts", opts))
 
-	c, err := config.Load(opts.Conf)
+	c, err := config.GetConf()
 	if err != nil {
 		log.Fatal(err)
 	}
