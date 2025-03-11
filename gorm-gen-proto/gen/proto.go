@@ -85,7 +85,7 @@ func (o *GormForTmpl) GetProtoFilePath(conf *config.GormGenProtoConfig) string {
 		return o.ProtoFilePath
 	}
 	fs := service.NewFS(conf)
-	o.ProtoFilePath = fs.GetProtoFilePath(o.Package, o.Package)
+	o.ProtoFilePath = fs.GetProtoFilePath("", o.Package)
 	return o.ProtoFilePath
 }
 
