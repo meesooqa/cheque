@@ -14,3 +14,8 @@ docker compose up
 ```bash
 make db_init
 ```
+
+3. TODO `host: "localhost"`
+```bash
+make import
+```
