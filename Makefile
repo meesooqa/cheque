@@ -20,6 +20,7 @@ version:
 	git tag gorm-gen-proto/$(word 2,$(MAKECMDGOALS))
 	git tag import/$(word 2,$(MAKECMDGOALS))
 	git tag tools/db/$(word 2,$(MAKECMDGOALS))
+	git tag frontend/$(word 2,$(MAKECMDGOALS))
 
 tidy:
 	find . -type f -name "go.mod" -exec dirname {} \; | xargs -I {} sh -c 'echo "Running go mod tidy in {}"; cd {} && go get -u && go mod tidy'
