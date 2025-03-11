@@ -21,13 +21,16 @@ version:
 	git tag import/$(word 2,$(MAKECMDGOALS))
 	git tag tools/db/$(word 2,$(MAKECMDGOALS))
 
+tidy:
+	find . -type f -name "go.mod" -exec dirname {} \; | xargs -I {} sh -c 'echo "Running go mod tidy in {}"; cd {} && go mod tidy'
+
 db_scheme:
-	docker compose run --rm db_tools_scheme
+	docker compose --profile db_tools_scheme run --rm db_tools_scheme
 
 db_cleanup:
-	docker compose run --rm db_tools_cleanup
+	docker compose --profile db_tools_cleanup run --rm db_tools_cleanup
 
 import:
-	docker compose run --rm import
+	docker compose --profile import run --rm import
 
-.PHONY: run lint test_race test db_scheme db_cleanup import
+.PHONY: run lint test_race test version tidy db_scheme db_cleanup import

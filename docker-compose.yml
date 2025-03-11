@@ -38,6 +38,7 @@ services:
       - ./etc/config.yml:/etc/config.yml
       - ./var/data:/var/data
     command: ["/usr/local/bin/import"]
+    profiles: ["import"]
 
   db_tools_scheme:
     build:
@@ -50,6 +51,7 @@ services:
     volumes:
       - ./etc/config.yml:/etc/config.yml
     command: ["/usr/local/bin/scheme"]
+    profiles: ["db_tools_scheme"]
 
   db_tools_cleanup:
     build:
@@ -62,6 +64,7 @@ services:
     volumes:
       - ./etc/config.yml:/etc/config.yml
     command: ["/usr/local/bin/cleanup"]
+    profiles: ["db_tools_cleanup"]
 
 volumes:
   cheque04_postgres_data:
