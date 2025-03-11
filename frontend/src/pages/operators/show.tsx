@@ -7,9 +7,7 @@ const { Title } = Typography;
 export const OperatorsShow = () => {
     const { queryResult } = useShow({});
     const { data, isLoading } = queryResult;
-
     const record = data?.data;
-
     return (
         <Show isLoading={isLoading}>
             <Title level={5}>{"name"}</Title>

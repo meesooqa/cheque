@@ -1,5 +1,10 @@
-import {DataProvider, GetListParams} from "@refinedev/core";
+import {
+    DataProvider,
+    GetListParams,
+    GetOneParams
+} from "@refinedev/core";
 import simpleRestDataProvider from "@refinedev/simple-rest";
+import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const baseDataProvider = simpleRestDataProvider(API_URL);
@@ -33,5 +38,14 @@ export const dataProvider: DataProvider = {
             data: data.items,
             total: data.count,
         };
-    }
+    },
+
+    getOne: async (params: GetOneParams) => {
+        const { resource, id } = params;
+        const url = `${API_URL}/${resource}/${id}`;
+        const response = await axios.get(url);
+        return {
+            data: response.data.item,
+        };
+    },
 };
