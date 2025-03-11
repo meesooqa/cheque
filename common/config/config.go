@@ -36,7 +36,8 @@ type DbConfig struct {
 
 // ServerConfig - server parameters
 type ServerConfig struct {
-	Port int `yaml:"port"`
+	Port int      `yaml:"port"`
+	CORS []string `yaml:"cors"`
 }
 
 // GrpcServerConfig - server parameters

@@ -3,6 +3,9 @@ system:
   upload_path: "test/upload"
 server:
   port: 4321
+  cors:
+    - "http://localhost:1111"
+    - "http://localhost:2222"
 grpc_server:
   endpoint: "localhost:11111"
 db:
