@@ -20,12 +20,8 @@ import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { Header } from "./components/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
-import {
-    ReceiptsCreate,
-    ReceiptsEdit,
-    ReceiptsList,
-    ReceiptsShow,
-} from "./pages/receipts";
+import {ReceiptsCreate, ReceiptsEdit, ReceiptsList, ReceiptsShow} from "./pages/receipts";
+import {OperatorsCreate, OperatorsEdit, OperatorsList, OperatorsShow} from "./pages/operators";
 
 function App() {
     return (
@@ -46,6 +42,16 @@ function App() {
                                         create: "/receipts/create",
                                         edit: "/receipts/edit/:id",
                                         show: "/receipts/show/:id",
+                                        meta: {
+                                            canDelete: true,
+                                        },
+                                    },
+                                    {
+                                        name: "operators",
+                                        list: "/operators",
+                                        create: "/operators/create",
+                                        edit: "/operators/edit/:id",
+                                        show: "/operators/show/:id",
                                         meta: {
                                             canDelete: true,
                                         },
@@ -78,6 +84,12 @@ function App() {
                                             <Route path="create" element={<ReceiptsCreate />} />
                                             <Route path="edit/:id" element={<ReceiptsEdit />} />
                                             <Route path="show/:id" element={<ReceiptsShow />} />
+                                        </Route>
+                                        <Route path="/operators">
+                                            <Route index element={<OperatorsList />} />
+                                            <Route path="create" element={<OperatorsCreate />} />
+                                            <Route path="edit/:id" element={<OperatorsEdit />} />
+                                            <Route path="show/:id" element={<OperatorsShow />} />
                                         </Route>
                                         <Route path="*" element={<ErrorComponent />} />
                                     </Route>
