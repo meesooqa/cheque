@@ -21,7 +21,7 @@ import (
 
 func main() {
 	logger := common_log.InitConsoleLogger(slog.LevelDebug)
-	conf, err := config.Load("etc/config.yml")
+	conf, err := config.GetConf()
 	if err != nil {
 		log.Fatal(err)
 	}
