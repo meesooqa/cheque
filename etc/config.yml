@@ -3,6 +3,9 @@ system:
   upload_path: "var/upload"
 server:
   port: 8080
+  cors:
+    - "http://localhost:3000",
+    - "http://localhost:5173",
 grpc_server:
   endpoint: "localhost:50051"
 db:

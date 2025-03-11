@@ -45,10 +45,7 @@ func main() {
 		handlers.NewGrpcHandler(logger, conf.GrpcServer, ss),
 	}
 
-	// TODO add to config
-	middleware := middlewares.NewCORS([]string{
-		"http://localhost:5173", // frontendrefine
-	})
+	middleware := middlewares.NewCORS(conf.Server.CORS)
 	srv := server.NewServer(logger, conf.Server, hh, middleware)
 	err = srv.Run()
 	logger.Error("server terminated", "err", err)
