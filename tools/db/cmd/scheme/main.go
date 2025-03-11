@@ -7,7 +7,7 @@ import (
 	"github.com/meesooqa/cheque/common/models"
 )
 
-func gormMigrate() {
+func main() {
 	db := common_db.GetDB()
 	err := db.AutoMigrate(
 		&models.Operator{},

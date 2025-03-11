@@ -16,7 +16,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	filename := conf.System.DataPath + "/extract.json"
+	// filename := conf.System.DataPath + "/extract.json"
+	// filename := conf.System.DataPath + "/extract-20250228.json"
+	filename := conf.System.DataPath + "/202502.json"
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		log.Fatal(err)

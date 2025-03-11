@@ -6,7 +6,7 @@ import (
 	"github.com/meesooqa/cheque/common/common_db"
 )
 
-func cleanup() {
+func main() {
 	db := common_db.GetDB()
 	var tables []string
 	db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Pluck("tablename", &tables)

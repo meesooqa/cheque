@@ -21,13 +21,13 @@ version:
 	git tag import/$(word 2,$(MAKECMDGOALS))
 	git tag tools/db/$(word 2,$(MAKECMDGOALS))
 
-db_init:
-	go run ./tools/db gorm:migrate
+db_scheme:
+	docker compose run --rm db_tools_scheme
 
 db_cleanup:
-	go run ./tools/db cleanup
+	docker compose run --rm db_tools_cleanup
 
 import:
 	go run ./import
 
-.PHONY: run lint test_race test db_init db_cleanup import
+.PHONY: run lint test_race test db_scheme db_cleanup import

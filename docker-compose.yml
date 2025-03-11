@@ -27,5 +27,29 @@ services:
     volumes:
       - ./etc:/srv/etc
 
+  db_tools_scheme:
+    build:
+      context: ./tools/db
+      dockerfile: Dockerfile.scheme
+    container_name: cheque04_db_tools_scheme
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./etc/config.yml:/etc/config.yml
+    command: ["/usr/local/bin/scheme"]
+
+  db_tools_cleanup:
+    build:
+      context: ./tools/db
+      dockerfile: Dockerfile.cleanup
+    container_name: cheque04_db_tools_cleanup
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./etc/config.yml:/etc/config.yml
+    command: ["/usr/local/bin/cleanup"]
+
 volumes:
   cheque04_postgres_data:
