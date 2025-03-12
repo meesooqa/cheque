@@ -11,19 +11,19 @@ import (
 )
 
 type Server struct {
-	logger     *slog.Logger
-	conf       *config.ServerConfig
-	handlers   []web.Handler
-	middleware web.HandlerMiddleware
-	httpServer *http.Server
+	logger      *slog.Logger
+	conf        *config.ServerConfig
+	handlers    []web.Handler
+	middlewares []web.HandlerMiddleware
+	httpServer  *http.Server
 }
 
-func NewServer(logger *slog.Logger, conf *config.ServerConfig, handlers []web.Handler, middleware web.HandlerMiddleware) *Server {
+func NewServer(logger *slog.Logger, conf *config.ServerConfig, handlers []web.Handler, middlewares []web.HandlerMiddleware) *Server {
 	return &Server{
-		logger:     logger,
-		conf:       conf,
-		handlers:   handlers,
-		middleware: middleware,
+		logger:      logger,
+		conf:        conf,
+		handlers:    handlers,
+		middlewares: middlewares,
 	}
 }
 
@@ -35,13 +35,8 @@ func (o *Server) Run() error {
 		WriteTimeout:      15 * time.Second, // HTTPResponseTimeout
 		IdleTimeout:       15 * time.Second,
 	}
-
 	o.logger.Info("server started", "port", o.conf.Port)
-	err := o.httpServer.ListenAndServe()
-	if err != nil {
-		return err
-	}
-	return nil
+	return o.httpServer.ListenAndServe()
 }
 
 func (o *Server) router() http.Handler {
@@ -49,8 +44,12 @@ func (o *Server) router() http.Handler {
 	for _, handler := range o.handlers {
 		handler.Handle(mux)
 	}
-	if o.middleware != nil {
-		return o.middleware.Handle(mux)
+	if len(o.middlewares) > 0 {
+		middleHandler := http.Handler(mux)
+		for _, middleware := range o.middlewares {
+			middleHandler = middleware.Handle(middleHandler)
+		}
+		return middleHandler
 	} else {
 		return mux
 	}

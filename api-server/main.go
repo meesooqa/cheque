@@ -42,11 +42,15 @@ func main() {
 
 	hh := []web.Handler{
 		// grpc-gateway (REST)
-		handlers.NewGrpcHandler(logger, conf.GrpcServer, ss),
+		handlers.NewGrpcGateway(logger, conf.GrpcServer, ss),
 	}
 
-	middleware := middlewares.NewCORS(conf.Server.CORS)
-	srv := server.NewServer(logger, conf.Server, hh, middleware)
+	mws := []web.HandlerMiddleware{
+		// order matters
+		middlewares.NewLog(logger),
+		middlewares.NewCORS(conf.Server.CORS),
+	}
+	srv := server.NewServer(logger, conf.Server, hh, mws)
 	err = srv.Run()
 	logger.Error("server terminated", "err", err)
 }
