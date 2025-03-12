@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	tplCmdProtoc = `protoc -I. --go_out={{.Dir}} --go_opt=paths=source_relative --go-grpc_out={{.Dir}} --go-grpc_opt=paths=source_relative --grpc-gateway_out={{.Dir}} --grpc-gateway_opt=paths=source_relative {{.File}}`
+	tplCmdProtoc = `protoc -I. --go_out={{.Dir}} --go_opt=paths=source_relative --go-grpc_out={{.Dir}} --go-grpc_opt=paths=source_relative --grpc-gateway_out={{.Dir}} --grpc-gateway_opt=paths=source_relative --openapiv2_out={{.Dir}} {{.File}}`
 )
 
 type ProtocExecutor struct{}
