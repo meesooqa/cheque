@@ -13,29 +13,27 @@ import (
 	"github.com/meesooqa/cheque/common/config"
 )
 
-type GrpcHandler struct {
-	logger             *slog.Logger
-	conf               *config.GrpcServerConfig
-	grpcServiceServers []api.ServiceServer
+type GrpcGateway struct {
+	logger         *slog.Logger
+	conf           *config.GrpcServerConfig
+	serviceServers []api.ServiceServer
 }
 
-func NewGrpcHandler(logger *slog.Logger, conf *config.GrpcServerConfig, grpcServiceServers []api.ServiceServer) *GrpcHandler {
-	return &GrpcHandler{
-		logger:             logger,
-		conf:               conf,
-		grpcServiceServers: grpcServiceServers,
+func NewGrpcGateway(logger *slog.Logger, conf *config.GrpcServerConfig, serviceServers []api.ServiceServer) *GrpcGateway {
+	return &GrpcGateway{
+		logger:         logger,
+		conf:           conf,
+		serviceServers: serviceServers,
 	}
 }
 
-func (o *GrpcHandler) Handle(mux *http.ServeMux) error {
+func (o *GrpcGateway) Handle(mux *http.ServeMux) error {
 	ctx := context.Background()
-	//ctx, cancel := context.WithCancel(ctx)
-	//defer cancel()
 	// grpc-gateway
 	apiMux := runtime.NewServeMux()
-	if len(o.grpcServiceServers) > 0 {
+	if len(o.serviceServers) > 0 {
 		opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-		for _, grpcServiceServer := range o.grpcServiceServers {
+		for _, grpcServiceServer := range o.serviceServers {
 			err := grpcServiceServer.RegisterFromEndpoint(ctx, apiMux, o.conf.Endpoint, opts)
 			if err != nil {
 				o.logger.Error("failed to register grpc gateway endpoint", slog.Any("err", err))
