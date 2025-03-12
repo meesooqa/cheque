@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	tplCmdProtoc = `protoc -I. --go_out={{.Dir}} --go_opt=paths=source_relative --go-grpc_out={{.Dir}} --go-grpc_opt=paths=source_relative --grpc-gateway_out={{.Dir}} --grpc-gateway_opt=paths=source_relative --openapiv2_out={{.Dir}} {{.File}}`
+	tplCmdProtoc = `protoc -I. --go_out={{.Dir}} --go_opt=paths=source_relative --go-grpc_out={{.Dir}} --go-grpc_opt=paths=source_relative --grpc-gateway_out={{.Dir}} --grpc-gateway_opt=paths=source_relative --openapiv2_out={{.SwaggerDir}} {{.File}}`
 )
 
 type ProtocExecutor struct{}
@@ -71,11 +71,13 @@ func (o *ProtocExecutor) Run(protoRoot, protocRoot, pkg, protoFileBaseName strin
 func (o *ProtocExecutor) getCmdProtoc(pbDir, protoFileBaseName string) (string, error) {
 	b := bytes.Buffer{}
 	err := template.Must(template.New("protoc").Parse(tplCmdProtoc)).Execute(&b, struct {
-		Dir  string
-		File string
+		Dir        string
+		SwaggerDir string
+		File       string
 	}{
-		Dir:  pbDir,
-		File: protoFileBaseName,
+		Dir:        pbDir,
+		SwaggerDir: pbDir + "/../../swagger", // TODO "../"
+		File:       protoFileBaseName,
 	})
 	if err != nil {
 		return "", err
