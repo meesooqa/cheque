@@ -17,7 +17,7 @@ func NewLog(logger *slog.Logger) *Log {
 
 func (o *Log) Handle(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		o.logger.Info("received request", slog.String("Method", r.Method), slog.String("URL.Path", r.URL.Path))
+		o.logger.Info("received request", slog.String("method", r.Method), slog.String("URL.Path", r.URL.Path))
 		next.ServeHTTP(w, r)
 	})
 }

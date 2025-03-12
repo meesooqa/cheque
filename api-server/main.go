@@ -43,11 +43,13 @@ func main() {
 	hh := []web.Handler{
 		// grpc-gateway (REST)
 		handlers.NewGrpcGateway(logger, conf.GrpcServer, ss),
+		// swagger
+		handlers.NewSwagger(logger),
 	}
 
 	mws := []web.HandlerMiddleware{
 		// order matters
-		middlewares.NewLog(logger),
+		// middlewares.NewLog(logger),
 		middlewares.NewCORS(conf.Server.CORS),
 	}
 	srv := server.NewServer(logger, conf.Server, hh, mws)
