@@ -5,8 +5,9 @@ server:
   port: 8080
   cors:
     - "http://localhost:3000"
-    - "http://localhost:5173"
-    - "http://localhost:5001"
+    - "http://localhost:5173" # Frontend
+    - "http://localhost:5001" # Frontend: Refine Devtools
+    - "http://localhost:8081" # Swagger
 grpc_server:
   endpoint: ":50051"
 db:
