@@ -23,7 +23,7 @@ version:
 	git tag frontend/$(word 2,$(MAKECMDGOALS))
 
 tidy:
-	find . -type f -name "go.mod" -exec dirname {} \; | xargs -I {} sh -c 'echo "Running go mod tidy in {}"; cd {} && go get -u && go mod tidy'
+	find . -type f -name "go.mod" -exec dirname {} \; | xargs -I {} sh -c 'echo "Running go mod tidy in {}"; cd {} && go get -u ./... && go mod tidy'
 
 db_scheme:
 	docker compose --profile db_tools_scheme run --rm db_tools_scheme
