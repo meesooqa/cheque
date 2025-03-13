@@ -23,6 +23,7 @@ import { ColorModeContextProvider } from "./contexts/color-mode";
 import {ReceiptsCreate, ReceiptsEdit, ReceiptsList, ReceiptsShow} from "./pages/receipts";
 import {OperatorsCreate, OperatorsEdit, OperatorsList, OperatorsShow} from "./pages/operators";
 import {SellersCreate, SellersEdit, SellersList, SellersShow} from "./pages/sellers";
+import {SellerplacesCreate, SellerplacesEdit, SellerplacesList, SellerplacesShow} from "./pages/sellerplaces";
 
 function App() {
     return (
@@ -67,6 +68,16 @@ function App() {
                                             canDelete: true,
                                         },
                                     },
+                                    {
+                                        name: "sellerplaces",
+                                        list: "/sellerplaces",
+                                        create: "/sellerplaces/create",
+                                        edit: "/sellerplaces/edit/:id",
+                                        show: "/sellerplaces/show/:id",
+                                        meta: {
+                                            canDelete: true,
+                                        },
+                                    },
                                 ]}
                                 options={{
                                     syncWithLocation: true,
@@ -107,6 +118,12 @@ function App() {
                                             <Route path="create" element={<SellersCreate />} />
                                             <Route path="edit/:id" element={<SellersEdit />} />
                                             <Route path="show/:id" element={<SellersShow />} />
+                                        </Route>
+                                        <Route path="/sellerplaces">
+                                            <Route index element={<SellerplacesList />} />
+                                            <Route path="create" element={<SellerplacesCreate />} />
+                                            <Route path="edit/:id" element={<SellerplacesEdit />} />
+                                            <Route path="show/:id" element={<SellerplacesShow />} />
                                         </Route>
                                         <Route path="*" element={<ErrorComponent />} />
                                     </Route>
