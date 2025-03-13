@@ -42,6 +42,7 @@ db_restore_from_backup:
 	docker exec -t cheque04_postgres pg_restore -U user -d receipts_db --clean --if-exists /backup/receipts_db.dump
 
 db_scheme:
+	#docker exec -it cheque04_postgres psql -U user -d postgres -c "CREATE DATABASE receipts_db;"
 	docker compose --profile db_tools_scheme run --rm db_tools_scheme
 
 db_cleanup:
