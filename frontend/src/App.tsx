@@ -22,6 +22,7 @@ import { Header } from "./components/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
 import {ReceiptsCreate, ReceiptsEdit, ReceiptsList, ReceiptsShow} from "./pages/receipts";
 import {OperatorsCreate, OperatorsEdit, OperatorsList, OperatorsShow} from "./pages/operators";
+import {SellersCreate, SellersEdit, SellersList, SellersShow} from "./pages/sellers";
 
 function App() {
     return (
@@ -52,6 +53,16 @@ function App() {
                                         create: "/operators/create",
                                         edit: "/operators/edit/:id",
                                         show: "/operators/show/:id",
+                                        meta: {
+                                            canDelete: true,
+                                        },
+                                    },
+                                    {
+                                        name: "sellers",
+                                        list: "/sellers",
+                                        create: "/sellers/create",
+                                        edit: "/sellers/edit/:id",
+                                        show: "/sellers/show/:id",
                                         meta: {
                                             canDelete: true,
                                         },
@@ -90,6 +101,12 @@ function App() {
                                             <Route path="create" element={<OperatorsCreate />} />
                                             <Route path="edit/:id" element={<OperatorsEdit />} />
                                             <Route path="show/:id" element={<OperatorsShow />} />
+                                        </Route>
+                                        <Route path="/sellers">
+                                            <Route index element={<SellersList />} />
+                                            <Route path="create" element={<SellersCreate />} />
+                                            <Route path="edit/:id" element={<SellersEdit />} />
+                                            <Route path="show/:id" element={<SellersShow />} />
                                         </Route>
                                         <Route path="*" element={<ErrorComponent />} />
                                     </Route>
