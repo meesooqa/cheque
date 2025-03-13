@@ -47,6 +47,10 @@ db_scheme:
 db_cleanup:
 	docker compose --profile db_tools_cleanup run --rm db_tools_cleanup
 
+#db_drop_all_the_whole_database:
+	#docker exec -it cheque04_postgres psql -U user -d postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE datname = 'receipts_db';"
+	#docker exec -it cheque04_postgres psql -U user -d postgres -c "DROP DATABASE receipts_db;"
+
 import:
 	docker compose --profile import run --rm import
 
