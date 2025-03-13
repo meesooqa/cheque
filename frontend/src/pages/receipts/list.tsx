@@ -7,11 +7,11 @@ import {
     useTable,
     FilterDropdown
 } from "@refinedev/antd";
-import { Space, Table, InputNumber, DatePicker } from "antd";
+import { Space, Table, Button, InputNumber, DatePicker } from "antd";
 const { RangePicker } = DatePicker;
 
 export const ReceiptsList = () => {
-    const { tableProps } = useTable({
+    const { tableProps, setFilters } = useTable({
         initialSorter: [
             { field: "date_time", order: "desc" },
         ],
@@ -25,6 +25,9 @@ export const ReceiptsList = () => {
 
     return (
         <List>
+            <Button onClick={() => setFilters([], "replace")} style={{ marginBottom: 16 }}>
+                Clear Filters
+            </Button>
             <Table {...tableProps} rowKey="externalIdentifier">
                 <Table.Column dataIndex="externalIdentifier" title={"externalIdentifier"} />
                 <Table.Column
