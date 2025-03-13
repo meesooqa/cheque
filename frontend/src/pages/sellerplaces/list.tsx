@@ -32,6 +32,8 @@ export const SellerplacesList = () => {
                     )}
                     onFilter={(value, record) => record.name ? record.name.toString().toLowerCase().includes((value as string).toLowerCase()) : false}
                 />
+                <Table.Column dataIndex="address" title={"address"} sorter={true} />
+                <Table.Column dataIndex="email" title={"email"} sorter={true} />
                 <Table.Column
                     title={"Actions"}
                     dataIndex="actions"
