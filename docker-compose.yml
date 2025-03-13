@@ -31,16 +31,6 @@ services:
     environment:
       - SWAGGER_DIR=/app/api/swagger
 
-  swagger:
-    image: swaggerapi/swagger-ui
-    container_name: cheque04_swagger
-    volumes:
-      - ./etc/swagger-ui-config/swagger-initializer.js:/usr/share/nginx/html/swagger-initializer.js:ro
-    ports:
-      - "8081:8080"
-    depends_on:
-      - api
-
   import:
     build:
       context: ./import
@@ -79,6 +69,16 @@ services:
       - ./etc/config.yml:/etc/config.yml
     command: ["/usr/local/bin/cleanup"]
     profiles: ["db_tools_cleanup"]
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    container_name: cheque04_swagger
+    volumes:
+      - ./etc/swagger-ui-config/swagger-initializer.js:/usr/share/nginx/html/swagger-initializer.js:ro
+    ports:
+      - "8081:8080"
+    depends_on:
+      - api
 
   frontend:
     build:
