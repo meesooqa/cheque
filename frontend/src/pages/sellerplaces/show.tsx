@@ -1,4 +1,4 @@
-import { Show, TextField } from "@refinedev/antd";
+import { Show, TextField, EmailField } from "@refinedev/antd";
 import { useShow } from "@refinedev/core";
 import { Typography } from "antd";
 
@@ -19,7 +19,7 @@ export const SellerplacesShow = () => {
             <Title level={5}>{"address"}</Title>
             <TextField value={record?.address} />
             <Title level={5}>{"email"}</Title>
-            <TextField value={record?.email} />
+            <EmailField value={record?.email} />
         </Show>
     );
 };
