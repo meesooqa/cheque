@@ -4,7 +4,7 @@ go 1.23.4
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
-	github.com/meesooqa/cheque/common v1.22.2
+	github.com/meesooqa/cheque/common v1.22.3
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20250311190419-81fb87f6b8bf
 	google.golang.org/grpc v1.71.0

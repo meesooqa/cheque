@@ -2,7 +2,7 @@ module github.com/meesooqa/cheque/tools/db
 
 go 1.23.4
 
-require github.com/meesooqa/cheque/common v1.22.2
+require github.com/meesooqa/cheque/common v1.22.3
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
