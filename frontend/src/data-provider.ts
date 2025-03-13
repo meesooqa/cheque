@@ -21,17 +21,31 @@ export const dataProvider: DataProvider = {
         // sort
         const { sorters } = params;
         if (sorters && sorters.length > 0) {
-            sorters.forEach((sorter, index) => {
-                // queryParams.set(`sort_by[${index}]`, sorter.field);
-                // queryParams.set(`sort_order[${index}]`, sorter.order);
-                queryParams.set(`sort_by`, sorter.field);
-                queryParams.set(`sort_order`, sorter.order);
-            });
+            queryParams.set(`sort_by`, sorters[0].field);
+            queryParams.set(`sort_order`, sorters[0].order);
+        } else {
+            queryParams.set(`sort_by`, "id");
+            queryParams.set(`sort_order`, "desc");
         }
         // filters
         // TODO sum_gt=100&sum_lt=1000&start_date_time=2025-01-01T00:00:00Z&end_date_time=2025-01-31T23:59:59Z
+        if (params.filters && params.filters.length > 0) {
+            const stringFilters = ["name", "inn"];
+            params.filters.forEach((filter) => {
+                if ("field" in filter && filter.value) {
+                    // const f = filter as { field: string; value: string | number | (string | number)[] };
+                    const f = filter as unknown as { field: string; value: string | number };
+                    stringFilters.forEach((fieldName: string) => {
+                        if (f.field === fieldName) {
+                            queryParams.set(fieldName, f.value as string);
+                        }
+                    });
+                }
+            });
+        }
 
         const url = `${API_URL}/${params.resource}?${queryParams}`;
+        // console.log({url: url});
         const response = await fetch(url);
         const data = await response.json();
         return {

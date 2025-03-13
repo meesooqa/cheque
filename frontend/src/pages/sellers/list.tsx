@@ -6,21 +6,50 @@ import {
     ShowButton,
     useTable
 } from "@refinedev/antd";
-import { Space, Table } from "antd";
+import { Space, Table, Input, Button } from "antd";
 
 export const SellersList = () => {
-    const { tableProps } = useTable({
-        initialSorter: [
-            { field: "id", order: "desc" },
-        ],
-    });
-
+    const { tableProps } = useTable({});
     return (
         <List>
             <Table {...tableProps} rowKey="id">
                 <Table.Column dataIndex="id" title={"id"} />
-                <Table.Column dataIndex="name" title={"name"} sorter={true}/>
-                <Table.Column dataIndex="inn" title={"inn"} sorter={true}/>
+                <Table.Column dataIndex="name" title={"name"} sorter={true}
+                    filterDropdown={({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+                    <div style={{ padding: 8 }}>
+                        <Input
+                          placeholder="Name"
+                          value={selectedKeys[0]}
+                          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                          onPressEnter={() => confirm()}
+                          style={{ marginBottom: 8, display: "block" }}
+                        />
+                        <Space>
+                          <Button onClick={() => {clearFilters && clearFilters();confirm();}}>Reset</Button>
+                          <Button type="primary" onClick={() => confirm()}>Search</Button>
+                        </Space>
+                    </div>
+                    )}
+                    onFilter={(value, record) => record.name ? record.name.toString().toLowerCase().includes((value as string).toLowerCase()) : false}
+                />
+                <Table.Column dataIndex="inn" title={"inn"} sorter={true}
+                    filterDropdown={({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+                    <div style={{ padding: 8 }}>
+                        <Input
+                          placeholder="Name"
+                          value={selectedKeys[0]}
+                          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                          onPressEnter={() => confirm()}
+                          style={{ marginBottom: 8, display: "block" }}
+                        />
+                        <Space>
+                          <Button onClick={() => {clearFilters && clearFilters();confirm();}}>Reset</Button>
+                          <Button type="primary" onClick={() => confirm()}>Search</Button>
+                        </Space>
+                    </div>
+                    )}
+                    onFilter={(value, record) => record.inn ? record.inn.toString().toLowerCase().includes((value as string).toLowerCase()) : false}
+                />
                 <Table.Column
                     title={"Actions"}
                     dataIndex="actions"
