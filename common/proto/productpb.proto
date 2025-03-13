@@ -10,7 +10,7 @@ option go_package = "./productpb";
 message Model {
   uint64 id = 1;
   string name = 2;
-  uint64 brandID = 3;
+  uint64 brand_id = 3;
 }
 
 message GetListRequest {
@@ -20,7 +20,7 @@ message GetListRequest {
   string sort_order = 4;
   // filters
   string name = 5;
-  uint64 brandID = 6;
+  uint64 brand_id = 6;
 }
 
 message GetListResponse {

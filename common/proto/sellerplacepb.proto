@@ -9,7 +9,7 @@ option go_package = "./sellerplacepb";
 
 message Model {
   uint64 id = 1;
-  uint64 sellerID = 2;
+  uint64 seller_id = 2;
   string name = 3;
   string address = 4;
   string email = 5;
@@ -21,7 +21,7 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
-  uint64 sellerID = 5;
+  uint64 seller_id = 5;
   string name = 6;
   string address = 7;
   string email = 8;

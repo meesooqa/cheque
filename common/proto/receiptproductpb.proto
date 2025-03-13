@@ -9,8 +9,8 @@ option go_package = "./receiptproductpb";
 
 message Model {
   uint64 id = 1;
-  uint64 productID = 2;
-  uint64 receiptID = 3;
+  uint64 product_id = 2;
+  uint64 receipt_id = 3;
   int32 price = 4;
   double quantity = 5;
   int32 sum = 6;
@@ -22,8 +22,8 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
-  uint64 productID = 5;
-  uint64 receiptID = 6;
+  uint64 product_id = 5;
+  uint64 receipt_id = 6;
   int32 price_gt = 7;
   int32 price_lt = 8;
   double quantity_gt = 9;

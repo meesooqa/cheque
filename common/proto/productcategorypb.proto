@@ -9,8 +9,8 @@ option go_package = "./productcategorypb";
 
 message Model {
   uint64 id = 1;
-  uint64 productID = 2;
-  uint64 categoryID = 3;
+  uint64 product_id = 2;
+  uint64 category_id = 3;
 }
 
 message GetListRequest {
@@ -19,8 +19,8 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
-  uint64 productID = 5;
-  uint64 categoryID = 6;
+  uint64 product_id = 5;
+  uint64 category_id = 6;
 }
 
 message GetListResponse {

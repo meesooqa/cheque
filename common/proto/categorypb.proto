@@ -9,7 +9,7 @@ option go_package = "./categorypb";
 
 message Model {
   uint64 id = 1;
-  uint64 parentID = 2;
+  uint64 parent_id = 2;
   string name = 3;
 }
 
@@ -19,7 +19,7 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
-  uint64 parentID = 5;
+  uint64 parent_id = 5;
   string name = 6;
 }
 

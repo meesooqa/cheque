@@ -9,11 +9,11 @@ option go_package = "./imagepb";
 
 message Model {
   uint64 id = 1;
-  uint64 productID = 2;
+  uint64 product_id = 2;
   string name = 3;
   string url = 4;
   int32 order = 5;
-  bool isMain = 6;
+  bool is_main = 6;
 }
 
 message GetListRequest {
@@ -22,11 +22,11 @@ message GetListRequest {
   string sort_by = 3;
   string sort_order = 4;
   // filters
-  uint64 productID = 5;
+  uint64 product_id = 5;
   string name = 6;
   string url = 7;
 //  int32 order = 8;
-  bool isMain = 9;
+  bool is_main = 9;
 }
 
 message GetListResponse {
