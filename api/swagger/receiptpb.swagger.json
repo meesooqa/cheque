@@ -82,14 +82,14 @@
             "format": "date-time"
           },
           {
-            "name": "operatorID",
+            "name": "operatorId",
             "in": "query",
             "required": false,
             "type": "string",
             "format": "uint64"
           },
           {
-            "name": "sellerPlaceID",
+            "name": "sellerPlaceId",
             "in": "query",
             "required": false,
             "type": "string",
@@ -385,11 +385,11 @@
           "type": "string",
           "format": "date-time"
         },
-        "operatorID": {
+        "operatorId": {
           "type": "string",
           "format": "uint64"
         },
-        "sellerPlaceID": {
+        "sellerPlaceId": {
           "type": "string",
           "format": "uint64"
         },

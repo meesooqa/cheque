@@ -61,7 +61,7 @@
             "type": "string"
           },
           {
-            "name": "productID",
+            "name": "productId",
             "description": "filters",
             "in": "query",
             "required": false,
@@ -69,7 +69,7 @@
             "format": "uint64"
           },
           {
-            "name": "receiptID",
+            "name": "receiptId",
             "in": "query",
             "required": false,
             "type": "string",
@@ -340,11 +340,11 @@
           "type": "string",
           "format": "uint64"
         },
-        "productID": {
+        "productId": {
           "type": "string",
           "format": "uint64"
         },
-        "receiptID": {
+        "receiptId": {
           "type": "string",
           "format": "uint64"
         },

@@ -61,7 +61,7 @@
             "type": "string"
           },
           {
-            "name": "sellerID",
+            "name": "sellerId",
             "description": "filters",
             "in": "query",
             "required": false,
@@ -328,7 +328,7 @@
           "type": "string",
           "format": "uint64"
         },
-        "sellerID": {
+        "sellerId": {
           "type": "string",
           "format": "uint64"
         },

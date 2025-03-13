@@ -68,7 +68,7 @@
             "type": "string"
           },
           {
-            "name": "brandID",
+            "name": "brandId",
             "in": "query",
             "required": false,
             "type": "string",
@@ -291,7 +291,7 @@
         "name": {
           "type": "string"
         },
-        "brandID": {
+        "brandId": {
           "type": "string",
           "format": "uint64"
         }

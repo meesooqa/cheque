@@ -61,7 +61,7 @@
             "type": "string"
           },
           {
-            "name": "parentID",
+            "name": "parentId",
             "description": "filters",
             "in": "query",
             "required": false,
@@ -288,7 +288,7 @@
           "type": "string",
           "format": "uint64"
         },
-        "parentID": {
+        "parentId": {
           "type": "string",
           "format": "uint64"
         },

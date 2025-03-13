@@ -61,7 +61,7 @@
             "type": "string"
           },
           {
-            "name": "productID",
+            "name": "productId",
             "description": "filters",
             "in": "query",
             "required": false,
@@ -301,7 +301,7 @@
           "type": "string",
           "format": "uint64"
         },
-        "productID": {
+        "productId": {
           "type": "string",
           "format": "uint64"
         },
