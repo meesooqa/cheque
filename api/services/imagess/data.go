@@ -11,7 +11,7 @@ func NewConverter() *Converter {
 func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 	return &pb.Model{
 		Id:        uint64(dbItem.ID),
-		ProductID: uint64(dbItem.ProductID),
+		ProductId: uint64(dbItem.ProductId),
 		Name:      dbItem.Name,
 		Url:       dbItem.URL,
 		Order:     int32(dbItem.Order),
@@ -21,7 +21,7 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 
 func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 	return &DbModel{
-		ProductID: uint(pbItem.ProductID),
+		ProductId: uint(pbItem.ProductId),
 		Name:      pbItem.Name,
 		URL:       pbItem.Url,
 		Order:     int(pbItem.Order),

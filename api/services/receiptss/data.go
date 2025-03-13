@@ -24,11 +24,11 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 		KktReg:               dbItem.KktReg,
 		BuyerPhoneOrAddress:  dbItem.BuyerPhoneOrAddress,
 	}
-	if dbItem.OperatorID != nil {
-		pbModel.OperatorID = uint64(*dbItem.OperatorID)
+	if dbItem.OperatorId != nil {
+		pbModel.OperatorId = uint64(*dbItem.OperatorId)
 	}
-	if dbItem.SellerPlaceID != nil {
-		pbModel.SellerPlaceID = uint64(*dbItem.SellerPlaceID)
+	if dbItem.SellerPlaceId != nil {
+		pbModel.SellerPlaceId = uint64(*dbItem.SellerPlaceId)
 	}
 	return &pbModel
 }
@@ -44,9 +44,9 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 		KktReg:               pbItem.KktReg,
 		BuyerPhoneOrAddress:  pbItem.BuyerPhoneOrAddress,
 	}
-	uintItemOperatorID := uint(pbItem.OperatorID)
-	dbModel.OperatorID = &uintItemOperatorID
-	uintItemSellerPlaceID := uint(pbItem.SellerPlaceID)
-	dbModel.SellerPlaceID = &uintItemSellerPlaceID
+	uintItemOperatorId := uint(pbItem.OperatorId)
+	dbModel.OperatorId = &uintItemOperatorId
+	uintItemSellerPlaceId := uint(pbItem.SellerPlaceId)
+	dbModel.SellerPlaceId = &uintItemSellerPlaceId
 	return &dbModel
 }

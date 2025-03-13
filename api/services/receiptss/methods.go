@@ -43,8 +43,8 @@ func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*p
 	filters := []services.FilterFunc{
 		ExternalIdentifierFilter(req.ExternalIdentifier),
 		DateTimeFilter(req.DateTimeStart, req.DateTimeEnd),
-		OperatorIDFilter(req.OperatorID),
-		SellerPlaceIDFilter(req.SellerPlaceID),
+		OperatorIdFilter(req.OperatorId),
+		SellerPlaceIdFilter(req.SellerPlaceId),
 		FiscalDocumentNumberFilter(req.FiscalDocumentNumberGt, req.FiscalDocumentNumberLt),
 		FiscalDriveNumberFilter(req.FiscalDriveNumber),
 		FiscalSignFilter(req.FiscalSignGt, req.FiscalSignLt),

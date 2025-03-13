@@ -11,14 +11,14 @@ func NewConverter() *Converter {
 func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 	return &pb.Model{
 		Id:         uint64(dbItem.ID),
-		ProductID:  uint64(dbItem.ProductID),
-		CategoryID: uint64(dbItem.CategoryID),
+		ProductId:  uint64(dbItem.ProductId),
+		CategoryId: uint64(dbItem.CategoryId),
 	}
 }
 
 func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 	return &DbModel{
-		ProductID:  uint(pbItem.ProductID),
-		CategoryID: uint(pbItem.CategoryID),
+		ProductId:  uint(pbItem.ProductId),
+		CategoryId: uint(pbItem.CategoryId),
 	}
 }

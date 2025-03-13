@@ -6,7 +6,7 @@ import (
 	"github.com/meesooqa/cheque/api/services"
 )
 
-func ProductIDFilter(value uint64) services.FilterFunc {
+func ProductIdFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("product_id = ?", value)
@@ -15,7 +15,7 @@ func ProductIDFilter(value uint64) services.FilterFunc {
 	}
 }
 
-func CategoryIDFilter(value uint64) services.FilterFunc {
+func CategoryIdFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("category_id = ?", value)

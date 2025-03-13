@@ -41,7 +41,7 @@ func (o *ServiceServer) DeleteItem(ctx context.Context, req *pb.DeleteItemReques
 
 func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {
 	filters := []services.FilterFunc{
-		SellerIDFilter(req.SellerID),
+		SellerIdFilter(req.SellerId),
 		NameFilter(req.Name),
 		AddressFilter(req.Address),
 		EmailFilter(req.Email),

@@ -59,7 +59,7 @@ func DateTimeFilter(valueStart, valueEnd *timestamppb.Timestamp) services.Filter
 	}
 }
 
-func OperatorIDFilter(value uint64) services.FilterFunc {
+func OperatorIdFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("operator_id = ?", value)
@@ -68,7 +68,7 @@ func OperatorIDFilter(value uint64) services.FilterFunc {
 	}
 }
 
-func SellerPlaceIDFilter(value uint64) services.FilterFunc {
+func SellerPlaceIdFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("seller_place_id = ?", value)

@@ -11,7 +11,7 @@ func NewConverter() *Converter {
 func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 	return &pb.Model{
 		Id:       uint64(dbItem.ID),
-		SellerID: uint64(dbItem.SellerID),
+		SellerId: uint64(dbItem.SellerId),
 		Name:     dbItem.Name,
 		Address:  dbItem.Address,
 		Email:    dbItem.Email,
@@ -20,7 +20,7 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 
 func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 	return &DbModel{
-		SellerID: uint(pbItem.SellerID),
+		SellerId: uint(pbItem.SellerId),
 		Name:     pbItem.Name,
 		Address:  pbItem.Address,
 		Email:    pbItem.Email,

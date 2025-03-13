@@ -15,7 +15,7 @@ func NameFilter(value string) services.FilterFunc {
 	}
 }
 
-func ParentIDFilter(value uint64) services.FilterFunc {
+func ParentIdFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("parent_id = ?", value)
