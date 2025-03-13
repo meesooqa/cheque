@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 lint:
 	golangci-lint run ./...
 
@@ -25,6 +27,20 @@ version:
 tidy:
 	find . -type f -name "go.mod" -exec dirname {} \; | xargs -I {} sh -c 'echo "Running go mod tidy in {}"; cd {} && go get -u ./... && go mod tidy'
 
+db_backup:
+	docker exec -t cheque04_postgres mkdir -p /backup
+	docker exec -t cheque04_postgres pg_dump -U user -d receipts_db -F c -f /backup/receipts_db.dump
+	docker cp cheque04_postgres:/backup/receipts_db.dump ./var/backup/receipts_db.dump
+	#tar -czvf ./var/backup/receipts_db_$(shell date +"%Y%m%d-%H%M%S").tar.gz -C ./var/backup receipts_db.dump
+	#tar -tzf ./var/backup/receipts_db_*.tar.gz
+	zip ./var/backup/receipts_db_$(shell date +"%Y%m%d-%H%M%S").zip ./var/backup/receipts_db.dump
+	unzip -l ./var/backup/receipts_db_*.zip
+	rm ./var/backup/receipts_db.dump
+
+db_restore_from_backup:
+	docker cp ./var/backup/receipts_db.dump cheque04_postgres:/backup/receipts_db.dump
+	docker exec -t cheque04_postgres pg_restore -U user -d receipts_db --clean --if-exists /backup/receipts_db.dump
+
 db_scheme:
 	docker compose --profile db_tools_scheme run --rm db_tools_scheme
 
@@ -34,4 +50,4 @@ db_cleanup:
 import:
 	docker compose --profile import run --rm import
 
-.PHONY: run lint test_race test version tidy db_scheme db_cleanup import
+.PHONY: run lint test_race test version tidy db_backup db_retsore_from_backup db_scheme db_cleanup import
