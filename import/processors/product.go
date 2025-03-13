@@ -12,7 +12,7 @@ func (o *ReceiptProcessor) processProducts(db *gorm.DB, receipt *models.Receipt)
 	for i, rp := range receipt.ReceiptProducts {
 		productName := rp.Product.Name
 		if id, ok := cache[productName]; ok {
-			receipt.ReceiptProducts[i].ProductID = id
+			receipt.ReceiptProducts[i].ProductId = id
 			receipt.ReceiptProducts[i].Product = models.Product{}
 			continue
 		}
@@ -22,7 +22,7 @@ func (o *ReceiptProcessor) processProducts(db *gorm.DB, receipt *models.Receipt)
 			return err
 		}
 		cache[productName] = item.ID
-		receipt.ReceiptProducts[i].ProductID = item.ID
+		receipt.ReceiptProducts[i].ProductId = item.ID
 		receipt.ReceiptProducts[i].Product = models.Product{}
 	}
 	return nil

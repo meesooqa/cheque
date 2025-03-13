@@ -19,14 +19,14 @@ type Seller struct {
 	Inn  string `gorm:"uniqueIndex:idx_seller_name_inn;not null" json:"inn"`
 }
 
-// SellerPlace – seller place, combination of SellerID, Name and Address is unique
+// SellerPlace – seller place, combination of SellerId, Name and Address is unique
 type SellerPlace struct {
 	gorm.Model
 	SellerId uint   `gorm:"uniqueIndex:idx_seller_place,where:deleted_at IS NULL;not null" json:"seller_id"`
 	Name     string `gorm:"uniqueIndex:idx_seller_place;not null" json:"name"`
 	Address  string `gorm:"uniqueIndex:idx_seller_place;not null" json:"address"`
 	Email    string `json:"email"`
-	Seller   Seller `gorm:"foreignKey:SellerID;constraint:OnDelete:CASCADE;" json:"seller"`
+	Seller   Seller `gorm:"foreignKey:SellerId;constraint:OnDelete:CASCADE;" json:"seller"`
 }
 
 // Category – categories tree
@@ -35,8 +35,8 @@ type Category struct {
 	ParentId *uint      `gorm:"index" json:"parent_id"`
 	Name     string     `gorm:"not null" json:"name"`
 	Products []Product  `gorm:"many2many:product_categories;" json:"products"`
-	Parent   *Category  `gorm:"foreignKey:ParentID" json:"parent"`
-	Children []Category `gorm:"foreignKey:ParentID" json:"children"`
+	Parent   *Category  `gorm:"foreignKey:ParentId" json:"parent"`
+	Children []Category `gorm:"foreignKey:ParentId" json:"children"`
 }
 
 // Brand – brand with unique name
@@ -51,7 +51,7 @@ type Product struct {
 	gorm.Model
 	Name       string     `gorm:"uniqueIndex:idx_product_name,where:deleted_at IS NULL;not null" json:"name"`
 	BrandId    *uint      `gorm:"index" json:"brand_id"`
-	Brand      *Brand     `gorm:"foreignKey:BrandID;constraint:OnDelete:SET NULL;" json:"brand"`
+	Brand      *Brand     `gorm:"foreignKey:BrandId;constraint:OnDelete:SET NULL;" json:"brand"`
 	Categories []Category `gorm:"many2many:product_categories;" json:"categories"`
 	Images     []Image    `gorm:"constraint:OnDelete:CASCADE;" json:"images"`
 }
@@ -88,7 +88,7 @@ type Receipt struct {
 	SellerPlaceId        *uint            `gorm:"index" json:"seller_place_id"`
 	Operator             *Operator        `json:"operator"`
 	SellerPlace          *SellerPlace     `json:"seller_place"`
-	ReceiptProducts      []ReceiptProduct `gorm:"foreignKey:ReceiptID;constraint:OnDelete:CASCADE;" json:"receipt_products"`
+	ReceiptProducts      []ReceiptProduct `gorm:"foreignKey:ReceiptId;constraint:OnDelete:CASCADE;" json:"receipt_products"`
 }
 
 // ReceiptProduct receipt item
