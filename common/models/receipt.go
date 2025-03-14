@@ -9,97 +9,97 @@ import (
 // Operator – operator with unique name
 type Operator struct {
 	gorm.Model
-	Name string `gorm:"index:idx_operator_name,unique,where:deleted_at IS NULL;not null" json:"name"`
+	Name string `gorm:"index:idx_operator_name,unique,where:deleted_at IS NULL;not null"`
 }
 
 // Seller – seller, Name + Inn = unique
 type Seller struct {
 	gorm.Model
-	Name         string        `gorm:"uniqueIndex:idx_seller_name_inn,where:deleted_at IS NULL;not null" json:"name"`
-	Inn          string        `gorm:"uniqueIndex:idx_seller_name_inn;not null" json:"inn"`
-	SellerPlaces []SellerPlace `gorm:"constraint:OnDelete:CASCADE;" json:"products"`
+	Name         string        `gorm:"uniqueIndex:idx_seller_name_inn,where:deleted_at IS NULL;not null"`
+	Inn          string        `gorm:"uniqueIndex:idx_seller_name_inn;not null"`
+	SellerPlaces []SellerPlace `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 // SellerPlace – seller place, combination of SellerId, Name and Address is unique
 type SellerPlace struct {
 	gorm.Model
-	SellerId uint   `gorm:"uniqueIndex:idx_seller_place,where:deleted_at IS NULL;not null;" json:"seller_id"`
-	Name     string `gorm:"uniqueIndex:idx_seller_place;not null" json:"name"`
-	Address  string `gorm:"uniqueIndex:idx_seller_place;not null" json:"address"`
-	Email    string `json:"email"`
-	Seller   Seller `json:"seller"`
+	SellerId uint   `gorm:"uniqueIndex:idx_seller_place,where:deleted_at IS NULL;not null;"`
+	Name     string `gorm:"uniqueIndex:idx_seller_place;not null"`
+	Address  string `gorm:"uniqueIndex:idx_seller_place;not null"`
+	Email    string
+	Seller   Seller
 }
 
 // Category – categories tree
 type Category struct {
 	gorm.Model
-	ParentId *uint      `gorm:"index" json:"parent_id"`
-	Name     string     `gorm:"not null" json:"name"`
-	Products []Product  `gorm:"many2many:product_categories;" json:"products"`
-	Parent   *Category  `gorm:"foreignKey:ParentId" json:"parent"`
-	Children []Category `gorm:"foreignKey:ParentId" json:"children"`
+	ParentId *uint      `gorm:"index"`
+	Name     string     `gorm:"not null"`
+	Products []Product  `gorm:"many2many:product_categories;"`
+	Parent   *Category  `gorm:"foreignKey:ParentId"`
+	Children []Category `gorm:"foreignKey:ParentId"`
 }
 
 // Brand – brand with unique name
 type Brand struct {
 	gorm.Model
-	Name     string    `gorm:"uniqueIndex:idx_brand_name,where:deleted_at IS NULL;not null" json:"name"`
-	Products []Product `gorm:"constraint:OnDelete:RESTRICT;" json:"products"`
+	Name     string    `gorm:"uniqueIndex:idx_brand_name,where:deleted_at IS NULL;not null"`
+	Products []Product `gorm:"constraint:OnDelete:RESTRICT;"`
 }
 
 // Product – item with unique name
 type Product struct {
 	gorm.Model
-	Name       string     `gorm:"uniqueIndex:idx_product_name,where:deleted_at IS NULL;not null" json:"name"`
-	BrandId    *uint      `gorm:"index" json:"brand_id"`
-	Brand      *Brand     `gorm:"foreignKey:BrandId;constraint:OnDelete:SET NULL;" json:"brand"`
-	Categories []Category `gorm:"many2many:product_categories;" json:"categories"`
-	Images     []Image    `gorm:"constraint:OnDelete:CASCADE;" json:"images"`
+	Name       string     `gorm:"uniqueIndex:idx_product_name,where:deleted_at IS NULL;not null"`
+	BrandId    *uint      `gorm:"index"`
+	Brand      *Brand     `gorm:"foreignKey:BrandId;constraint:OnDelete:SET NULL;"`
+	Categories []Category `gorm:"many2many:product_categories;"`
+	Images     []Image    `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 // ProductCategory – product categories
 type ProductCategory struct {
 	gorm.Model
-	ProductId  uint `gorm:"uniqueIndex:idx_product_category,where:deleted_at IS NULL;not null" json:"product_id"`
-	CategoryId uint `gorm:"uniqueIndex:idx_product_category;not null" json:"category_id"`
+	ProductId  uint `gorm:"uniqueIndex:idx_product_category,where:deleted_at IS NULL;not null"`
+	CategoryId uint `gorm:"uniqueIndex:idx_product_category;not null"`
 }
 
 // Image – product photos
 type Image struct {
 	gorm.Model
-	ProductId uint   `gorm:"index;not null;uniqueIndex:idx_product_is_main,where:(is_main = true AND deleted_at IS NULL)" json:"product_id"`
-	IsMain    bool   `gorm:"uniqueIndex:idx_product_is_main" json:"is_main"`
-	Name      string `json:"name"`
-	URL       string `json:"url"`
-	Order     int    `json:"order"`
+	ProductId uint `gorm:"index;not null;uniqueIndex:idx_product_is_main,where:(is_main = true AND deleted_at IS NULL)"`
+	IsMain    bool `gorm:"uniqueIndex:idx_product_is_main"`
+	Name      string
+	URL       string
+	Order     int
 }
 
 // Receipt – receipt with unique ExternalIdentifier
 type Receipt struct {
 	gorm.Model
-	ExternalIdentifier   string           `gorm:"uniqueIndex:idx_receipt_external_identifier,where:deleted_at IS NULL;not null" json:"external_identifier"`
-	DateTime             time.Time        `gorm:"not null" json:"date_time"`
-	FiscalDocumentNumber int64            `json:"fiscal_document_number"`
-	FiscalDriveNumber    string           `json:"fiscal_drive_number"`
-	FiscalSign           int64            `json:"fiscal_sign"`
-	Sum                  int              `gorm:"not null" json:"sum"`
-	KktReg               string           `json:"kkt_reg"`
-	BuyerPhoneOrAddress  string           `json:"buyer_phone_or_address"`
-	OperatorId           *uint            `gorm:"index" json:"operator_id"`
-	SellerPlaceId        *uint            `gorm:"index" json:"seller_place_id"`
-	Operator             *Operator        `json:"operator"`
-	SellerPlace          *SellerPlace     `json:"seller_place"`
-	ReceiptProducts      []ReceiptProduct `gorm:"foreignKey:ReceiptId;constraint:OnDelete:CASCADE;" json:"receipt_products"`
+	ExternalIdentifier   string    `gorm:"uniqueIndex:idx_receipt_external_identifier,where:deleted_at IS NULL;not null"`
+	DateTime             time.Time `gorm:"not null"`
+	FiscalDocumentNumber int64
+	FiscalDriveNumber    string
+	FiscalSign           int64
+	Sum                  int `gorm:"not null"`
+	KktReg               string
+	BuyerPhoneOrAddress  string
+	OperatorId           *uint `gorm:"index"`
+	SellerPlaceId        *uint `gorm:"index"`
+	Operator             *Operator
+	SellerPlace          *SellerPlace
+	ReceiptProducts      []ReceiptProduct `gorm:"foreignKey:ReceiptId;constraint:OnDelete:CASCADE;"`
 }
 
 // ReceiptProduct receipt item
 type ReceiptProduct struct {
 	gorm.Model
-	ProductId       uint    `gorm:"index;not null" json:"product_id"`
-	ReceiptId       uint    `gorm:"index;not null" json:"receipt_id"`
-	Price           int     `json:"price"`
-	Quantity        float64 `json:"quantity"`
-	Sum             int     `json:"sum"`
-	ProductCodeData *string `gorm:"type:jsonb" json:"product_code_data"`
-	Product         Product `json:"product"`
+	ProductId       uint `gorm:"index;not null"`
+	ReceiptId       uint `gorm:"index;not null"`
+	Price           int
+	Quantity        float64
+	Sum             int
+	ProductCodeData *string `gorm:"type:jsonb"`
+	Product         Product
 }
