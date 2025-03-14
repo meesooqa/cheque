@@ -1,6 +1,7 @@
 FROM golang:1.23-alpine AS build
 COPY . /build
 WORKDIR /build
+RUN go mod tidy
 RUN CGO_ENABLED=0 GOOS=linux go build -o /build/cleanup -ldflags "-s -w" /build/cmd/cleanup/main.go
 
 FROM alpine:latest
