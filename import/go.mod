@@ -4,7 +4,7 @@ go 1.23.4
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/meesooqa/cheque/common v1.22.3
+	github.com/meesooqa/cheque/common v1.22.4
 	gorm.io/gorm v1.25.12
 )
 

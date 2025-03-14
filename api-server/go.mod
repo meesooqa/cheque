@@ -4,8 +4,8 @@ go 1.23.4
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
-	github.com/meesooqa/cheque/api v1.22.3
-	github.com/meesooqa/cheque/common v1.22.3
+	github.com/meesooqa/cheque/api v1.22.4
+	github.com/meesooqa/cheque/common v1.22.4
 	google.golang.org/grpc v1.71.0
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12
@@ -23,8 +23,8 @@ require (
 	golang.org/x/sync v0.12.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250311190419-81fb87f6b8bf // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250311190419-81fb87f6b8bf // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250313205543-e70fdf4c4cb4 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250313205543-e70fdf4c4cb4 // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
