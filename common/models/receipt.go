@@ -15,18 +15,19 @@ type Operator struct {
 // Seller – seller, Name + Inn = unique
 type Seller struct {
 	gorm.Model
-	Name string `gorm:"uniqueIndex:idx_seller_name_inn,where:deleted_at IS NULL;not null" json:"name"`
-	Inn  string `gorm:"uniqueIndex:idx_seller_name_inn;not null" json:"inn"`
+	Name         string        `gorm:"uniqueIndex:idx_seller_name_inn,where:deleted_at IS NULL;not null" json:"name"`
+	Inn          string        `gorm:"uniqueIndex:idx_seller_name_inn;not null" json:"inn"`
+	SellerPlaces []SellerPlace `gorm:"constraint:OnDelete:CASCADE;" json:"products"`
 }
 
 // SellerPlace – seller place, combination of SellerId, Name and Address is unique
 type SellerPlace struct {
 	gorm.Model
-	SellerId uint   `gorm:"uniqueIndex:idx_seller_place,where:deleted_at IS NULL;not null" json:"seller_id"`
+	SellerId uint   `gorm:"uniqueIndex:idx_seller_place,where:deleted_at IS NULL;not null;" json:"seller_id"`
 	Name     string `gorm:"uniqueIndex:idx_seller_place;not null" json:"name"`
 	Address  string `gorm:"uniqueIndex:idx_seller_place;not null" json:"address"`
 	Email    string `json:"email"`
-	Seller   Seller `gorm:"foreignKey:SellerId;constraint:OnDelete:CASCADE;" json:"seller"`
+	Seller   Seller `json:"seller"`
 }
 
 // Category – categories tree
