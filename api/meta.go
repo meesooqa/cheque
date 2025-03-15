@@ -17,16 +17,16 @@ import (
 	"github.com/meesooqa/cheque/common/api"
 )
 
-func GetServiceServers(logger *slog.Logger, db *gorm.DB) []api.ServiceServer {
+func GetServiceServers() []api.ServiceServer {
 	return []api.ServiceServer{
-		operatorss.NewServiceServer(logger, db),
-		sellerss.NewServiceServer(logger, db),
-		sellerplacess.NewServiceServer(logger, db),
-		categoryss.NewServiceServer(logger, db),
-		brandss.NewServiceServer(logger, db),
-		productss.NewServiceServer(logger, db),
-		imagess.NewServiceServer(logger, db),
-		receiptss.NewServiceServer(logger, db),
-		receiptproductss.NewServiceServer(logger, db),
+		operatorss.NewServiceServer(),
+		sellerss.NewServiceServer(),
+		sellerplacess.NewServiceServer(),
+		categoryss.NewServiceServer(),
+		brandss.NewServiceServer(),
+		productss.NewServiceServer(),
+		imagess.NewServiceServer(),
+		receiptss.NewServiceServer(),
+		receiptproductss.NewServiceServer(),
 	}
 }
