@@ -3,6 +3,9 @@ syntax = "proto3";
 
 package receiptpb;
 
+import "operatorpb.proto";
+import "receiptproductpb.proto";
+import "sellerplacepb.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -20,6 +23,9 @@ message Model {
   int32 sum = 9;
   string kkt_reg = 10;
   string buyer_phone_or_address = 11;
+  operatorpb.Model operator = 12;
+  sellerplacepb.Model seller_place = 13;
+  receiptproductpb.Summary receipt_products = 14;
 }
 
 message GetListRequest {

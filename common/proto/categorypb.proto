@@ -11,6 +11,14 @@ message Model {
   uint64 id = 1;
   uint64 parent_id = 2;
   string name = 3;
+  Summary parent = 4;
+  repeated Summary children = 5;
+}
+
+message Summary {
+  uint64 id = 1;
+  uint64 parent_id = 2;
+  string name = 3;
 }
 
 message GetListRequest {

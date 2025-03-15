@@ -3,11 +3,23 @@ syntax = "proto3";
 
 package productpb;
 
+import "brandpb.proto";
+import "categorypb.proto";
+import "imagepb.proto";
 import "google/api/annotations.proto";
 
 option go_package = "github.com/meesooqa/cheque/api/pb/productpb";
 
 message Model {
+  uint64 id = 1;
+  string name = 2;
+  uint64 brand_id = 3;
+  brandpb.Model brand = 4;
+  repeated imagepb.Model images = 5;
+  repeated categorypb.Summary categories = 6;
+}
+
+message Summary {
   uint64 id = 1;
   string name = 2;
   uint64 brand_id = 3;
