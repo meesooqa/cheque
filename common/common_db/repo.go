@@ -57,7 +57,7 @@ func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []FilterF
 
 func (o *BaseRepository[DbModel]) Get(ctx context.Context, id uint64) (*DbModel, error) {
 	db := GetDB(ctx)
-	o.preload(db)
+	db = o.preload(db)
 	var item DbModel
 	if err := db.First(&item, id).Error; err != nil {
 		return nil, fmt.Errorf("item with ID %d not found: %w", id, err)
@@ -118,10 +118,11 @@ func (o *BaseRepository[DbModel]) addPagination(query *gorm.DB, pagination Pagin
 	}
 }
 
-func (o *BaseRepository[DbModel]) preload(db *gorm.DB) {
+func (o *BaseRepository[DbModel]) preload(db *gorm.DB) *gorm.DB {
 	if len(o.Preloads) > 0 {
 		for _, preload := range o.Preloads {
 			db = db.Preload(preload)
 		}
 	}
+	return db
 }
