@@ -21,7 +21,6 @@ func init() {
 		{models.Category{}, "models.Category", "categories", "categorypb", "categoryss"},
 		{models.Brand{}, "models.Brand", "brands", "brandpb", "brandss"},
 		{models.Product{}, "models.Product", "products", "productpb", "productss"},
-		{models.ProductCategory{}, "models.ProductCategory", "productscategories", "productcategorypb", "productcategoryss"},
 		{models.Image{}, "models.Image", "images", "imagepb", "imagess"},
 		{models.Receipt{}, "models.Receipt", "receipts", "receiptpb", "receiptss"},
 		{models.ReceiptProduct{}, "models.ReceiptProduct", "receiptsproducts", "receiptproductpb", "receiptproductss"},
