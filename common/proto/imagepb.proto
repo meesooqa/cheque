@@ -5,7 +5,7 @@ package imagepb;
 
 import "google/api/annotations.proto";
 
-option go_package = "./imagepb";
+option go_package = "github.com/meesooqa/cheque/api/pb/imagepb";
 
 message Model {
   uint64 id = 1;

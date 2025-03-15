@@ -5,7 +5,7 @@ package brandpb;
 
 import "google/api/annotations.proto";
 
-option go_package = "./brandpb";
+option go_package = "github.com/meesooqa/cheque/api/pb/brandpb";
 
 message Model {
   uint64 id = 1;

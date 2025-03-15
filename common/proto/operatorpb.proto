@@ -5,7 +5,7 @@ package operatorpb;
 
 import "google/api/annotations.proto";
 
-option go_package = "./operatorpb";
+option go_package = "github.com/meesooqa/cheque/api/pb/operatorpb";
 
 message Model {
   uint64 id = 1;

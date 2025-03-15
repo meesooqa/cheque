@@ -6,7 +6,7 @@ package receiptpb;
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "./receiptpb";
+option go_package = "github.com/meesooqa/cheque/api/pb/receiptpb";
 
 message Model {
   uint64 id = 1;
