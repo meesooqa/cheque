@@ -29,12 +29,13 @@ type Repository[DbModel any] interface {
 }
 
 type BaseRepository[DbModel any] struct {
-	logger *slog.Logger
+	logger   *slog.Logger
+	preloads []string
 }
 
 func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []FilterFunc, sort SortData, pagination PaginationData) ([]*DbModel, int64, error) {
-	// TODO Preload
 	db := GetDB(ctx)
+	o.preload(db)
 	query := db.Model(new(DbModel))
 	if len(filters) > 0 {
 		for _, filter := range filters {
@@ -57,8 +58,8 @@ func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []FilterF
 }
 
 func (o *BaseRepository[DbModel]) Get(ctx context.Context, id uint64) (*DbModel, error) {
-	// TODO Preload
 	db := GetDB(ctx)
+	o.preload(db)
 	var item DbModel
 	if err := db.First(&item, id).Error; err != nil {
 		return nil, fmt.Errorf("item with ID %d not found: %w", id, err)
@@ -116,5 +117,13 @@ func (o *BaseRepository[DbModel]) addPagination(query *gorm.DB, pagination Pagin
 	if pagination.Page > 0 {
 		offset := pagination.PageSize * (pagination.Page - 1)
 		query = query.Offset(offset)
+	}
+}
+
+func (o *BaseRepository[DbModel]) preload(db *gorm.DB) {
+	if len(o.preloads) > 0 {
+		for _, preload := range o.preloads {
+			db = db.Preload(preload)
+		}
 	}
 }
