@@ -1,7 +1,13 @@
 FROM golang:1.23-alpine AS build
-COPY . /build
+
 WORKDIR /build
-RUN go get -u . && go mod tidy
+COPY ./common /build/common
+COPY ./api /build/api
+COPY ./api-server /build/api-server
+
+WORKDIR /build/api-server
+RUN go mod tidy && go mod download
+
 RUN CGO_ENABLED=0 GOOS=linux go build -o /build/cheque -ldflags "-s -w"
 
 FROM alpine:latest
