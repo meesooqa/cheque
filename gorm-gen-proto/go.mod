@@ -4,7 +4,7 @@ go 1.23.4
 
 require (
 	github.com/jessevdk/go-flags v1.6.1
-	github.com/meesooqa/cheque/common v1.22.4
+	github.com/meesooqa/cheque/common v1.22.5
 	github.com/stretchr/testify v1.10.0
 )
 
