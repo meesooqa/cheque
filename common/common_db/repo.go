@@ -33,7 +33,7 @@ type BaseRepository[DbModel any] struct {
 
 func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []FilterFunc, sort SortData, pagination PaginationData) ([]*DbModel, int64, error) {
 	db := GetDB(ctx)
-	o.preload(db)
+	db = o.preload(db)
 	query := db.Model(new(DbModel))
 	if len(filters) > 0 {
 		for _, filter := range filters {
