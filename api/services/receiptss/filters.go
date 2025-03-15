@@ -4,8 +4,24 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gorm"
 
+	pb "github.com/meesooqa/cheque/api/pb/receiptpb"
 	"github.com/meesooqa/cheque/api/services"
 )
+
+func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
+	return []services.FilterFunc{
+		ExternalIdentifierFilter(req.ExternalIdentifier),
+		DateTimeFilter(req.DateTimeStart, req.DateTimeEnd),
+		OperatorIDFilter(req.OperatorId),
+		SellerPlaceIDFilter(req.SellerPlaceId),
+		FiscalDocumentNumberFilter(req.FiscalDocumentNumberGt, req.FiscalDocumentNumberLt),
+		FiscalDriveNumberFilter(req.FiscalDriveNumber),
+		FiscalSignFilter(req.FiscalSignGt, req.FiscalSignLt),
+		SumFilter(req.SumGt, req.SumLt),
+		KktRegFilter(req.KktReg),
+		BuyerPhoneOrAddressFilter(req.BuyerPhoneOrAddress),
+	}
+}
 
 func ExternalIdentifierFilter(value string) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {

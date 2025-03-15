@@ -3,8 +3,18 @@ package imagess
 import (
 	"gorm.io/gorm"
 
+	pb "github.com/meesooqa/cheque/api/pb/imagepb"
 	"github.com/meesooqa/cheque/api/services"
 )
+
+func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
+	return []services.FilterFunc{
+		ProductIDFilter(req.ProductId),
+		NameFilter(req.Name),
+		UrlFilter(req.Url),
+		IsMainFilter(req.IsMain),
+	}
+}
 
 func ProductIDFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {

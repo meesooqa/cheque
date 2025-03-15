@@ -4,7 +4,6 @@ import (
 	"context"
 
 	pb "github.com/meesooqa/cheque/api/pb/sellerpb"
-	"github.com/meesooqa/cheque/api/services"
 )
 
 func (o *ServiceServer) GetItem(ctx context.Context, req *pb.GetItemRequest) (*pb.GetItemResponse, error) {
@@ -40,11 +39,7 @@ func (o *ServiceServer) DeleteItem(ctx context.Context, req *pb.DeleteItemReques
 }
 
 func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {
-	filters := []services.FilterFunc{
-		NameFilter(req.Name),
-		InnFilter(req.Inn),
-	}
-	items, total, err := o.BaseService.GetList(filters, req.SortBy, req.SortOrder, int(req.PageSize), int(req.Page))
+	items, total, err := o.BaseService.GetList(GetFilters(req), req.SortBy, req.SortOrder, int(req.PageSize), int(req.Page))
 	if err != nil {
 		return nil, err
 	}

@@ -3,8 +3,19 @@ package receiptproductss
 import (
 	"gorm.io/gorm"
 
+	pb "github.com/meesooqa/cheque/api/pb/receiptproductpb"
 	"github.com/meesooqa/cheque/api/services"
 )
+
+func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
+	return []services.FilterFunc{
+		ProductIDFilter(req.ProductId),
+		ReceiptIDFilter(req.ReceiptId),
+		PriceFilter(req.PriceGt, req.PriceLt),
+		SumFilter(req.SumGt, req.SumLt),
+		QuantityFilter(req.QuantityGt, req.QuantityLt),
+	}
+}
 
 func ProductIDFilter(value uint64) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
