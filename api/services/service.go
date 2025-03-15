@@ -1,9 +1,7 @@
 package services
 
 import (
-	"log/slog"
-
-	"gorm.io/gorm"
+	"github.com/meesooqa/cheque/common/common_db"
 )
 
 type Converter[DbModel any, PbModel any] interface {
@@ -11,27 +9,14 @@ type Converter[DbModel any, PbModel any] interface {
 	DataPbToDb(pbItem *PbModel) *DbModel
 }
 
-type FilterFunc func(db *gorm.DB) *gorm.DB
-
 type BaseService[DbModel any, PbModel any] struct {
-	Logger    *slog.Logger
-	db        *gorm.DB
+	Repo      common_db.Repository[DbModel]
 	converter Converter[DbModel, PbModel]
 }
 
-func NewBaseService[T any, U any](log *slog.Logger, db *gorm.DB, converter Converter[T, U]) *BaseService[T, U] {
+func NewBaseService[T any, U any](repo common_db.Repository[T], converter Converter[T, U]) *BaseService[T, U] {
 	return &BaseService[T, U]{
-		Logger:    log,
-		db:        db,
+		Repo:      repo,
 		converter: converter,
 	}
-}
-
-func (o *BaseService[T, U]) Preload(db *gorm.DB, preloads ...string) *gorm.DB {
-	if len(preloads) > 0 {
-		for _, preload := range preloads {
-			db = db.Preload(preload)
-		}
-	}
-	return db
 }
