@@ -21,7 +21,7 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 		Name:     dbItem.Name,
 		Address:  dbItem.Address,
 		Email:    dbItem.Email,
-		Seller: &sellerpb.Summary{
+		Seller: &sellerpb.Model{
 			Id:   uint64(dbItem.Seller.ID),
 			Name: dbItem.Seller.Name,
 			Inn:  dbItem.Seller.Inn,

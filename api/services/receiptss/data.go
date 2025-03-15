@@ -3,7 +3,9 @@ package receiptss
 import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
+	"github.com/meesooqa/cheque/api/pb/operatorpb"
 	pb "github.com/meesooqa/cheque/api/pb/receiptpb"
+	"github.com/meesooqa/cheque/api/pb/sellerplacepb"
 )
 
 type Converter struct{}
@@ -30,6 +32,22 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 	if dbItem.SellerPlaceID != nil {
 		pbModel.SellerPlaceId = uint64(*dbItem.SellerPlaceID)
 	}
+	if dbItem.Operator != nil {
+		pbModel.Operator = &operatorpb.Model{
+			Id:   uint64(dbItem.Operator.ID),
+			Name: dbItem.Operator.Name,
+		}
+	}
+	if dbItem.SellerPlace != nil {
+		pbModel.SellerPlace = &sellerplacepb.Model{
+			Id:       uint64(dbItem.SellerPlace.ID),
+			SellerId: uint64(dbItem.SellerPlace.SellerID),
+			Name:     dbItem.SellerPlace.Name,
+			Address:  dbItem.SellerPlace.Address,
+			Email:    dbItem.SellerPlace.Email,
+		}
+	}
+	// TODO products
 	return &pbModel
 }
 
@@ -44,6 +62,7 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 		KktReg:               pbItem.KktReg,
 		BuyerPhoneOrAddress:  pbItem.BuyerPhoneOrAddress,
 	}
+	// TODO products
 	uintItemOperatorID := uint(pbItem.OperatorId)
 	dbModel.OperatorID = &uintItemOperatorID
 	uintItemSellerPlaceID := uint(pbItem.SellerPlaceId)
