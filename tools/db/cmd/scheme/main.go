@@ -16,7 +16,6 @@ func main() {
 		&models.Category{},
 		&models.Brand{},
 		&models.Product{},
-		&models.ProductCategory{},
 		&models.Image{},
 		&models.Receipt{},
 		&models.ReceiptProduct{},
