@@ -37,6 +37,7 @@ type Proto3TmplDataBuilder struct {
 type Proto3TmplData struct {
 	ApiVersion   string
 	Package      string
+	GoPackage    string
 	Imports      []string
 	ModelFields  []ProtoField
 	FilterFields []ProtoField
@@ -124,6 +125,8 @@ func (o *Proto3Generator) Run(logger *slog.Logger, gm *GormForTmpl) error {
 
 func (o *Proto3TmplDataBuilder) ProvideData() (*Proto3TmplData, error) {
 	var err error
+	o.data.GoPackage = "github.com/meesooqa/cheque/api/pb/" + o.data.Package
+	// TODO GoPackage. See common.Conf.GormGenProtoConfig.ProtocRoot
 	err = o.fillModelFields(o.gormModel)
 	if err != nil {
 		return nil, err

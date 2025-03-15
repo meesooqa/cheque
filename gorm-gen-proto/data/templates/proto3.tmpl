@@ -8,7 +8,7 @@ import "{{$pkg}}";
 {{- end -}}
 {{- end}}
 
-option go_package = "./{{.Package}}";
+option go_package = "{{.GoPackage}}";
 
 message Model {
   uint64 id = 1;
