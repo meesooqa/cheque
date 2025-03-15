@@ -5,11 +5,11 @@ import (
 	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/pb/receiptpb"
-	"github.com/meesooqa/cheque/api/services"
+	"github.com/meesooqa/cheque/common/common_db"
 )
 
-func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
-	return []services.FilterFunc{
+func GetFilters(req *pb.GetListRequest) []common_db.FilterFunc {
+	return []common_db.FilterFunc{
 		ExternalIdentifierFilter(req.ExternalIdentifier),
 		DateTimeFilter(req.DateTimeStart, req.DateTimeEnd),
 		OperatorIDFilter(req.OperatorId),
@@ -23,7 +23,7 @@ func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
 	}
 }
 
-func ExternalIdentifierFilter(value string) services.FilterFunc {
+func ExternalIdentifierFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("external_identifier ILIKE ?", "%"+value+"%")
@@ -32,7 +32,7 @@ func ExternalIdentifierFilter(value string) services.FilterFunc {
 	}
 }
 
-func FiscalDriveNumberFilter(value string) services.FilterFunc {
+func FiscalDriveNumberFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("fiscal_drive_number ILIKE ?", "%"+value+"%")
@@ -41,7 +41,7 @@ func FiscalDriveNumberFilter(value string) services.FilterFunc {
 	}
 }
 
-func KktRegFilter(value string) services.FilterFunc {
+func KktRegFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("kkt_reg ILIKE ?", "%"+value+"%")
@@ -50,7 +50,7 @@ func KktRegFilter(value string) services.FilterFunc {
 	}
 }
 
-func BuyerPhoneOrAddressFilter(value string) services.FilterFunc {
+func BuyerPhoneOrAddressFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("buyer_phone_or_address ILIKE ?", "%"+value+"%")
@@ -59,7 +59,7 @@ func BuyerPhoneOrAddressFilter(value string) services.FilterFunc {
 	}
 }
 
-func DateTimeFilter(valueStart, valueEnd *timestamppb.Timestamp) services.FilterFunc {
+func DateTimeFilter(valueStart, valueEnd *timestamppb.Timestamp) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		// RFC3339
 		// "2022-01-01T00:00:00Z"
@@ -75,7 +75,7 @@ func DateTimeFilter(valueStart, valueEnd *timestamppb.Timestamp) services.Filter
 	}
 }
 
-func OperatorIDFilter(value uint64) services.FilterFunc {
+func OperatorIDFilter(value uint64) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("operator_id = ?", value)
@@ -84,7 +84,7 @@ func OperatorIDFilter(value uint64) services.FilterFunc {
 	}
 }
 
-func SellerPlaceIDFilter(value uint64) services.FilterFunc {
+func SellerPlaceIDFilter(value uint64) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("seller_place_id = ?", value)
@@ -93,7 +93,7 @@ func SellerPlaceIDFilter(value uint64) services.FilterFunc {
 	}
 }
 
-func FiscalDocumentNumberFilter(valueGt, valueLt int64) services.FilterFunc {
+func FiscalDocumentNumberFilter(valueGt, valueLt int64) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if valueGt > 0 && valueLt > 0 {
 			db = db.Where("fiscal_document_number BETWEEN ? AND ?", valueGt, valueLt)
@@ -106,7 +106,7 @@ func FiscalDocumentNumberFilter(valueGt, valueLt int64) services.FilterFunc {
 	}
 }
 
-func FiscalSignFilter(valueGt, valueLt int64) services.FilterFunc {
+func FiscalSignFilter(valueGt, valueLt int64) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if valueGt > 0 && valueLt > 0 {
 			db = db.Where("fiscal_sign BETWEEN ? AND ?", valueGt, valueLt)
@@ -119,7 +119,7 @@ func FiscalSignFilter(valueGt, valueLt int64) services.FilterFunc {
 	}
 }
 
-func SumFilter(valueGt, valueLt int32) services.FilterFunc {
+func SumFilter(valueGt, valueLt int32) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if valueGt > 0 && valueLt > 0 {
 			db = db.Where("sum BETWEEN ? AND ?", valueGt, valueLt)

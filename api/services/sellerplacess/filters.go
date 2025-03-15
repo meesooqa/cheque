@@ -4,11 +4,11 @@ import (
 	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/pb/sellerplacepb"
-	"github.com/meesooqa/cheque/api/services"
+	"github.com/meesooqa/cheque/common/common_db"
 )
 
-func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
-	return []services.FilterFunc{
+func GetFilters(req *pb.GetListRequest) []common_db.FilterFunc {
+	return []common_db.FilterFunc{
 		SellerIDFilter(req.SellerId),
 		NameFilter(req.Name),
 		AddressFilter(req.Address),
@@ -16,7 +16,7 @@ func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
 	}
 }
 
-func SellerIDFilter(value uint64) services.FilterFunc {
+func SellerIDFilter(value uint64) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("seller_id = ?", value)
@@ -25,7 +25,7 @@ func SellerIDFilter(value uint64) services.FilterFunc {
 	}
 }
 
-func NameFilter(value string) services.FilterFunc {
+func NameFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("name ILIKE ?", "%"+value+"%")
@@ -34,7 +34,7 @@ func NameFilter(value string) services.FilterFunc {
 	}
 }
 
-func AddressFilter(value string) services.FilterFunc {
+func AddressFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("inn ILIKE ?", "%"+value+"%")
@@ -43,7 +43,7 @@ func AddressFilter(value string) services.FilterFunc {
 	}
 }
 
-func EmailFilter(value string) services.FilterFunc {
+func EmailFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("inn ILIKE ?", "%"+value+"%")

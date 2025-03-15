@@ -4,11 +4,11 @@ import (
 	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/pb/receiptproductpb"
-	"github.com/meesooqa/cheque/api/services"
+	"github.com/meesooqa/cheque/common/common_db"
 )
 
-func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
-	return []services.FilterFunc{
+func GetFilters(req *pb.GetListRequest) []common_db.FilterFunc {
+	return []common_db.FilterFunc{
 		ProductIDFilter(req.ProductId),
 		ReceiptIDFilter(req.ReceiptId),
 		PriceFilter(req.PriceGt, req.PriceLt),
@@ -17,7 +17,7 @@ func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
 	}
 }
 
-func ProductIDFilter(value uint64) services.FilterFunc {
+func ProductIDFilter(value uint64) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("product_id = ?", value)
@@ -26,7 +26,7 @@ func ProductIDFilter(value uint64) services.FilterFunc {
 	}
 }
 
-func ReceiptIDFilter(value uint64) services.FilterFunc {
+func ReceiptIDFilter(value uint64) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("receipt_id = ?", value)
@@ -35,7 +35,7 @@ func ReceiptIDFilter(value uint64) services.FilterFunc {
 	}
 }
 
-func PriceFilter(valueGt, valueLt int32) services.FilterFunc {
+func PriceFilter(valueGt, valueLt int32) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if valueGt > 0 && valueLt > 0 {
 			db = db.Where("price BETWEEN ? AND ?", valueGt, valueLt)
@@ -48,7 +48,7 @@ func PriceFilter(valueGt, valueLt int32) services.FilterFunc {
 	}
 }
 
-func SumFilter(valueGt, valueLt int32) services.FilterFunc {
+func SumFilter(valueGt, valueLt int32) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if valueGt > 0 && valueLt > 0 {
 			db = db.Where("sum BETWEEN ? AND ?", valueGt, valueLt)
@@ -61,7 +61,7 @@ func SumFilter(valueGt, valueLt int32) services.FilterFunc {
 	}
 }
 
-func QuantityFilter(valueGt, valueLt float64) services.FilterFunc {
+func QuantityFilter(valueGt, valueLt float64) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if valueGt > 0 && valueLt > 0 {
 			db = db.Where("quantity BETWEEN ? AND ?", valueGt, valueLt)
