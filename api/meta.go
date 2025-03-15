@@ -1,10 +1,6 @@
 package api
 
 import (
-	"log/slog"
-
-	"gorm.io/gorm"
-
 	"github.com/meesooqa/cheque/api/services/brandss"
 	"github.com/meesooqa/cheque/api/services/categoryss"
 	"github.com/meesooqa/cheque/api/services/imagess"
