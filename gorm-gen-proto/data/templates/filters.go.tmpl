@@ -3,8 +3,15 @@ package {{.Package}}
 import (
 	"gorm.io/gorm"
 
+    pb "{{.ImportPb}}"
 	"{{.ImportServices}}"
 )
+
+func GetFilters(req *pb.GetListRequest) []services.FilterFunc {
+    return []services.FilterFunc{
+		ExampleFilter(""),
+	}
+}
 
 func ExampleFilter(value string) services.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
