@@ -10,9 +10,5 @@ type SellerPlaceRepository struct {
 }
 
 func NewSellerPlaceRepository() *SellerPlaceRepository {
-	return &SellerPlaceRepository{common_db.BaseRepository[models.SellerPlace]{
-		Preloads: []string{
-			"Seller",
-		},
-	}}
+	return &SellerPlaceRepository{common_db.BaseRepository[models.SellerPlace]{}}
 }

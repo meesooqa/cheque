@@ -10,9 +10,5 @@ type BrandRepository struct {
 }
 
 func NewBrandRepository() *BrandRepository {
-	return &BrandRepository{common_db.BaseRepository[models.Brand]{
-		Preloads: []string{
-			"Products",
-		},
-	}}
+	return &BrandRepository{common_db.BaseRepository[models.Brand]{}}
 }
