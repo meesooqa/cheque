@@ -27,10 +27,11 @@ func NewBaseService[T any, U any](log *slog.Logger, db *gorm.DB, converter Conve
 	}
 }
 
-func (o *BaseService[T, U]) Preload(preloads ...string) {
+func (o *BaseService[T, U]) Preload(db *gorm.DB, preloads ...string) *gorm.DB {
 	if len(preloads) > 0 {
 		for _, preload := range preloads {
-			o.db = o.db.Preload(preload)
+			db = db.Preload(preload)
 		}
 	}
+	return db
 }
