@@ -57,13 +57,6 @@ type Product struct {
 	Images     []Image    `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
-// ProductCategory – product categories
-type ProductCategory struct {
-	gorm.Model
-	ProductId  uint `gorm:"uniqueIndex:idx_product_category,where:deleted_at IS NULL;not null"`
-	CategoryId uint `gorm:"uniqueIndex:idx_product_category;not null"`
-}
-
 // Image – product photos
 type Image struct {
 	gorm.Model
