@@ -14,7 +14,7 @@ func (o *ReceiptProcessor) processSeller(db *gorm.DB, receipt *models.Receipt, c
 	key := item.Name + "_" + item.Inn
 
 	if id, ok := cache[key]; ok {
-		receipt.SellerPlace.SellerId = id
+		receipt.SellerPlace.SellerID = id
 		receipt.SellerPlace.Seller = models.Seller{}
 		return nil
 	}
@@ -29,7 +29,7 @@ func (o *ReceiptProcessor) processSeller(db *gorm.DB, receipt *models.Receipt, c
 			return err
 		}
 	}
-	receipt.SellerPlace.SellerId = existedItem.ID
+	receipt.SellerPlace.SellerID = existedItem.ID
 	cache[key] = existedItem.ID
 	receipt.SellerPlace.Seller = models.Seller{}
 	return nil
