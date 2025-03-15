@@ -289,6 +289,22 @@
     }
   },
   "definitions": {
+    "productpbSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "brandId": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -359,6 +375,9 @@
         "sum": {
           "type": "integer",
           "format": "int32"
+        },
+        "product": {
+          "$ref": "#/definitions/productpbSummary"
         }
       }
     },

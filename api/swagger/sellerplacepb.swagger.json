@@ -286,7 +286,7 @@
         }
       }
     },
-    "sellerpbSummary": {
+    "sellerpbModel": {
       "type": "object",
       "properties": {
         "id": {
@@ -357,7 +357,7 @@
           "type": "string"
         },
         "seller": {
-          "$ref": "#/definitions/sellerpbSummary"
+          "$ref": "#/definitions/sellerpbModel"
         }
       }
     },

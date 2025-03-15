@@ -327,6 +327,18 @@
     }
   },
   "definitions": {
+    "operatorpbModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -413,6 +425,15 @@
         },
         "buyerPhoneOrAddress": {
           "type": "string"
+        },
+        "operator": {
+          "$ref": "#/definitions/operatorpbModel"
+        },
+        "sellerPlace": {
+          "$ref": "#/definitions/sellerplacepbModel"
+        },
+        "receiptProducts": {
+          "$ref": "#/definitions/receiptproductpbSummary"
         }
       }
     },
@@ -421,6 +442,35 @@
       "properties": {
         "item": {
           "$ref": "#/definitions/receiptpbModel"
+        }
+      }
+    },
+    "receiptproductpbSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "productId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "receiptId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double"
+        },
+        "sum": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
@@ -440,6 +490,46 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "sellerpbModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "inn": {
+          "type": "string"
+        }
+      }
+    },
+    "sellerplacepbModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "sellerId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "seller": {
+          "$ref": "#/definitions/sellerpbModel"
         }
       }
     }

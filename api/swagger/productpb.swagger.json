@@ -246,6 +246,60 @@
     }
   },
   "definitions": {
+    "brandpbModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "categorypbSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "parentId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "imagepbModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "productId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "isMain": {
+          "type": "boolean"
+        }
+      }
+    },
     "productpbCreateItemResponse": {
       "type": "object",
       "properties": {
@@ -294,6 +348,23 @@
         "brandId": {
           "type": "string",
           "format": "uint64"
+        },
+        "brand": {
+          "$ref": "#/definitions/brandpbModel"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/imagepbModel"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/categorypbSummary"
+          }
         }
       }
     },

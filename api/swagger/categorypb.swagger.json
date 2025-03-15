@@ -294,6 +294,32 @@
         },
         "name": {
           "type": "string"
+        },
+        "parent": {
+          "$ref": "#/definitions/categorypbSummary"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/categorypbSummary"
+          }
+        }
+      }
+    },
+    "categorypbSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "parentId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
         }
       }
     },
