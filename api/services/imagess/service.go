@@ -2,15 +2,14 @@ package imagess
 
 import (
 	"context"
-	"log/slog"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
-	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/pb/imagepb"
 	"github.com/meesooqa/cheque/api/services"
 	"github.com/meesooqa/cheque/common/models"
+	"github.com/meesooqa/cheque/common/repositories"
 )
 
 type DbModel = models.Image
@@ -20,8 +19,8 @@ type ServiceServer struct {
 	pb.UnimplementedModelServiceServer
 }
 
-func NewServiceServer(log *slog.Logger, db *gorm.DB) *ServiceServer {
-	base := services.NewBaseService[DbModel, pb.Model](log, db, NewConverter())
+func NewServiceServer() *ServiceServer {
+	base := services.NewBaseService[DbModel, pb.Model](repositories.NewImageRepository(), NewConverter())
 	return &ServiceServer{BaseService: base}
 }
 
