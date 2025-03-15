@@ -2,6 +2,8 @@ module github.com/meesooqa/cheque/import
 
 go 1.23.4
 
+replace github.com/meesooqa/cheque/common => ../common
+
 require (
 	github.com/google/uuid v1.6.0
 	github.com/meesooqa/cheque/common v1.22.5

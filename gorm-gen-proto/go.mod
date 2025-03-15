@@ -2,6 +2,8 @@ module github.com/meesooqa/cheque/gorm-gen-proto
 
 go 1.23.4
 
+replace github.com/meesooqa/cheque/common => ../common
+
 require (
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/meesooqa/cheque/common v1.22.5

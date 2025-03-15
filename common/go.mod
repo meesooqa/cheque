@@ -2,6 +2,8 @@ module github.com/meesooqa/cheque/common
 
 go 1.23.4
 
+replace github.com/meesooqa/cheque/gorm-gen-proto => ../gorm-gen-proto
+
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
 	github.com/meesooqa/cheque/gorm-gen-proto v1.22.4

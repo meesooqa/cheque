@@ -2,6 +2,11 @@ module github.com/meesooqa/cheque/api-server
 
 go 1.23.4
 
+replace (
+	github.com/meesooqa/cheque/api => ../api
+	github.com/meesooqa/cheque/common => ../common
+)
+
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
 	github.com/meesooqa/cheque/api v1.22.4
