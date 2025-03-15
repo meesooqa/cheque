@@ -7,7 +7,7 @@ import (
 )
 
 func (o *ServiceServer) GetItem(ctx context.Context, req *pb.GetItemRequest) (*pb.GetItemResponse, error) {
-	item, err := o.BaseService.GetItem(req.Id)
+	item, err := o.BaseService.GetItem(ctx, req.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -15,7 +15,7 @@ func (o *ServiceServer) GetItem(ctx context.Context, req *pb.GetItemRequest) (*p
 }
 
 func (o *ServiceServer) CreateItem(ctx context.Context, req *pb.CreateItemRequest) (*pb.CreateItemResponse, error) {
-	item, err := o.BaseService.CreateItem(req.Item)
+	item, err := o.BaseService.CreateItem(ctx, req.Item)
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +23,7 @@ func (o *ServiceServer) CreateItem(ctx context.Context, req *pb.CreateItemReques
 }
 
 func (o *ServiceServer) UpdateItem(ctx context.Context, req *pb.UpdateItemRequest) (*pb.UpdateItemResponse, error) {
-	item, err := o.BaseService.UpdateItem(req.Id, req.Item)
+	item, err := o.BaseService.UpdateItem(ctx, req.Id, req.Item)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func (o *ServiceServer) UpdateItem(ctx context.Context, req *pb.UpdateItemReques
 }
 
 func (o *ServiceServer) DeleteItem(ctx context.Context, req *pb.DeleteItemRequest) (*pb.DeleteItemResponse, error) {
-	err := o.BaseService.DeleteItem(req.Id)
+	err := o.BaseService.DeleteItem(ctx, req.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func (o *ServiceServer) DeleteItem(ctx context.Context, req *pb.DeleteItemReques
 }
 
 func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {
-	items, total, err := o.BaseService.GetList(GetFilters(req), req.SortBy, req.SortOrder, int(req.PageSize), int(req.Page))
+	items, total, err := o.BaseService.GetList(ctx, GetFilters(req), req.SortBy, req.SortOrder, int(req.PageSize), int(req.Page))
 	if err != nil {
 		return nil, err
 	}
