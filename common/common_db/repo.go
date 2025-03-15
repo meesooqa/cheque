@@ -3,7 +3,6 @@ package common_db
 import (
 	"context"
 	"fmt"
-	"log/slog"
 
 	"gorm.io/gorm"
 )
@@ -29,8 +28,7 @@ type Repository[DbModel any] interface {
 }
 
 type BaseRepository[DbModel any] struct {
-	logger   *slog.Logger
-	preloads []string
+	Preloads []string
 }
 
 func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []FilterFunc, sort SortData, pagination PaginationData) ([]*DbModel, int64, error) {
@@ -121,8 +119,8 @@ func (o *BaseRepository[DbModel]) addPagination(query *gorm.DB, pagination Pagin
 }
 
 func (o *BaseRepository[DbModel]) preload(db *gorm.DB) {
-	if len(o.preloads) > 0 {
-		for _, preload := range o.preloads {
+	if len(o.Preloads) > 0 {
+		for _, preload := range o.Preloads {
 			db = db.Preload(preload)
 		}
 	}
