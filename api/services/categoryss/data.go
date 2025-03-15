@@ -13,8 +13,8 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 		Id:   uint64(dbItem.ID),
 		Name: dbItem.Name,
 	}
-	if dbItem.ParentId != nil {
-		pbModel.ParentId = uint64(*dbItem.ParentId)
+	if dbItem.ParentID != nil {
+		pbModel.ParentID = uint64(*dbItem.ParentID)
 	}
 	return &pbModel
 }
@@ -23,7 +23,7 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 	dbModel := DbModel{
 		Name: pbItem.Name,
 	}
-	uintItemParentId := uint(pbItem.ParentId)
-	dbModel.ParentId = &uintItemParentId
+	uintItemParentID := uint(pbItem.ParentID)
+	dbModel.ParentID = &uintItemParentID
 	return &dbModel
 }
