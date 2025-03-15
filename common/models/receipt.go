@@ -20,10 +20,10 @@ type Seller struct {
 	SellerPlaces []SellerPlace `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
-// SellerPlace – seller place, combination of SellerId, Name and Address is unique
+// SellerPlace – seller place, combination of SellerID, Name and Address is unique
 type SellerPlace struct {
 	gorm.Model
-	SellerId uint   `gorm:"uniqueIndex:idx_seller_place,where:deleted_at IS NULL;not null;"`
+	SellerID uint   `gorm:"uniqueIndex:idx_seller_place,where:deleted_at IS NULL;not null;"`
 	Name     string `gorm:"uniqueIndex:idx_seller_place;not null"`
 	Address  string `gorm:"uniqueIndex:idx_seller_place;not null"`
 	Email    string
@@ -33,11 +33,11 @@ type SellerPlace struct {
 // Category – categories tree
 type Category struct {
 	gorm.Model
-	ParentId *uint      `gorm:"index"`
+	ParentID *uint      `gorm:"index"`
 	Name     string     `gorm:"not null"`
 	Products []Product  `gorm:"many2many:product_categories;"`
-	Parent   *Category  `gorm:"foreignKey:ParentId"`
-	Children []Category `gorm:"foreignKey:ParentId"`
+	Parent   *Category  `gorm:"foreignKey:ParentID"`
+	Children []Category `gorm:"foreignKey:ParentID"`
 }
 
 // Brand – brand with unique name
@@ -51,8 +51,8 @@ type Brand struct {
 type Product struct {
 	gorm.Model
 	Name       string     `gorm:"uniqueIndex:idx_product_name,where:deleted_at IS NULL;not null"`
-	BrandId    *uint      `gorm:"index"`
-	Brand      *Brand     `gorm:"foreignKey:BrandId;constraint:OnDelete:SET NULL;"`
+	BrandID    *uint      `gorm:"index"`
+	Brand      *Brand     `gorm:"foreignKey:BrandID;constraint:OnDelete:SET NULL;"`
 	Categories []Category `gorm:"many2many:product_categories;"`
 	Images     []Image    `gorm:"constraint:OnDelete:CASCADE;"`
 }
@@ -60,7 +60,7 @@ type Product struct {
 // Image – product photos
 type Image struct {
 	gorm.Model
-	ProductId uint `gorm:"index;not null;uniqueIndex:idx_product_is_main,where:(is_main = true AND deleted_at IS NULL)"`
+	ProductID uint `gorm:"index;not null;uniqueIndex:idx_product_is_main,where:(is_main = true AND deleted_at IS NULL)"`
 	IsMain    bool `gorm:"uniqueIndex:idx_product_is_main"`
 	Name      string
 	URL       string
@@ -78,18 +78,18 @@ type Receipt struct {
 	Sum                  int `gorm:"not null"`
 	KktReg               string
 	BuyerPhoneOrAddress  string
-	OperatorId           *uint `gorm:"index"`
-	SellerPlaceId        *uint `gorm:"index"`
+	OperatorID           *uint `gorm:"index"`
+	SellerPlaceID        *uint `gorm:"index"`
 	Operator             *Operator
 	SellerPlace          *SellerPlace
-	ReceiptProducts      []ReceiptProduct `gorm:"foreignKey:ReceiptId;constraint:OnDelete:CASCADE;"`
+	ReceiptProducts      []ReceiptProduct `gorm:"foreignKey:ReceiptID;constraint:OnDelete:CASCADE;"`
 }
 
 // ReceiptProduct receipt item
 type ReceiptProduct struct {
 	gorm.Model
-	ProductId       uint `gorm:"index;not null"`
-	ReceiptId       uint `gorm:"index;not null"`
+	ProductID       uint `gorm:"index;not null"`
+	ReceiptID       uint `gorm:"index;not null"`
 	Price           int
 	Quantity        float64
 	Sum             int
