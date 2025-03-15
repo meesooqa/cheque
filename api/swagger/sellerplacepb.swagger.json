@@ -286,6 +286,21 @@
         }
       }
     },
+    "sellerpbSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "inn": {
+          "type": "string"
+        }
+      }
+    },
     "sellerplacepbCreateItemResponse": {
       "type": "object",
       "properties": {
@@ -340,6 +355,9 @@
         },
         "email": {
           "type": "string"
+        },
+        "seller": {
+          "$ref": "#/definitions/sellerpbSummary"
         }
       }
     },
