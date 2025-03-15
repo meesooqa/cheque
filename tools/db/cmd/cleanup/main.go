@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	db := common_db.GetDB()
+	db := common_db.GetDB(nil)
 	var tables []string
 	db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Pluck("tablename", &tables)
 	for _, table := range tables {

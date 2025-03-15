@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	db := common_db.GetDB()
+	db := common_db.GetDB(nil)
 	err := db.AutoMigrate(
 		&models.Operator{},
 		&models.Seller{},

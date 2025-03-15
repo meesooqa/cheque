@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	db := common_db.GetDB()
+	db := common_db.GetDB(nil)
 	conf, err := config.GetConf()
 	if err != nil {
 		log.Fatal(err)

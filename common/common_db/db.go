@@ -11,7 +11,7 @@ import (
 	"github.com/meesooqa/cheque/common/config"
 )
 
-func GetDB() *gorm.DB {
+func GetDB(ctx context.Context) *gorm.DB {
 	conf, err := config.GetConf()
 	if err != nil {
 		log.Fatalf("can't load config: %v", err)
@@ -21,5 +21,8 @@ func GetDB() *gorm.DB {
 	if err != nil {
 		log.Fatalf("failed to connect database: %v", err)
 	}
-	return db.WithContext(context.TODO())
+	if ctx == nil {
+		ctx = context.TODO()
+	}
+	return db.WithContext(ctx)
 }
