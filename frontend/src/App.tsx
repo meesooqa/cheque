@@ -25,6 +25,7 @@ import {OperatorsCreate, OperatorsEdit, OperatorsList, OperatorsShow} from "./pa
 import {SellersCreate, SellersEdit, SellersList, SellersShow} from "./pages/sellers";
 import {SellerplacesCreate, SellerplacesEdit, SellerplacesList, SellerplacesShow} from "./pages/sellerplaces";
 import {CategoriesCreate, CategoriesEdit, CategoriesList, CategoriesShow} from "./pages/categories";
+import {BrandsList, BrandsCreate, BrandsEdit, BrandsShow} from "./pages/brands";
 
 function App() {
     return (
@@ -141,6 +142,12 @@ function App() {
                                             <Route path="create" element={<CategoriesCreate />} />
                                             <Route path="edit/:id" element={<CategoriesEdit />} />
                                             <Route path="show/:id" element={<CategoriesShow />} />
+                                        </Route>
+                                        <Route path="/brands">
+                                            <Route index element={<BrandsList />} />
+                                            <Route path="create" element={<BrandsCreate />} />
+                                            <Route path="edit/:id" element={<BrandsEdit />} />
+                                            <Route path="show/:id" element={<BrandsShow />} />
                                         </Route>
                                         <Route path="*" element={<ErrorComponent />} />
                                     </Route>
