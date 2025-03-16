@@ -28,6 +28,7 @@ import {CategoriesCreate, CategoriesEdit, CategoriesList, CategoriesShow} from "
 import {BrandsList, BrandsCreate, BrandsEdit, BrandsShow} from "./pages/brands";
 import {ProductsList, ProductsCreate, ProductsEdit, ProductsShow} from "./pages/products";
 import {ImagesList, ImagesCreate, ImagesEdit, ImagesShow} from "./pages/images";
+import {ReceiptsProductsList, ReceiptsProductsCreate, ReceiptsProductsEdit, ReceiptsProductsShow} from "./pages/receiptsproducts";
 
 function App() {
     return (
@@ -122,6 +123,16 @@ function App() {
                                             canDelete: true,
                                         },
                                     },
+                                    {
+                                        name: "receiptsproducts",
+                                        list: "/receiptsproducts",
+                                        create: "/receiptsproducts/create",
+                                        edit: "/receiptsproducts/edit/:id",
+                                        show: "/receiptsproducts/show/:id",
+                                        meta: {
+                                            canDelete: true,
+                                        },
+                                    },
                                 ]}
                                 options={{
                                     syncWithLocation: true,
@@ -192,6 +203,12 @@ function App() {
                                             <Route path="create" element={<ImagesCreate />} />
                                             <Route path="edit/:id" element={<ImagesEdit />} />
                                             <Route path="show/:id" element={<ImagesShow />} />
+                                        </Route>
+                                        <Route path="/receiptsproducts">
+                                            <Route index element={<ReceiptsProductsList />} />
+                                            <Route path="create" element={<ReceiptsProductsCreate />} />
+                                            <Route path="edit/:id" element={<ReceiptsProductsEdit />} />
+                                            <Route path="show/:id" element={<ReceiptsProductsShow />} />
                                         </Route>
                                         <Route path="*" element={<ErrorComponent />} />
                                     </Route>
