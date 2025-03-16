@@ -27,6 +27,7 @@ import {SellerplacesCreate, SellerplacesEdit, SellerplacesList, SellerplacesShow
 import {CategoriesCreate, CategoriesEdit, CategoriesList, CategoriesShow} from "./pages/categories";
 import {BrandsList, BrandsCreate, BrandsEdit, BrandsShow} from "./pages/brands";
 import {ProductsList, ProductsCreate, ProductsEdit, ProductsShow} from "./pages/products";
+import {ImagesList, ImagesCreate, ImagesEdit, ImagesShow} from "./pages/images";
 
 function App() {
     return (
@@ -111,6 +112,16 @@ function App() {
                                             canDelete: true,
                                         },
                                     },
+                                    {
+                                        name: "images",
+                                        list: "/images",
+                                        create: "/images/create",
+                                        edit: "/images/edit/:id",
+                                        show: "/images/show/:id",
+                                        meta: {
+                                            canDelete: true,
+                                        },
+                                    },
                                 ]}
                                 options={{
                                     syncWithLocation: true,
@@ -175,6 +186,12 @@ function App() {
                                             <Route path="create" element={<ProductsCreate />} />
                                             <Route path="edit/:id" element={<ProductsEdit />} />
                                             <Route path="show/:id" element={<ProductsShow />} />
+                                        </Route>
+                                        <Route path="/images">
+                                            <Route index element={<ImagesList />} />
+                                            <Route path="create" element={<ImagesCreate />} />
+                                            <Route path="edit/:id" element={<ImagesEdit />} />
+                                            <Route path="show/:id" element={<ImagesShow />} />
                                         </Route>
                                         <Route path="*" element={<ErrorComponent />} />
                                     </Route>
