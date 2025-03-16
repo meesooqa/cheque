@@ -24,6 +24,7 @@ import {ReceiptsCreate, ReceiptsEdit, ReceiptsList, ReceiptsShow} from "./pages/
 import {OperatorsCreate, OperatorsEdit, OperatorsList, OperatorsShow} from "./pages/operators";
 import {SellersCreate, SellersEdit, SellersList, SellersShow} from "./pages/sellers";
 import {SellerplacesCreate, SellerplacesEdit, SellerplacesList, SellerplacesShow} from "./pages/sellerplaces";
+import {CategoriesCreate, CategoriesEdit, CategoriesList, CategoriesShow} from "./pages/categories";
 
 function App() {
     return (
@@ -78,6 +79,16 @@ function App() {
                                             canDelete: true,
                                         },
                                     },
+                                    {
+                                        name: "categories",
+                                        list: "/categories",
+                                        create: "/categories/create",
+                                        edit: "/categories/edit/:id",
+                                        show: "/categories/show/:id",
+                                        meta: {
+                                            canDelete: true,
+                                        },
+                                    },
                                 ]}
                                 options={{
                                     syncWithLocation: true,
@@ -124,6 +135,12 @@ function App() {
                                             <Route path="create" element={<SellerplacesCreate />} />
                                             <Route path="edit/:id" element={<SellerplacesEdit />} />
                                             <Route path="show/:id" element={<SellerplacesShow />} />
+                                        </Route>
+                                        <Route path="/categories">
+                                            <Route index element={<CategoriesList />} />
+                                            <Route path="create" element={<CategoriesCreate />} />
+                                            <Route path="edit/:id" element={<CategoriesEdit />} />
+                                            <Route path="show/:id" element={<CategoriesShow />} />
                                         </Route>
                                         <Route path="*" element={<ErrorComponent />} />
                                     </Route>
