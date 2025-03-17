@@ -33,44 +33,44 @@ services:
     environment:
       - SWAGGER_DIR=/app/api/swagger
 
-#  import:
-#    build:
-#      context: ./import
-#    container_name: cheque04_import
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#    volumes:
-#      - ./etc/config.yml:/etc/config.yml
-#      - ./var/data:/var/data
-#    command: ["/usr/local/bin/import"]
-#    profiles: ["import"]
-#
-#  db_tools_scheme:
-#    build:
-#      context: ./tools/db
-#      dockerfile: Dockerfile.scheme
-#    container_name: cheque04_db_tools_scheme
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#    volumes:
-#      - ./etc/config.yml:/etc/config.yml
-#    command: ["/usr/local/bin/scheme"]
-#    profiles: ["db_tools_scheme"]
-#
-#  db_tools_cleanup:
-#    build:
-#      context: ./tools/db
-#      dockerfile: Dockerfile.cleanup
-#    container_name: cheque04_db_tools_cleanup
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#    volumes:
-#      - ./etc/config.yml:/etc/config.yml
-#    command: ["/usr/local/bin/cleanup"]
-#    profiles: ["db_tools_cleanup"]
+  import:
+    build:
+      context: ./import
+    container_name: cheque04_import
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./etc/config.yml:/etc/config.yml
+      - ./var/data:/var/data
+    command: ["/usr/local/bin/import"]
+    profiles: ["import"]
+
+  db_tools_scheme:
+    build:
+      context: .
+      dockerfile: tools/db/Dockerfile.scheme
+    container_name: cheque04_db_tools_scheme
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./etc/config.yml:/etc/config.yml
+    command: ["/usr/local/bin/scheme"]
+    profiles: ["db_tools_scheme"]
+
+  db_tools_cleanup:
+    build:
+      context: ./tools/db
+      dockerfile: Dockerfile.cleanup
+    container_name: cheque04_db_tools_cleanup
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./etc/config.yml:/etc/config.yml
+    command: ["/usr/local/bin/cleanup"]
+    profiles: ["db_tools_cleanup"]
 
   swagger:
     image: swaggerapi/swagger-ui

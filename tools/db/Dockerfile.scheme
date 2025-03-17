@@ -1,8 +1,10 @@
 FROM golang:1.23-alpine AS build
-COPY . /build
 WORKDIR /build
-RUN go get -u . && go mod tidy
-RUN CGO_ENABLED=0 GOOS=linux go build -o /build/scheme -ldflags "-s -w" /build/cmd/scheme/main.go
+COPY ./common /build/common
+COPY ./tools/db /build/tools/db
+WORKDIR /build/tools/db
+RUN go mod tidy && go mod download
+RUN CGO_ENABLED=0 GOOS=linux go build -o /build/scheme -ldflags "-s -w" cmd/scheme/main.go
 
 FROM alpine:latest
 COPY --from=build /build/scheme /usr/local/bin/scheme
