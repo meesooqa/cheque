@@ -16,14 +16,11 @@ func NewReceiptProcessor() *ReceiptProcessor {
 }
 
 // Process processes Receipt, including related entities
-func (o *ReceiptProcessor) Process(db *gorm.DB, receipt *models.Receipt, sellerCache, sellerPlaceCache, operatorCache map[string]uint) error {
+func (o *ReceiptProcessor) Process(db *gorm.DB, receipt *models.Receipt, sellerCache, sellerPlaceCache map[string]uint) error {
 	if err := o.processSeller(db, receipt, sellerCache); err != nil {
 		return err
 	}
 	if err := o.processSellerPlace(db, receipt, sellerPlaceCache); err != nil {
-		return err
-	}
-	if err := o.processOperator(db, receipt, operatorCache); err != nil {
 		return err
 	}
 	if err := o.processProducts(db, receipt); err != nil {

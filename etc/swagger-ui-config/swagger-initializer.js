@@ -1,7 +1,6 @@
 window.onload = function() {
     const ui = SwaggerUIBundle({
         urls: [
-            { url: "http://localhost:8080/swagger/operatorpb.swagger.json", name: "Operator API" },
             { url: "http://localhost:8080/swagger/sellerpb.swagger.json", name: "Seller API" },
             { url: "http://localhost:8080/swagger/sellerplacepb.swagger.json", name: "Seller Place API" },
             { url: "http://localhost:8080/swagger/categorypb.swagger.json", name: "Category API" },

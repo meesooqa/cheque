@@ -12,11 +12,11 @@ func GetFilters(req *pb.GetListRequest) []common_db.FilterFunc {
 	return []common_db.FilterFunc{
 		ExternalIdentifierFilter(req.ExternalIdentifier),
 		DateTimeFilter(req.DateTimeStart, req.DateTimeEnd),
-		OperatorIDFilter(req.OperatorId),
+		OperatorFilter(req.Operator),
 		SellerPlaceIDFilter(req.SellerPlaceId),
-		FiscalDocumentNumberFilter(req.FiscalDocumentNumberGt, req.FiscalDocumentNumberLt),
+		FiscalDocumentNumberFilter(req.FiscalDocumentNumber),
 		FiscalDriveNumberFilter(req.FiscalDriveNumber),
-		FiscalSignFilter(req.FiscalSignGt, req.FiscalSignLt),
+		FiscalSignFilter(req.FiscalSign),
 		SumFilter(req.SumGt, req.SumLt),
 		KktRegFilter(req.KktReg),
 		BuyerPhoneOrAddressFilter(req.BuyerPhoneOrAddress),
@@ -75,10 +75,10 @@ func DateTimeFilter(valueStart, valueEnd *timestamppb.Timestamp) common_db.Filte
 	}
 }
 
-func OperatorIDFilter(value uint64) common_db.FilterFunc {
+func OperatorFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
-		if value != 0 {
-			return db.Where("operator_id = ?", value)
+		if value != "" {
+			return db.Where("operator ILIKE ?", "%"+value+"%")
 		}
 		return db
 	}
@@ -93,27 +93,19 @@ func SellerPlaceIDFilter(value uint64) common_db.FilterFunc {
 	}
 }
 
-func FiscalDocumentNumberFilter(valueGt, valueLt int64) common_db.FilterFunc {
+func FiscalDocumentNumberFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
-		if valueGt > 0 && valueLt > 0 {
-			db = db.Where("fiscal_document_number BETWEEN ? AND ?", valueGt, valueLt)
-		} else if valueGt > 0 {
-			db = db.Where("fiscal_document_number >= ?", valueGt)
-		} else if valueLt > 0 {
-			db = db.Where("fiscal_document_number <= ?", valueLt)
+		if value != "" {
+			return db.Where("fiscal_document_number ILIKE ?", "%"+value+"%")
 		}
 		return db
 	}
 }
 
-func FiscalSignFilter(valueGt, valueLt int64) common_db.FilterFunc {
+func FiscalSignFilter(value string) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
-		if valueGt > 0 && valueLt > 0 {
-			db = db.Where("fiscal_sign BETWEEN ? AND ?", valueGt, valueLt)
-		} else if valueGt > 0 {
-			db = db.Where("fiscal_sign >= ?", valueGt)
-		} else if valueLt > 0 {
-			db = db.Where("fiscal_sign <= ?", valueLt)
+		if value != "" {
+			return db.Where("fiscal_sign ILIKE ?", "%"+value+"%")
 		}
 		return db
 	}

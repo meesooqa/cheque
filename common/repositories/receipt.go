@@ -12,7 +12,6 @@ type ReceiptRepository struct {
 func NewReceiptRepository() *ReceiptRepository {
 	return &ReceiptRepository{common_db.BaseRepository[models.Receipt]{
 		Preloads: []string{
-			"Operator",
 			"SellerPlace",
 			"ReceiptProducts",
 		},

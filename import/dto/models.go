@@ -12,9 +12,9 @@ type TicketItemDTO struct {
 
 type ReceiptDTO struct {
 	DateTime             string          `json:"dateTime"`
-	FiscalDocumentNumber int64           `json:"fiscalDocumentNumber"`
+	FiscalDocumentNumber string          `json:"fiscalDocumentNumber"`
 	FiscalDriveNumber    string          `json:"fiscalDriveNumber"`
-	FiscalSign           int64           `json:"fiscalSign"`
+	FiscalSign           string          `json:"fiscalSign"`
 	TotalSum             int             `json:"totalSum"`
 	KktRegID             string          `json:"kktRegId"`
 	BuyerPhoneOrAddress  string          `json:"buyerPhoneOrAddress"`

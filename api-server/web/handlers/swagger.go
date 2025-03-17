@@ -33,7 +33,7 @@ func (o *Swagger) handlePage(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Swagger.handlePage(): method is not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	// http://localhost:8080/swagger/operatorpb.swagger.json
+	// http://localhost:8080/swagger/brandpb.swagger.json
 	pbDir := os.Getenv("SWAGGER_DIR")
 
 	// check URL

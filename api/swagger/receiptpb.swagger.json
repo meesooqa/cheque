@@ -82,11 +82,10 @@
             "format": "date-time"
           },
           {
-            "name": "operatorId",
+            "name": "operator",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "uint64"
+            "type": "string"
           },
           {
             "name": "sellerPlaceId",
@@ -96,18 +95,10 @@
             "format": "uint64"
           },
           {
-            "name": "fiscalDocumentNumberGt",
+            "name": "fiscalDocumentNumber",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "fiscalDocumentNumberLt",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "fiscalDriveNumber",
@@ -116,18 +107,10 @@
             "type": "string"
           },
           {
-            "name": "fiscalSignGt",
+            "name": "fiscalSign",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "fiscalSignLt",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "sumGt",
@@ -333,18 +316,6 @@
     }
   },
   "definitions": {
-    "operatorpbModel": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "uint64"
-        },
-        "name": {
-          "type": "string"
-        }
-      }
-    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -403,24 +374,21 @@
           "type": "string",
           "format": "date-time"
         },
-        "operatorId": {
-          "type": "string",
-          "format": "uint64"
+        "operator": {
+          "type": "string"
         },
         "sellerPlaceId": {
           "type": "string",
           "format": "uint64"
         },
         "fiscalDocumentNumber": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "fiscalDriveNumber": {
           "type": "string"
         },
         "fiscalSign": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "sum": {
           "type": "integer",
@@ -431,9 +399,6 @@
         },
         "buyerPhoneOrAddress": {
           "type": "string"
-        },
-        "operator": {
-          "$ref": "#/definitions/operatorpbModel"
         },
         "sellerPlace": {
           "$ref": "#/definitions/sellerplacepbModel"

@@ -3,7 +3,6 @@ syntax = "proto3";
 
 package receiptpb;
 
-import "operatorpb.proto";
 import "receiptproductpb.proto";
 import "sellerplacepb.proto";
 import "google/api/annotations.proto";
@@ -15,18 +14,17 @@ message Model {
   uint64 id = 1;
   string external_identifier = 2;
   google.protobuf.Timestamp date_time = 3;
-  uint64 operator_id = 4;
+  string operator = 4;
   uint64 seller_place_id = 5;
-  int64 fiscal_document_number = 6;
+  string fiscal_document_number = 6;
   string fiscal_drive_number = 7;
-  int64 fiscal_sign = 8;
+  string fiscal_sign = 8;
   int32 sum = 9;
   string kkt_reg = 10;
   string buyer_phone_or_address = 11;
-  operatorpb.Model operator = 12;
-  sellerplacepb.Model seller_place = 13;
-  receiptproductpb.Summary receipt_products = 14;
-  string comment = 15;
+  sellerplacepb.Model seller_place = 12;
+  receiptproductpb.Summary receipt_products = 13;
+  string comment = 14;
 }
 
 message GetListRequest {
@@ -38,18 +36,16 @@ message GetListRequest {
   string external_identifier = 5;
   google.protobuf.Timestamp date_time_start = 6;
   google.protobuf.Timestamp date_time_end = 7;
-  uint64 operator_id = 8;
+  string operator = 8;
   uint64 seller_place_id = 9;
-  int64 fiscal_document_number_gt = 10;
-  int64 fiscal_document_number_lt = 11;
-  string fiscal_drive_number = 12;
-  int64 fiscal_sign_gt = 13;
-  int64 fiscal_sign_lt = 14;
-  int32 sum_gt = 15;
-  int32 sum_lt = 16;
-  string kkt_reg = 17;
-  string buyer_phone_or_address = 18;
-  string comment = 19;
+  string fiscal_document_number = 10;
+  string fiscal_drive_number = 11;
+  string fiscal_sign = 12;
+  int32 sum_gt = 13;
+  int32 sum_lt = 14;
+  string kkt_reg = 15;
+  string buyer_phone_or_address = 16;
+  string comment = 17;
 }
 
 message GetListResponse {

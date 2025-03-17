@@ -10,7 +10,6 @@ import (
 func main() {
 	db := common_db.GetDB(nil)
 	err := db.AutoMigrate(
-		&models.Operator{},
 		&models.Seller{},
 		&models.SellerPlace{},
 		&models.Category{},

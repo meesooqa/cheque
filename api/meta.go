@@ -4,7 +4,6 @@ import (
 	"github.com/meesooqa/cheque/api/services/brandss"
 	"github.com/meesooqa/cheque/api/services/categoryss"
 	"github.com/meesooqa/cheque/api/services/imagess"
-	"github.com/meesooqa/cheque/api/services/operatorss"
 	"github.com/meesooqa/cheque/api/services/productss"
 	"github.com/meesooqa/cheque/api/services/receiptproductss"
 	"github.com/meesooqa/cheque/api/services/receiptss"
@@ -15,7 +14,6 @@ import (
 
 func GetServiceServers() []api.ServiceServer {
 	return []api.ServiceServer{
-		operatorss.NewServiceServer(),
 		sellerss.NewServiceServer(),
 		sellerplacess.NewServiceServer(),
 		categoryss.NewServiceServer(),

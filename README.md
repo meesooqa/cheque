@@ -26,7 +26,6 @@ make import
 
 6. Check. Available common params: `page_size`, `page`, `sort_by`, `sort_order`.
 - http://localhost:8080/api/v1/receipts
-- http://localhost:8080/api/v1/operators
 - http://localhost:8080/api/v1/sellers
 - http://localhost:8080/api/v1/sellerplaces
 - http://localhost:8080/api/v1/categories

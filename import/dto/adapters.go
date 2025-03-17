@@ -19,16 +19,16 @@ func NewDtoAdapter() *DtoAdapter {
 func (a *DtoAdapter) Convert(rawDataDTO RawDataDTO) (*models.Receipt, error) {
 	receiptDTO := rawDataDTO.Ticket.Document.Receipt
 	result := &models.Receipt{
-		ExternalIdentifier:   rawDataDTO.ID,
+		ExternalIdentifier:   strings.TrimSpace(rawDataDTO.ID),
 		DateTime:             a.parseDateTime(receiptDTO.DateTime),
-		FiscalDocumentNumber: receiptDTO.FiscalDocumentNumber,
-		FiscalDriveNumber:    receiptDTO.FiscalDriveNumber,
-		FiscalSign:           receiptDTO.FiscalSign,
+		FiscalDocumentNumber: strings.TrimSpace(receiptDTO.FiscalDocumentNumber),
+		FiscalDriveNumber:    strings.TrimSpace(receiptDTO.FiscalDriveNumber),
+		FiscalSign:           strings.TrimSpace(receiptDTO.FiscalSign),
 		Sum:                  receiptDTO.TotalSum,
 		KktReg:               strings.TrimSpace(receiptDTO.KktRegID),
-		BuyerPhoneOrAddress:  receiptDTO.BuyerPhoneOrAddress,
+		BuyerPhoneOrAddress:  strings.TrimSpace(receiptDTO.BuyerPhoneOrAddress),
+		Operator:             strings.TrimSpace(receiptDTO.Operator),
 	}
-	result.Operator = a.getOperator(receiptDTO)
 	result.SellerPlace = a.getSellerPlace(receiptDTO)
 	result.ReceiptProducts = a.getReceiptProducts(receiptDTO)
 	return result, nil
@@ -54,15 +54,6 @@ func (a *DtoAdapter) getSellerPlace(receiptDTO ReceiptDTO) *models.SellerPlace {
 	}
 }
 
-func (a *DtoAdapter) getOperator(receiptDTO ReceiptDTO) *models.Operator {
-	var result *models.Operator = nil
-	var name = strings.TrimSpace(receiptDTO.Operator)
-	if name != "" {
-		result = &models.Operator{Name: name}
-	}
-	return result
-}
-
 func (a *DtoAdapter) getReceiptProducts(receiptDTO ReceiptDTO) []models.ReceiptProduct {
 	var result []models.ReceiptProduct
 	for _, itemDTO := range receiptDTO.Items {
@@ -78,7 +69,7 @@ func (a *DtoAdapter) getReceiptProducts(receiptDTO ReceiptDTO) []models.ReceiptP
 			Quantity:        itemDTO.Quantity,
 			Sum:             itemDTO.Sum,
 			ProductCodeData: productCodeData,
-			Product:         models.Product{Name: itemDTO.Name},
+			Product:         models.Product{Name: strings.TrimSpace(itemDTO.Name)},
 		})
 	}
 	return result

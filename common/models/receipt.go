@@ -6,12 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// Operator – operator with unique name
-type Operator struct {
-	gorm.Model
-	Name string `gorm:"index:idx_operator_name,unique,where:deleted_at IS NULL;not null"`
-}
-
 // Seller – seller, Name + Inn = unique
 type Seller struct {
 	gorm.Model
@@ -70,16 +64,15 @@ type Receipt struct {
 	gorm.Model
 	ExternalIdentifier   string    `gorm:"uniqueIndex:idx_receipt_external_identifier,where:deleted_at IS NULL;not null"`
 	DateTime             time.Time `gorm:"not null"`
-	FiscalDocumentNumber int64
+	FiscalDocumentNumber string
 	FiscalDriveNumber    string
-	FiscalSign           int64
+	FiscalSign           string
 	Sum                  int `gorm:"not null"`
 	KktReg               string
 	BuyerPhoneOrAddress  string
-	OperatorID           *uint `gorm:"index"`
+	Operator             string
 	SellerPlaceID        *uint `gorm:"index"`
 	Comment              string
-	Operator             *Operator        `gorm:"constraint:OnDelete:SET NULL;"`
 	SellerPlace          *SellerPlace     `gorm:"constraint:OnDelete:SET NULL;"`
 	ReceiptProducts      []ReceiptProduct `gorm:"foreignKey:ReceiptID;constraint:OnDelete:CASCADE;"`
 }

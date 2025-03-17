@@ -33,11 +33,10 @@ func (o *ImportService) SaveReceipt(db *gorm.DB, data []byte) error {
 		return tx.Error
 	}
 
-	// global caches Seller, SellerPlace, Operator
+	// global caches Seller, SellerPlace
 	// (Product uses local cache for every Receipt)
 	sellerCache := make(map[string]uint)
 	sellerPlaceCache := make(map[string]uint)
-	operatorCache := make(map[string]uint)
 
 	for _, item := range rawData {
 		receipt, err := o.adapter.Convert(item)
@@ -46,7 +45,7 @@ func (o *ImportService) SaveReceipt(db *gorm.DB, data []byte) error {
 			return err
 		}
 
-		if err = o.processor.Process(tx, receipt, sellerCache, sellerPlaceCache, operatorCache); err != nil {
+		if err = o.processor.Process(tx, receipt, sellerCache, sellerPlaceCache); err != nil {
 			tx.Rollback()
 			return err
 		}
