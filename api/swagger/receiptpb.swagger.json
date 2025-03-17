@@ -154,6 +154,12 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -434,6 +440,9 @@
         },
         "receiptProducts": {
           "$ref": "#/definitions/receiptproductpbSummary"
+        },
+        "comment": {
+          "type": "string"
         }
       }
     },
