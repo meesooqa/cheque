@@ -62,15 +62,15 @@ services:
 
   db_tools_cleanup:
     build:
-      context: ./tools/db
-      dockerfile: Dockerfile.cleanup
+      context: .
+      dockerfile: tools/db/Dockerfile.cleanup
     container_name: cheque04_db_tools_cleanup
     depends_on:
       postgres:
         condition: service_healthy
     volumes:
       - ./etc/config.yml:/etc/config.yml
-    command: ["/usr/local/bin/cleanup"]
+    command: ["/usr/local/bin/app"]
     profiles: ["db_tools_cleanup"]
 
   swagger:

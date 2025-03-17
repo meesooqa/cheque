@@ -1,9 +1,11 @@
 FROM golang:1.23-alpine AS build
-COPY . /build
 WORKDIR /build
-RUN go get -u . && go mod tidy
-RUN CGO_ENABLED=0 GOOS=linux go build -o /build/cleanup -ldflags "-s -w" /build/cmd/cleanup/main.go
+COPY ./common /build/common
+COPY ./tools/db /build/tools/db
+WORKDIR /build/tools/db
+RUN go mod tidy && go mod download
+RUN CGO_ENABLED=0 GOOS=linux go build -o /build/app -ldflags "-s -w" cmd/cleanup/main.go
 
 FROM alpine:latest
-COPY --from=build /build/cleanup /usr/local/bin/cleanup
-CMD ["/usr/local/bin/cleanup"]
+COPY --from=build /build/app /usr/local/bin/app
+CMD ["/usr/local/bin/app"]
