@@ -2,6 +2,7 @@ package dto
 
 import (
 	"encoding/json"
+	"strconv"
 	"strings"
 	"time"
 
@@ -21,9 +22,9 @@ func (a *DtoAdapter) Convert(rawDataDTO RawDataDTO) (*models.Receipt, error) {
 	result := &models.Receipt{
 		ExternalIdentifier:   strings.TrimSpace(rawDataDTO.ID),
 		DateTime:             a.parseDateTime(receiptDTO.DateTime),
-		FiscalDocumentNumber: strings.TrimSpace(receiptDTO.FiscalDocumentNumber),
+		FiscalDocumentNumber: strconv.FormatInt(receiptDTO.FiscalDocumentNumber, 10),
 		FiscalDriveNumber:    strings.TrimSpace(receiptDTO.FiscalDriveNumber),
-		FiscalSign:           strings.TrimSpace(receiptDTO.FiscalSign),
+		FiscalSign:           strconv.FormatInt(receiptDTO.FiscalSign, 10),
 		Sum:                  receiptDTO.TotalSum,
 		KktReg:               strings.TrimSpace(receiptDTO.KktRegID),
 		BuyerPhoneOrAddress:  strings.TrimSpace(receiptDTO.BuyerPhoneOrAddress),
