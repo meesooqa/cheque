@@ -57,7 +57,7 @@ services:
         condition: service_healthy
     volumes:
       - ./etc/config.yml:/etc/config.yml
-    command: ["/usr/local/bin/scheme"]
+    command: ["/usr/local/bin/app"]
     profiles: ["db_tools_scheme"]
 
   db_tools_cleanup:
