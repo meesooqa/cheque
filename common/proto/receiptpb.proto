@@ -26,6 +26,7 @@ message Model {
   operatorpb.Model operator = 12;
   sellerplacepb.Model seller_place = 13;
   receiptproductpb.Summary receipt_products = 14;
+  string comment = 15;
 }
 
 message GetListRequest {
@@ -48,6 +49,7 @@ message GetListRequest {
   int32 sum_lt = 16;
   string kkt_reg = 17;
   string buyer_phone_or_address = 18;
+  string comment = 19;
 }
 
 message GetListResponse {

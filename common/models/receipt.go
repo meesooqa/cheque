@@ -15,9 +15,8 @@ type Operator struct {
 // Seller – seller, Name + Inn = unique
 type Seller struct {
 	gorm.Model
-	Name         string        `gorm:"uniqueIndex:idx_seller_name_inn,where:deleted_at IS NULL;not null"`
-	Inn          string        `gorm:"uniqueIndex:idx_seller_name_inn;not null"`
-	SellerPlaces []SellerPlace `gorm:"foreignKey:SellerID;constraint:OnDelete:CASCADE;"`
+	Name string `gorm:"uniqueIndex:idx_seller_name_inn,where:deleted_at IS NULL;not null"`
+	Inn  string `gorm:"uniqueIndex:idx_seller_name_inn;not null"`
 }
 
 // SellerPlace – seller place, combination of SellerID, Name and Address is unique
@@ -27,7 +26,7 @@ type SellerPlace struct {
 	Name     string `gorm:"uniqueIndex:idx_seller_place_sna;not null"`
 	Address  string `gorm:"uniqueIndex:idx_seller_place_sna;not null"`
 	Email    string
-	Seller   Seller
+	Seller   Seller `gorm:"foreignKey:SellerID;references:ID;constraint:OnDelete:CASCADE;"`
 }
 
 // Category – categories tree
@@ -77,8 +76,9 @@ type Receipt struct {
 	Sum                  int `gorm:"not null"`
 	KktReg               string
 	BuyerPhoneOrAddress  string
-	OperatorID           *uint            `gorm:"index"`
-	SellerPlaceID        *uint            `gorm:"index"`
+	OperatorID           *uint `gorm:"index"`
+	SellerPlaceID        *uint `gorm:"index"`
+	Comment              string
 	Operator             *Operator        `gorm:"constraint:OnDelete:SET NULL;"`
 	SellerPlace          *SellerPlace     `gorm:"constraint:OnDelete:SET NULL;"`
 	ReceiptProducts      []ReceiptProduct `gorm:"foreignKey:ReceiptID;constraint:OnDelete:CASCADE;"`
