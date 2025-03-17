@@ -33,11 +33,10 @@ type SellerPlace struct {
 // Category – categories tree
 type Category struct {
 	gorm.Model
-	ParentID *uint       `gorm:"index"`
-	Name     string      `gorm:"not null"`
-	Products []Product   `gorm:"many2many:product_categories;"`
-	Parent   *Category   `gorm:"foreignKey:ParentID;constraint:OnDelete:SET NULL;"`
-	Children []*Category `gorm:"foreignKey:ParentID;"`
+	ParentID *uint     `gorm:"index"`
+	Name     string    `gorm:"not null"`
+	Products []Product `gorm:"many2many:product_categories;"`
+	Parent   *Category `gorm:"foreignKey:ParentID;references:ID;constraint:OnDelete:SET NULL;"`
 }
 
 // Brand – brand with unique name

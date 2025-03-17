@@ -297,13 +297,6 @@
         },
         "parent": {
           "$ref": "#/definitions/categorypbSummary"
-        },
-        "children": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/categorypbSummary"
-          }
         }
       }
     },

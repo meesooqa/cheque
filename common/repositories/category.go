@@ -13,7 +13,6 @@ func NewCategoryRepository() *CategoryRepository {
 	return &CategoryRepository{common_db.BaseRepository[models.Category]{
 		Preloads: []string{
 			"Parent",
-			"Children",
 		},
 	}}
 }
