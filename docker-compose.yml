@@ -35,7 +35,8 @@ services:
 
   import:
     build:
-      context: ./import
+      context: .
+      dockerfile: import/Dockerfile
     container_name: cheque04_import
     depends_on:
       postgres:
@@ -43,7 +44,7 @@ services:
     volumes:
       - ./etc/config.yml:/etc/config.yml
       - ./var/data:/var/data
-    command: ["/usr/local/bin/import"]
+    command: ["/usr/local/bin/app"]
     profiles: ["import"]
 
   db_tools_scheme:
