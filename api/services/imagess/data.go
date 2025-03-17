@@ -20,6 +20,7 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 }
 
 func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
+	// TODO Url: Conf.System.UploadPath + ProductID + *.jpg
 	return &DbModel{
 		ProductID: uint(pbItem.ProductId),
 		Name:      pbItem.Name,
