@@ -45,6 +45,10 @@ func UrlFilter(value string) common_db.FilterFunc {
 
 func IsMainFilter(value bool) common_db.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
-		return db.Where("is_main = ?", value)
+		// TODO value == false
+		if value != false {
+			return db.Where("is_main = ?", value)
+		}
+		return db
 	}
 }
