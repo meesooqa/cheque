@@ -14,7 +14,7 @@ export const ProductsEdit: React.FC = () => {
 
     const { formProps, saveButtonProps, queryResult } = useForm({
         metaData: {
-            fields: ["id", "name", "brandID", "categories",
+            fields: ["id", "name", "brandId", "categories",
                 "images.id", "images.name", "images.url", "images.isMain", "images.order"],
         },
     });
@@ -134,7 +134,7 @@ export const ProductsEdit: React.FC = () => {
 
                 <Form.Item
                     label="Бренд"
-                    name="brandID"
+                    name="brandId"
                 >
                     <Select {...brandSelectProps} allowClear />
                 </Form.Item>
