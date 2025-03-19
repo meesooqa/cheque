@@ -20,8 +20,7 @@ func NewSwagger(logger *slog.Logger) *Swagger {
 	return &Swagger{
 		logger: logger,
 		method: http.MethodGet,
-		// TODO "/swagger"?
-		route: "/swagger/",
+		route:  "/swagger/",
 	}
 }
 
@@ -41,7 +40,7 @@ func (o *Swagger) handlePage(w http.ResponseWriter, r *http.Request) {
 
 	// check URL
 	filePath := filepath.Join(pbDir, strings.TrimPrefix(r.URL.Path, o.route))
-	o.logger.Debug("swagger has been requested", slog.String("path", filePath))
+	//o.logger.Debug("swagger has been requested", slog.String("path", filePath))
 
 	if !strings.HasSuffix(filePath, ".json") {
 		http.Error(w, "Forbidden", http.StatusForbidden)
