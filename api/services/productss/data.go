@@ -7,6 +7,8 @@ import (
 	"github.com/meesooqa/cheque/api/pb/categorypb"
 	"github.com/meesooqa/cheque/api/pb/imagepb"
 	pb "github.com/meesooqa/cheque/api/pb/productpb"
+	"github.com/meesooqa/cheque/api/services/categoryss"
+	"github.com/meesooqa/cheque/api/services/imagess"
 	"github.com/meesooqa/cheque/common/models"
 )
 
@@ -59,16 +61,9 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 func (o *Converter) getPbCategories(dbItems []models.Category) []*categorypb.Summary {
 	if len(dbItems) > 0 {
 		pbItems := make([]*categorypb.Summary, len(dbItems))
+		converter := categoryss.NewConverter()
 		for i, dbItem := range dbItems {
-			var pbParentId uint64
-			if dbItem.ParentID != nil {
-				pbParentId = uint64(*dbItem.ParentID)
-			}
-			pbItems[i] = &categorypb.Summary{
-				Id:       uint64(dbItem.ID),
-				Name:     dbItem.Name,
-				ParentId: pbParentId,
-			}
+			pbItems[i] = converter.SummaryDbToPb(&dbItem)
 		}
 		return pbItems
 	}
@@ -78,15 +73,9 @@ func (o *Converter) getPbCategories(dbItems []models.Category) []*categorypb.Sum
 func (o *Converter) getPbImages(dbItems []models.Image) []*imagepb.Model {
 	if len(dbItems) > 0 {
 		pbItems := make([]*imagepb.Model, len(dbItems))
+		converter := imagess.NewConverter()
 		for i, dbItem := range dbItems {
-			pbItems[i] = &imagepb.Model{
-				Id:        uint64(dbItem.ID),
-				ProductId: uint64(dbItem.ProductID),
-				Name:      dbItem.Name,
-				Url:       dbItem.URL,
-				Order:     int32(dbItem.Order),
-				IsMain:    dbItem.IsMain,
-			}
+			pbItems[i] = converter.DataDbToPb(&dbItem)
 		}
 		return pbItems
 	}
