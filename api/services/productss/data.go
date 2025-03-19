@@ -42,11 +42,21 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 		dbModel.BrandID = &uintItemBrandID
 	}
 	if pbItem.Brand != nil {
-		converter := brandss.NewConverter()
-		dbModel.Brand = converter.DataPbToDb(pbItem.Brand)
+		brandConverter := brandss.NewConverter()
+		dbModel.Brand = brandConverter.DataPbToDb(pbItem.Brand)
 	}
-	// TODO Categories
-	// TODO Images
+	if pbItem.Categories != nil {
+		categoryConverter := categoryss.NewConverter()
+		for _, categorySummary := range pbItem.Categories {
+			dbModel.Categories = append(dbModel.Categories, *categoryConverter.SummaryPbToDb(categorySummary))
+		}
+	}
+	//if pbItem.Images != nil {
+	//	imageConverter := imagess.NewConverter()
+	//	for _, image := range pbItem.Images {
+	//		dbModel.Images = append(dbModel.Images, *imageConverter.DataPbToDb(image))
+	//	}
+	//}
 	return &dbModel
 }
 
