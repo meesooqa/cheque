@@ -27,6 +27,7 @@ func TestLoad(t *testing.T) {
 	assert.Equal(t, "localhost:11111", c.GrpcServer.Endpoint)
 
 	assert.IsType(t, &DbConfig{}, c.DB)
+	assert.Equal(t, false, c.DB.IsDebugMode)
 	assert.Equal(t, "localhost", c.DB.Host)
 	assert.Equal(t, 1234, c.DB.Port)
 	assert.Equal(t, "disable", c.DB.SslMode)

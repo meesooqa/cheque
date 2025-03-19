@@ -26,12 +26,13 @@ type GormGenProtoConfig struct {
 
 // DbConfig - DB parameters
 type DbConfig struct {
-	Host     string `yaml:"host"`
-	Port     int    `yaml:"port"`
-	SslMode  string `yaml:"sslmode"`
-	User     string `yaml:"user"`
-	Password string `yaml:"password"`
-	DbName   string `yaml:"dbname"`
+	IsDebugMode bool   `yaml:"is_debug_mode"`
+	Host        string `yaml:"host"`
+	Port        int    `yaml:"port"`
+	SslMode     string `yaml:"sslmode"`
+	User        string `yaml:"user"`
+	Password    string `yaml:"password"`
+	DbName      string `yaml:"dbname"`
 }
 
 // ServerConfig - server parameters

@@ -24,5 +24,8 @@ func GetDB(ctx context.Context) *gorm.DB {
 	if ctx == nil {
 		ctx = context.TODO()
 	}
+	if conf.DB.IsDebugMode {
+		db = db.Debug()
+	}
 	return db.WithContext(ctx)
 }

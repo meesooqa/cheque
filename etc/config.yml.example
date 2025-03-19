@@ -11,6 +11,7 @@ server:
 grpc_server:
   endpoint: ":50051"
 db:
+  is_debug_mode: false
   host: "postgres"
   port: 5432
   sslmode: "disable"

@@ -9,6 +9,7 @@ server:
 grpc_server:
   endpoint: "localhost:11111"
 db:
+  is_debug_mode: false
   host: "localhost"
   port: 1234
   sslmode: "disable"
