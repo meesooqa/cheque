@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 type Swagger struct {
@@ -34,6 +36,7 @@ func (o *Swagger) handlePage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// http://localhost:8080/swagger/brandpb.swagger.json
+	godotenv.Load()
 	pbDir := os.Getenv("SWAGGER_DIR")
 
 	// check URL
