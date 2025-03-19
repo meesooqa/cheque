@@ -4,7 +4,6 @@ import (
 	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/pb/categorypb"
-	"github.com/meesooqa/cheque/common/models"
 )
 
 type Converter struct{}
@@ -39,17 +38,29 @@ func (o *Converter) SummaryDbToPb(dbItem *DbModel) *pb.Summary {
 	}
 }
 
+func (o *Converter) SummaryPbToDb(pbItem *pb.Summary) *DbModel {
+	var dbParentId *uint
+	if pbItem.ParentId == 0 {
+		dbParentId = nil
+	} else {
+		dbParentIdTmp := uint(pbItem.ParentId)
+		dbParentId = &dbParentIdTmp
+	}
+	return &DbModel{
+		Model: gorm.Model{
+			ID: uint(pbItem.Id),
+		},
+		ParentID: dbParentId,
+		Name:     pbItem.Name,
+	}
+}
+
 func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 	dbModel := DbModel{
 		Name: pbItem.Name,
 	}
 	uintItemParentID := uint(pbItem.ParentId)
 	dbModel.ParentID = &uintItemParentID
-	dbModel.Parent = &models.Category{
-		Model: gorm.Model{
-			ID: uint(pbItem.Parent.Id),
-		},
-		Name: pbItem.Parent.Name,
-	}
+	dbModel.Parent = o.SummaryPbToDb(pbItem.Parent)
 	return &dbModel
 }
