@@ -30,6 +30,7 @@ services:
     volumes:
       - ./etc:/srv/etc
       - ./api/swagger:/app/api/swagger
+      - ./var/upload:/var/upload
     environment:
       - SWAGGER_DIR=/app/api/swagger
 

@@ -45,6 +45,8 @@ func main() {
 		handlers.NewGrpcGateway(logger, conf.GrpcServer, ss),
 		// swagger
 		handlers.NewSwagger(logger),
+		// product photos
+		handlers.NewMedia(logger, conf.System),
 	}
 
 	mws := []web.HandlerMiddleware{
