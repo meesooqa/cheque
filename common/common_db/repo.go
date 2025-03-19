@@ -27,7 +27,12 @@ type Repository[DbModel any] interface {
 	Delete(ctx context.Context, id uint64) error
 }
 
+type HasAssociations[DbModel any] interface {
+	UpdateAssociations(db *gorm.DB, item *DbModel, updatedData *DbModel) error
+}
+
 type BaseRepository[DbModel any] struct {
+	Self     HasAssociations[DbModel]
 	Preloads []string
 }
 
@@ -74,13 +79,32 @@ func (o *BaseRepository[DbModel]) Create(ctx context.Context, newItem *DbModel) 
 }
 
 func (o *BaseRepository[DbModel]) Update(ctx context.Context, id uint64, updatedItem *DbModel) (*DbModel, error) {
-	db := GetDB(ctx)
-	var dbItem DbModel
-	if err := db.First(&dbItem, id).Error; err != nil {
+	dbItem, err := o.Get(ctx, id)
+	if err != nil {
 		return nil, err
 	}
-	if err := db.Model(&dbItem).Updates(updatedItem).Error; err != nil {
-		return nil, err
+
+	db := GetDB(ctx)
+	tx := db.Begin()
+	if tx.Error != nil {
+		return nil, fmt.Errorf("failed to begin transaction: %w", tx.Error)
+	}
+
+	if err = tx.Model(dbItem).Updates(updatedItem).Error; err != nil {
+		tx.Rollback()
+		return nil, fmt.Errorf("failed to update item: %w", err)
+	}
+	if hasAssoc, ok := any(o.Self).(HasAssociations[DbModel]); ok {
+		err = hasAssoc.UpdateAssociations(tx, dbItem, updatedItem)
+		if err != nil {
+			tx.Rollback()
+			return nil, fmt.Errorf("failed to update associations: %w", err)
+		}
+	}
+
+	if err = tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return nil, fmt.Errorf("failed to commit transaction: %w", err)
 	}
 	return o.Get(ctx, id)
 }
