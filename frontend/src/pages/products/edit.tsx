@@ -101,6 +101,10 @@ export const ProductsEdit: React.FC = () => {
     const customFormProps = {
         ...formProps,
         onFinish: async (values: any) => {
+            // categories
+            if (values.categories && Array.isArray(values.categories)) {
+                values.categories = values.categories.map((id: string) => ({ id }));
+            }
             // Преобразуем список загруженных файлов в формат для API
             const images = fileList.map((file, index) => ({
                 id: file.imageId || (file.uid.startsWith('rc-upload') ? undefined : Number(file.uid)),
