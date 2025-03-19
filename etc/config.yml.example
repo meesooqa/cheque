@@ -1,6 +1,6 @@
 system:
-  data_path: "var/data"
-  upload_path: "var/upload"
+  data_path: "var/data" # see also docker volume
+  upload_path: "var/upload" # see also docker volume
 server:
   port: 8080
   cors:
