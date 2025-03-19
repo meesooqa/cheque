@@ -1,12 +1,10 @@
 package productss
 
 import (
-	"gorm.io/gorm"
-
-	"github.com/meesooqa/cheque/api/pb/brandpb"
 	"github.com/meesooqa/cheque/api/pb/categorypb"
 	"github.com/meesooqa/cheque/api/pb/imagepb"
 	pb "github.com/meesooqa/cheque/api/pb/productpb"
+	"github.com/meesooqa/cheque/api/services/brandss"
 	"github.com/meesooqa/cheque/api/services/categoryss"
 	"github.com/meesooqa/cheque/api/services/imagess"
 	"github.com/meesooqa/cheque/common/models"
@@ -27,10 +25,8 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 		pbModel.BrandId = uint64(*dbItem.BrandID)
 	}
 	if dbItem.Brand != nil {
-		pbModel.Brand = &brandpb.Model{
-			Id:   uint64(*dbItem.BrandID),
-			Name: dbItem.Brand.Name,
-		}
+		converter := brandss.NewConverter()
+		pbModel.Brand = converter.DataDbToPb(dbItem.Brand)
 	}
 	pbModel.Categories = o.getPbCategories(dbItem.Categories)
 	pbModel.Images = o.getPbImages(dbItem.Images)
@@ -46,12 +42,8 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 		dbModel.BrandID = &uintItemBrandID
 	}
 	if pbItem.Brand != nil {
-		dbModel.Brand = &models.Brand{
-			Model: gorm.Model{
-				ID: uint(pbItem.Brand.Id),
-			},
-			Name: pbItem.Brand.Name,
-		}
+		converter := brandss.NewConverter()
+		dbModel.Brand = converter.DataPbToDb(pbItem.Brand)
 	}
 	// TODO Categories
 	// TODO Images
