@@ -1,6 +1,6 @@
 package services
 
-import "github.com/meesooqa/cheque/db/repositories"
+import "github.com/meesooqa/cheque/db/db_types"
 
 type Converter[DbModel any, PbModel any] interface {
 	DataDbToPb(dbItem *DbModel) *PbModel
@@ -8,11 +8,11 @@ type Converter[DbModel any, PbModel any] interface {
 }
 
 type BaseService[DbModel any, PbModel any] struct {
-	Repo      repositories.Repository[DbModel]
+	Repo      db_types.Repository[DbModel]
 	converter Converter[DbModel, PbModel]
 }
 
-func NewBaseService[DbModel any, PbModel any](repo repositories.Repository[DbModel], converter Converter[DbModel, PbModel]) *BaseService[DbModel, PbModel] {
+func NewBaseService[DbModel any, PbModel any](repo db_types.Repository[DbModel], converter Converter[DbModel, PbModel]) *BaseService[DbModel, PbModel] {
 	return &BaseService[DbModel, PbModel]{
 		Repo:      repo,
 		converter: converter,

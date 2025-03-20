@@ -5,11 +5,11 @@ import (
 	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/pb/receiptpb"
-	"github.com/meesooqa/cheque/db/repositories"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
-func GetFilters(req *pb.GetListRequest) []repositories.FilterFunc {
-	return []repositories.FilterFunc{
+func GetFilters(req *pb.GetListRequest) []db_types.FilterFunc {
+	return []db_types.FilterFunc{
 		ExternalIdentifierFilter(req.ExternalIdentifier),
 		DateTimeFilter(req.DateTimeStart, req.DateTimeEnd),
 		OperatorFilter(req.Operator),
@@ -23,7 +23,7 @@ func GetFilters(req *pb.GetListRequest) []repositories.FilterFunc {
 	}
 }
 
-func ExternalIdentifierFilter(value string) repositories.FilterFunc {
+func ExternalIdentifierFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("external_identifier ILIKE ?", "%"+value+"%")
@@ -32,7 +32,7 @@ func ExternalIdentifierFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func FiscalDriveNumberFilter(value string) repositories.FilterFunc {
+func FiscalDriveNumberFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("fiscal_drive_number ILIKE ?", "%"+value+"%")
@@ -41,7 +41,7 @@ func FiscalDriveNumberFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func KktRegFilter(value string) repositories.FilterFunc {
+func KktRegFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("kkt_reg ILIKE ?", "%"+value+"%")
@@ -50,7 +50,7 @@ func KktRegFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func BuyerPhoneOrAddressFilter(value string) repositories.FilterFunc {
+func BuyerPhoneOrAddressFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("buyer_phone_or_address ILIKE ?", "%"+value+"%")
@@ -59,7 +59,7 @@ func BuyerPhoneOrAddressFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func DateTimeFilter(valueStart, valueEnd *timestamppb.Timestamp) repositories.FilterFunc {
+func DateTimeFilter(valueStart, valueEnd *timestamppb.Timestamp) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		// RFC3339
 		// "2022-01-01T00:00:00Z"
@@ -75,7 +75,7 @@ func DateTimeFilter(valueStart, valueEnd *timestamppb.Timestamp) repositories.Fi
 	}
 }
 
-func OperatorFilter(value string) repositories.FilterFunc {
+func OperatorFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("operator ILIKE ?", "%"+value+"%")
@@ -84,7 +84,7 @@ func OperatorFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func SellerPlaceIDFilter(value uint64) repositories.FilterFunc {
+func SellerPlaceIDFilter(value uint64) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("seller_place_id = ?", value)
@@ -93,7 +93,7 @@ func SellerPlaceIDFilter(value uint64) repositories.FilterFunc {
 	}
 }
 
-func FiscalDocumentNumberFilter(value string) repositories.FilterFunc {
+func FiscalDocumentNumberFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("fiscal_document_number ILIKE ?", "%"+value+"%")
@@ -102,7 +102,7 @@ func FiscalDocumentNumberFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func FiscalSignFilter(value string) repositories.FilterFunc {
+func FiscalSignFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("fiscal_sign ILIKE ?", "%"+value+"%")
@@ -111,7 +111,7 @@ func FiscalSignFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func SumFilter(valueGt, valueLt int32) repositories.FilterFunc {
+func SumFilter(valueGt, valueLt int32) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if valueGt > 0 && valueLt > 0 {
 			db = db.Where("sum BETWEEN ? AND ?", valueGt, valueLt)

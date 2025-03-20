@@ -4,11 +4,11 @@ import (
 	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/pb/imagepb"
-	"github.com/meesooqa/cheque/db/repositories"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
-func GetFilters(req *pb.GetListRequest) []repositories.FilterFunc {
-	return []repositories.FilterFunc{
+func GetFilters(req *pb.GetListRequest) []db_types.FilterFunc {
+	return []db_types.FilterFunc{
 		ProductIDFilter(req.ProductId),
 		NameFilter(req.Name),
 		UrlFilter(req.Url),
@@ -16,7 +16,7 @@ func GetFilters(req *pb.GetListRequest) []repositories.FilterFunc {
 	}
 }
 
-func ProductIDFilter(value uint64) repositories.FilterFunc {
+func ProductIDFilter(value uint64) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != 0 {
 			return db.Where("product_id = ?", value)
@@ -25,7 +25,7 @@ func ProductIDFilter(value uint64) repositories.FilterFunc {
 	}
 }
 
-func NameFilter(value string) repositories.FilterFunc {
+func NameFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("name ILIKE ?", "%"+value+"%")
@@ -34,7 +34,7 @@ func NameFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func UrlFilter(value string) repositories.FilterFunc {
+func UrlFilter(value string) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("url ILIKE ?", "%"+value+"%")
@@ -43,7 +43,7 @@ func UrlFilter(value string) repositories.FilterFunc {
 	}
 }
 
-func IsMainFilter(value bool) repositories.FilterFunc {
+func IsMainFilter(value bool) db_types.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		// TODO value == false
 		if value != false {

@@ -9,7 +9,8 @@ import (
 	pb "github.com/meesooqa/cheque/api/pb/imagepb"
 	"github.com/meesooqa/cheque/api/services"
 	"github.com/meesooqa/cheque/common/models"
-	"github.com/meesooqa/cheque/common/repositories"
+	"github.com/meesooqa/cheque/db/db_types"
+	"github.com/meesooqa/cheque/db/repositories"
 )
 
 type DbModel = models.Image
@@ -19,8 +20,8 @@ type ServiceServer struct {
 	pb.UnimplementedModelServiceServer
 }
 
-func NewServiceServer() *ServiceServer {
-	base := services.NewBaseService[DbModel, pb.Model](repositories.NewImageRepository(), NewConverter())
+func NewServiceServer(dbProvider db_types.DBProvider) *ServiceServer {
+	base := services.NewBaseService[DbModel, pb.Model](repositories.NewImageRepository(dbProvider), NewConverter())
 	return &ServiceServer{BaseService: base}
 }
 
