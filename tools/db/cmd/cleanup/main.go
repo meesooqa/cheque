@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	dbProvider := &db_provider.DefaultDBProvider{}
+	dbProvider := db_provider.NewDefaultDBProvider()
 	db := dbProvider.GetDB(nil)
 	var tables []string
 	db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Pluck("tablename", &tables)

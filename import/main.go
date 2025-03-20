@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	dbProvider := &db_provider.DefaultDBProvider{}
+	dbProvider := db_provider.NewDefaultDBProvider()
 	db := dbProvider.GetDB(nil)
 	configProvider := config.NewDefaultConfigProvider()
 	conf, err := configProvider.GetConf()

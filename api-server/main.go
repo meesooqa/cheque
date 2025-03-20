@@ -37,7 +37,7 @@ func main() {
 	}
 	db = db.WithContext(context.TODO())
 
-	ss := api.GetServiceServers(&db_provider.DefaultDBProvider{})
+	ss := api.GetServiceServers(db_provider.NewDefaultDBProvider())
 	grpcSrv := grpc.NewServer(logger, conf.GrpcServer, ss)
 	err = grpcSrv.Run()
 	if err != nil {

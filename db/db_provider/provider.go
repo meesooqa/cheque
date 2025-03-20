@@ -11,11 +11,18 @@ import (
 	"github.com/meesooqa/cheque/common/config"
 )
 
-type DefaultDBProvider struct{}
+type DefaultDBProvider struct {
+	configProvider config.ConfigProvider
+}
+
+func NewDefaultDBProvider() *DefaultDBProvider {
+	return &DefaultDBProvider{
+		configProvider: config.NewDefaultConfigProvider(),
+	}
+}
 
 func (o *DefaultDBProvider) GetDB(ctx context.Context) *gorm.DB {
-	configProvider := config.NewDefaultConfigProvider()
-	conf, err := configProvider.GetConf()
+	conf, err := o.configProvider.GetConf()
 	if err != nil {
 		log.Fatalf("can't load config: %v", err)
 	}
