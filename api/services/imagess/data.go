@@ -22,8 +22,7 @@ func NewConverter() *Converter {
 
 func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 	// http://localhost:8080/media/6/foo.jpg
-	// TODO build url
-	url := fmt.Sprintf("%s:%d/%s/%d/%s", "http://localhost", o.conf.Server.Port, "media", dbItem.ProductID, dbItem.URL)
+	url := fmt.Sprintf("%s%s:%d/%s/%d/%s", "http://", o.conf.Server.Host, o.conf.Server.Port, "media", dbItem.ProductID, dbItem.URL)
 	return &pb.Model{
 		Id:        uint64(dbItem.ID),
 		ProductId: uint64(dbItem.ProductID),
