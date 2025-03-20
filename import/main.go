@@ -4,13 +4,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/meesooqa/cheque/common/common_db"
 	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/db/db_provider"
 	"github.com/meesooqa/cheque/import/services"
 )
 
 func main() {
-	db := common_db.GetDB(nil)
+	dbProvider := &db_provider.DefaultDBProvider{}
+	db := dbProvider.GetDB(nil)
 	conf, err := config.GetConf()
 	if err != nil {
 		log.Fatal(err)

@@ -3,12 +3,13 @@ package main
 import (
 	"log"
 
-	"github.com/meesooqa/cheque/common/common_db"
 	"github.com/meesooqa/cheque/common/models"
+	"github.com/meesooqa/cheque/db/db_provider"
 )
 
 func main() {
-	db := common_db.GetDB(nil)
+	dbProvider := &db_provider.DefaultDBProvider{}
+	db := dbProvider.GetDB(nil)
 	err := db.AutoMigrate(
 		&models.Seller{},
 		&models.SellerPlace{},
