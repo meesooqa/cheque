@@ -6,40 +6,16 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/meesooqa/cheque/db/db_provider"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
-type FilterFunc func(db *gorm.DB) *gorm.DB
-
-type SortData struct {
-	SortField string
-	SortOrder string
-}
-
-type PaginationData struct {
-	Page     int
-	PageSize int
-}
-
-type Repository[DbModel any] interface {
-	GetList(ctx context.Context, filters []FilterFunc, sort SortData, pagination PaginationData) ([]*DbModel, int64, error)
-	Get(ctx context.Context, id uint64) (*DbModel, error)
-	Create(ctx context.Context, newItem *DbModel) (*DbModel, error)
-	Update(ctx context.Context, id uint64, updatedItem *DbModel) (*DbModel, error)
-	Delete(ctx context.Context, id uint64) error
-}
-
-type HasAssociations[DbModel any] interface {
-	UpdateAssociations(db *gorm.DB, item *DbModel, updatedData *DbModel) error
-}
-
 type BaseRepository[DbModel any] struct {
-	DBProvider db_provider.DBProvider
-	Self       HasAssociations[DbModel]
+	DBProvider db_types.DBProvider
+	Self       db_types.HasAssociations[DbModel]
 	Preloads   []string
 }
 
-func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []FilterFunc, sort SortData, pagination PaginationData) ([]*DbModel, int64, error) {
+func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []db_types.FilterFunc, sort db_types.SortData, pagination db_types.PaginationData) ([]*DbModel, int64, error) {
 	db := o.DBProvider.GetDB(ctx)
 	db = o.preload(db)
 	query := db.Model(new(DbModel))
@@ -97,7 +73,7 @@ func (o *BaseRepository[DbModel]) Update(ctx context.Context, id uint64, updated
 		tx.Rollback()
 		return nil, fmt.Errorf("failed to update item: %w", err)
 	}
-	if hasAssoc, ok := any(o.Self).(HasAssociations[DbModel]); ok {
+	if hasAssoc, ok := any(o.Self).(db_types.HasAssociations[DbModel]); ok {
 		err = hasAssoc.UpdateAssociations(tx, dbItem, updatedItem)
 		if err != nil {
 			tx.Rollback()
@@ -125,7 +101,7 @@ func (o *BaseRepository[DbModel]) Delete(ctx context.Context, id uint64) error {
 	return nil
 }
 
-func (o *BaseRepository[DbModel]) addSort(query *gorm.DB, sort SortData) {
+func (o *BaseRepository[DbModel]) addSort(query *gorm.DB, sort db_types.SortData) {
 	order := "asc"
 	if sort.SortOrder == "desc" {
 		order = "desc"
@@ -135,7 +111,7 @@ func (o *BaseRepository[DbModel]) addSort(query *gorm.DB, sort SortData) {
 	}
 }
 
-func (o *BaseRepository[DbModel]) addPagination(query *gorm.DB, pagination PaginationData) {
+func (o *BaseRepository[DbModel]) addPagination(query *gorm.DB, pagination db_types.PaginationData) {
 	if pagination.PageSize > 0 {
 		query = query.Limit(pagination.PageSize)
 	}

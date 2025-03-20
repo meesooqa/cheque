@@ -11,10 +11,6 @@ import (
 	"github.com/meesooqa/cheque/common/config"
 )
 
-type DBProvider interface {
-	GetDB(ctx context.Context) *gorm.DB
-}
-
 type DefaultDBProvider struct{}
 
 func (o *DefaultDBProvider) GetDB(ctx context.Context) *gorm.DB {

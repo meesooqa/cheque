@@ -6,14 +6,14 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/meesooqa/cheque/common/models"
-	"github.com/meesooqa/cheque/db/db_provider"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
 type ProductRepository struct {
 	BaseRepository[models.Product]
 }
 
-func NewProductRepository(dbProvider db_provider.DBProvider) *ProductRepository {
+func NewProductRepository(dbProvider db_types.DBProvider) *ProductRepository {
 	repo := &ProductRepository{BaseRepository[models.Product]{
 		DBProvider: dbProvider,
 		Preloads: []string{
