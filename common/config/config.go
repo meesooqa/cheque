@@ -53,11 +53,6 @@ type SystemConfig struct {
 	UploadPath string `yaml:"upload_path"`
 }
 
-// GetConf provides Conf from default config file
-func GetConf() (res *Conf, err error) {
-	return load("etc/config.yml")
-}
-
 // load config from file
 func load(fname string) (res *Conf, err error) {
 	res = &Conf{}
