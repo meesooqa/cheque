@@ -9,17 +9,17 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"github.com/meesooqa/cheque/common/api"
+	"github.com/meesooqa/cheque/common/common_api"
 	"github.com/meesooqa/cheque/common/config"
 )
 
 type GrpcGateway struct {
 	logger         *slog.Logger
 	conf           *config.GrpcServerConfig
-	serviceServers []api.ServiceServer
+	serviceServers []common_api.ServiceServer
 }
 
-func NewGrpcGateway(logger *slog.Logger, conf *config.GrpcServerConfig, serviceServers []api.ServiceServer) *GrpcGateway {
+func NewGrpcGateway(logger *slog.Logger, conf *config.GrpcServerConfig, serviceServers []common_api.ServiceServer) *GrpcGateway {
 	return &GrpcGateway{
 		logger:         logger,
 		conf:           conf,

@@ -7,17 +7,17 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/meesooqa/cheque/common/api"
+	"github.com/meesooqa/cheque/common/common_api"
 	"github.com/meesooqa/cheque/common/config"
 )
 
 type Server struct {
 	logger         *slog.Logger
 	conf           *config.GrpcServerConfig
-	serviceServers []api.ServiceServer
+	serviceServers []common_api.ServiceServer
 }
 
-func NewServer(logger *slog.Logger, conf *config.GrpcServerConfig, serviceServers []api.ServiceServer) *Server {
+func NewServer(logger *slog.Logger, conf *config.GrpcServerConfig, serviceServers []common_api.ServiceServer) *Server {
 	return &Server{
 		logger:         logger,
 		conf:           conf,

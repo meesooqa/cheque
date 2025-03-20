@@ -1,4 +1,4 @@
-package api
+package common_api
 
 import (
 	"context"
