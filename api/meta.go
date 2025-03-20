@@ -10,17 +10,18 @@ import (
 	"github.com/meesooqa/cheque/api/services/sellerplacess"
 	"github.com/meesooqa/cheque/api/services/sellerss"
 	"github.com/meesooqa/cheque/common/api"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
-func GetServiceServers() []api.ServiceServer {
+func GetServiceServers(dbProvider db_types.DBProvider) []api.ServiceServer {
 	return []api.ServiceServer{
-		sellerss.NewServiceServer(),
-		sellerplacess.NewServiceServer(),
-		categoryss.NewServiceServer(),
-		brandss.NewServiceServer(),
-		productss.NewServiceServer(),
-		imagess.NewServiceServer(),
-		receiptss.NewServiceServer(),
-		receiptproductss.NewServiceServer(),
+		sellerss.NewServiceServer(dbProvider),
+		sellerplacess.NewServiceServer(dbProvider),
+		categoryss.NewServiceServer(dbProvider),
+		brandss.NewServiceServer(dbProvider),
+		productss.NewServiceServer(dbProvider),
+		imagess.NewServiceServer(dbProvider),
+		receiptss.NewServiceServer(dbProvider),
+		receiptproductss.NewServiceServer(dbProvider),
 	}
 }

@@ -17,6 +17,7 @@ import (
 	"github.com/meesooqa/cheque/api-server/web/server"
 	"github.com/meesooqa/cheque/common/common_log"
 	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/db/db_provider"
 )
 
 func main() {
@@ -33,7 +34,7 @@ func main() {
 	}
 	db = db.WithContext(context.TODO())
 
-	ss := api.GetServiceServers()
+	ss := api.GetServiceServers(&db_provider.DefaultDBProvider{})
 	grpcSrv := grpc.NewServer(logger, conf.GrpcServer, ss)
 	err = grpcSrv.Run()
 	if err != nil {
