@@ -1,4 +1,4 @@
-package common
+package db
 
 import (
 	"github.com/meesooqa/cheque/db/models"
@@ -14,7 +14,6 @@ func init() {
 		PkgProtobuf      string
 		PkgServiceServer string
 	}{
-		// TODO move to db
 		{&models.Seller{}, "models.Seller", "sellers", "sellerpb", "sellerss"},
 		{&models.SellerPlace{}, "models.SellerPlace", "sellerplaces", "sellerplacepb", "sellerplacess"},
 		{&models.Category{}, "models.Category", "categories", "categorypb", "categoryss"},

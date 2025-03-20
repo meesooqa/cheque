@@ -11,9 +11,9 @@ import (
 
 	"github.com/jessevdk/go-flags"
 
-	_ "github.com/meesooqa/cheque/common"
 	"github.com/meesooqa/cheque/common/common_log"
 	"github.com/meesooqa/cheque/common/config"
+	_ "github.com/meesooqa/cheque/db"
 	"github.com/meesooqa/cheque/gorm-gen-proto/gen"
 	"github.com/meesooqa/cheque/gorm-gen-proto/reg"
 )
