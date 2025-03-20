@@ -4,6 +4,7 @@ use (
 	./api
 	./api-server
 	./common
+	./db
 	./gorm-gen-proto
 	./import
 	./tools/db
