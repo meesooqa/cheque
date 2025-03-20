@@ -29,13 +29,13 @@ func NewServer(logger *slog.Logger, conf *config.ServerConfig, handlers []web.Ha
 
 func (o *Server) Run() error {
 	o.httpServer = &http.Server{
-		Addr:              fmt.Sprintf(":%d", o.conf.Port),
+		Addr:              fmt.Sprintf("%v:%v", o.conf.Host, o.conf.Port),
 		Handler:           o.router(),
 		ReadHeaderTimeout: 15 * time.Second,
 		WriteTimeout:      15 * time.Second, // HTTPResponseTimeout
 		IdleTimeout:       15 * time.Second,
 	}
-	o.logger.Info("server started", "port", o.conf.Port)
+	o.logger.Info("server started", slog.String("host", o.conf.Host), slog.Int("port", o.conf.Port))
 	return o.httpServer.ListenAndServe()
 }
 
