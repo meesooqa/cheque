@@ -4,17 +4,17 @@ import (
 	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/pb/sellerpb"
-	"github.com/meesooqa/cheque/common/common_db"
+	"github.com/meesooqa/cheque/db/repositories"
 )
 
-func GetFilters(req *pb.GetListRequest) []common_db.FilterFunc {
-	return []common_db.FilterFunc{
+func GetFilters(req *pb.GetListRequest) []repositories.FilterFunc {
+	return []repositories.FilterFunc{
 		NameFilter(req.Name),
 		InnFilter(req.Inn),
 	}
 }
 
-func NameFilter(value string) common_db.FilterFunc {
+func NameFilter(value string) repositories.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("name ILIKE ?", "%"+value+"%")
@@ -23,7 +23,7 @@ func NameFilter(value string) common_db.FilterFunc {
 	}
 }
 
-func InnFilter(value string) common_db.FilterFunc {
+func InnFilter(value string) repositories.FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
 			return db.Where("inn ILIKE ?", "%"+value+"%")

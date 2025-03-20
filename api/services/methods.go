@@ -3,7 +3,7 @@ package services
 import (
 	"context"
 
-	"github.com/meesooqa/cheque/common/common_db"
+	"github.com/meesooqa/cheque/db/repositories"
 )
 
 func (o *BaseService[DbModel, PbModel]) GetItem(ctx context.Context, id uint64) (*PbModel, error) {
@@ -36,10 +36,10 @@ func (o *BaseService[DbModel, PbModel]) DeleteItem(ctx context.Context, id uint6
 	return o.Repo.Delete(ctx, id)
 }
 
-func (o *BaseService[DbModel, PbModel]) GetList(ctx context.Context, filters []common_db.FilterFunc, sortBy, sortOrder string, pageSize, page int) ([]*PbModel, int64, error) {
+func (o *BaseService[DbModel, PbModel]) GetList(ctx context.Context, filters []repositories.FilterFunc, sortBy, sortOrder string, pageSize, page int) ([]*PbModel, int64, error) {
 	dbItems, total, err := o.Repo.GetList(ctx, filters,
-		common_db.SortData{SortField: sortBy, SortOrder: sortOrder},
-		common_db.PaginationData{Page: page, PageSize: pageSize})
+		repositories.SortData{SortField: sortBy, SortOrder: sortOrder},
+		repositories.PaginationData{Page: page, PageSize: pageSize})
 	if err != nil {
 		return nil, 0, err
 	}
