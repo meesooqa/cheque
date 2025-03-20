@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
-	"github.com/meesooqa/cheque/common/models"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 type ReceiptProcessor struct{}
