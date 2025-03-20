@@ -3,6 +3,7 @@ module github.com/meesooqa/cheque/tools/db
 go 1.23.4
 
 replace github.com/meesooqa/cheque/common => ../../common
+replace github.com/meesooqa/cheque/db => ../../db
 
 require github.com/meesooqa/cheque/common v1.22.5
 

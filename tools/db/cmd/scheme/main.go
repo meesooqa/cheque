@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/meesooqa/cheque/common/models"
 	"github.com/meesooqa/cheque/db/db_provider"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 func main() {
