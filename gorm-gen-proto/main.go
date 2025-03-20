@@ -43,7 +43,9 @@ var templates *template.Template
 // `go run ./main.go --gen=protoc` OR `go run ./main.go -g protoc`
 // `go run ./main.go --gen=services` OR `go run ./main.go -g services`
 func main() {
-	logger := common_log.InitConsoleLogger(slog.LevelDebug)
+	lgr := common_log.NewConsoleLoggerProvider(slog.LevelDebug)
+	logger, cleanup := lgr.GetLogger()
+	defer cleanup()
 	logger.Info("begin")
 
 	var err error

@@ -21,7 +21,9 @@ import (
 )
 
 func main() {
-	logger := common_log.InitConsoleLogger(slog.LevelDebug)
+	lgr := common_log.NewConsoleLoggerProvider(slog.LevelDebug)
+	logger, cleanup := lgr.GetLogger()
+	defer cleanup()
 	conf, err := config.GetConf()
 	if err != nil {
 		log.Fatal(err)
