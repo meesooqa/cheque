@@ -5,8 +5,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/meesooqa/cheque/common/models"
 	"github.com/meesooqa/cheque/db/db_types"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 type ProductRepository struct {
