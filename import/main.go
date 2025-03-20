@@ -12,7 +12,8 @@ import (
 func main() {
 	dbProvider := &db_provider.DefaultDBProvider{}
 	db := dbProvider.GetDB(nil)
-	conf, err := config.GetConf()
+	configProvider := config.NewDefaultConfigProvider()
+	conf, err := configProvider.GetConf()
 	if err != nil {
 		log.Fatal(err)
 	}

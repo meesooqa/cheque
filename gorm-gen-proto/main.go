@@ -56,7 +56,8 @@ func main() {
 	}
 	logger.Debug("options", slog.Any("opts", opts))
 
-	c, err := config.GetConf()
+	configProvider := config.NewDefaultConfigProvider()
+	c, err := configProvider.GetConf()
 	if err != nil {
 		log.Fatal(err)
 	}

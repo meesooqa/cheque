@@ -14,7 +14,8 @@ import (
 type DefaultDBProvider struct{}
 
 func (o *DefaultDBProvider) GetDB(ctx context.Context) *gorm.DB {
-	conf, err := config.GetConf()
+	configProvider := config.NewDefaultConfigProvider()
+	conf, err := configProvider.GetConf()
 	if err != nil {
 		log.Fatalf("can't load config: %v", err)
 	}

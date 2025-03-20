@@ -21,10 +21,11 @@ import (
 )
 
 func main() {
-	lgr := common_log.NewConsoleLoggerProvider(slog.LevelDebug)
-	logger, cleanup := lgr.GetLogger()
+	loggerProvider := common_log.NewConsoleLoggerProvider(slog.LevelDebug)
+	logger, cleanup := loggerProvider.GetLogger()
 	defer cleanup()
-	conf, err := config.GetConf()
+	configProvider := config.NewDefaultConfigProvider()
+	conf, err := configProvider.GetConf()
 	if err != nil {
 		log.Fatal(err)
 	}
