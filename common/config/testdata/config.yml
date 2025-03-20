@@ -2,6 +2,7 @@ system:
   data_path: "test/data"
   upload_path: "test/upload"
 server:
+  host: "localhost"
   port: 4321
   cors:
     - "http://localhost:1111"

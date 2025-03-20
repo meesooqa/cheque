@@ -37,6 +37,7 @@ type DbConfig struct {
 
 // ServerConfig - server parameters
 type ServerConfig struct {
+	Host string   `yaml:"host"`
 	Port int      `yaml:"port"`
 	CORS []string `yaml:"cors"`
 }

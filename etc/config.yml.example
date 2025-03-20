@@ -2,6 +2,7 @@ system:
   data_path: "var/data" # see also docker volume
   upload_path: "var/upload" # see also docker volume
 server:
+  host: "localhost"
   port: 8080
   cors:
     - "http://localhost:3000"

@@ -17,6 +17,7 @@ func TestLoad(t *testing.T) {
 	assert.Equal(t, "test/upload", c.System.UploadPath)
 
 	assert.IsType(t, &ServerConfig{}, c.Server)
+	assert.Equal(t, "localhost", c.Server.Host)
 	assert.Equal(t, 4321, c.Server.Port)
 	assert.Equal(t, []string{
 		"http://localhost:1111",
