@@ -8,8 +8,8 @@ import (
 
 	pb "github.com/meesooqa/cheque/api/pb/sellerpb"
 	"github.com/meesooqa/cheque/api/services"
-	"github.com/meesooqa/cheque/common/models"
 	"github.com/meesooqa/cheque/db/db_types"
+	"github.com/meesooqa/cheque/db/models"
 	"github.com/meesooqa/cheque/db/repositories"
 )
 

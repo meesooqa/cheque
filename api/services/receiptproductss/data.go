@@ -5,7 +5,7 @@ import (
 
 	"github.com/meesooqa/cheque/api/pb/productpb"
 	pb "github.com/meesooqa/cheque/api/pb/receiptproductpb"
-	"github.com/meesooqa/cheque/common/models"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 type Converter struct{}

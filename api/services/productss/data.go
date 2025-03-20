@@ -7,7 +7,7 @@ import (
 	"github.com/meesooqa/cheque/api/services/brandss"
 	"github.com/meesooqa/cheque/api/services/categoryss"
 	"github.com/meesooqa/cheque/api/services/imagess"
-	"github.com/meesooqa/cheque/common/models"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 type Converter struct{}
