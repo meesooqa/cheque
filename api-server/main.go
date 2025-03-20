@@ -1,13 +1,8 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"log"
 	"log/slog"
-
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 
 	"github.com/meesooqa/cheque/api"
 	"github.com/meesooqa/cheque/api-server/grpc"
@@ -29,13 +24,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	dsn := fmt.Sprintf("host=%s port=%d sslmode=%s user=%s password=%s dbname=%s", conf.DB.Host, conf.DB.Port, conf.DB.SslMode, conf.DB.User, conf.DB.Password, conf.DB.DbName)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	db = db.WithContext(context.TODO())
 
 	ss := api.GetServiceServers(db_provider.NewDefaultDBProvider())
 	grpcSrv := grpc.NewServer(logger, conf.GrpcServer, ss)
