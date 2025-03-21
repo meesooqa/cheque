@@ -50,6 +50,7 @@ func TestNewDefaultDBProvider(t *testing.T) {
 
 func TestConstructDSN(t *testing.T) {
 	// Test that the DSN string is correctly constructed
+	mockConfig := new(MockConfigProvider)
 	dbConfig := &config.DbConfig{
 		Host:     "testhost",
 		Port:     5432,
@@ -58,10 +59,13 @@ func TestConstructDSN(t *testing.T) {
 		Password: "testpass",
 		DbName:   "testdb",
 	}
-	conf := &config.Conf{DB: dbConfig}
+	mockConfig.On("GetConf").Return(&config.Conf{DB: dbConfig}, nil)
+	provider := &DefaultDBProvider{
+		configProvider: mockConfig,
+	}
 
 	expectedDSN := "host=testhost port=5432 sslmode=disable user=testuser password=testpass dbname=testdb"
-	actualDSN := constructDSN(conf)
+	actualDSN := provider.constructDSN()
 
 	assert.Equal(t, expectedDSN, actualDSN)
 }

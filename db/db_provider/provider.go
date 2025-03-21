@@ -16,12 +16,6 @@ var gormOpen = func(dialector gorm.Dialector, config *gorm.Config) (*gorm.DB, er
 	return gorm.Open(dialector, config)
 }
 
-// constructDSN creates a PostgreSQL connection string from config
-func constructDSN(conf *config.Conf) string {
-	return fmt.Sprintf("host=%s port=%d sslmode=%s user=%s password=%s dbname=%s",
-		conf.DB.Host, conf.DB.Port, conf.DB.SslMode, conf.DB.User, conf.DB.Password, conf.DB.DbName)
-}
-
 type DefaultDBProvider struct {
 	configProvider config.ConfigProvider
 }
@@ -33,12 +27,7 @@ func NewDefaultDBProvider() *DefaultDBProvider {
 }
 
 func (o *DefaultDBProvider) GetDB(ctx context.Context) *gorm.DB {
-	conf, err := o.configProvider.GetConf()
-	if err != nil {
-		log.Fatalf("can't load config: %v", err)
-	}
-	dsn := constructDSN(conf)
-	// dsn := fmt.Sprintf("host=%s port=%d sslmode=%s user=%s password=%s dbname=%s", conf.DB.Host, conf.DB.Port, conf.DB.SslMode, conf.DB.User, conf.DB.Password, conf.DB.DbName)
+	dsn := o.constructDSN()
 	db, err := gormOpen(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect database: %v", err)
@@ -46,8 +35,16 @@ func (o *DefaultDBProvider) GetDB(ctx context.Context) *gorm.DB {
 	if ctx == nil {
 		ctx = context.TODO()
 	}
-	if conf.DB.IsDebugMode {
-		//db = db.Debug()
-	}
+	// TODO remove if conf.DB.IsDebugMode { db = db.Debug() }
 	return db.WithContext(ctx)
+}
+
+// constructDSN creates a PostgreSQL connection string from config
+func (o *DefaultDBProvider) constructDSN() string {
+	conf, err := o.configProvider.GetConf()
+	if err != nil {
+		log.Fatalf("can't load config: %v", err)
+	}
+	return fmt.Sprintf("host=%s port=%d sslmode=%s user=%s password=%s dbname=%s",
+		conf.DB.Host, conf.DB.Port, conf.DB.SslMode, conf.DB.User, conf.DB.Password, conf.DB.DbName)
 }
