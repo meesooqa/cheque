@@ -2,6 +2,7 @@ package db_provider
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -11,9 +12,10 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
-// MockConfigProvider is a mock implementation of the ConfigProvider interface
+// Mock implementations
 type MockConfigProvider struct {
 	mock.Mock
 }
@@ -26,6 +28,18 @@ func (m *MockConfigProvider) GetConf() (*config.Conf, error) {
 	return args.Get(0).(*config.Conf), args.Error(1)
 }
 
+type MockGormOpener struct {
+	mock.Mock
+}
+
+func (m *MockGormOpener) Open(dsn string, config *gorm.Config) (*gorm.DB, error) {
+	args := m.Called(dsn, config)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).(*gorm.DB), args.Error(1)
+}
+
 type testGormOpener struct{}
 
 func (o *testGormOpener) Open(dsn string, config *gorm.Config) (*gorm.DB, error) {
@@ -33,16 +47,151 @@ func (o *testGormOpener) Open(dsn string, config *gorm.Config) (*gorm.DB, error)
 }
 
 func TestNewDefaultDBProvider(t *testing.T) {
-	// Test the constructor function
+	// Test that the function returns a non-nil provider
 	provider := NewDefaultDBProvider()
 	assert.NotNil(t, provider)
 	assert.NotNil(t, provider.configProvider)
-	assert.IsType(t, &config.DefaultConfigProvider{}, provider.configProvider)
+	assert.NotNil(t, provider.gormOpener)
+}
+
+func TestNewDefaultDBProviderWithCustomOpener(t *testing.T) {
+	// Test with custom implementations
+	mockConfigProvider := new(MockConfigProvider)
+	mockGormOpener := new(MockGormOpener)
+
+	provider := NewDefaultDBProviderWithCustomOpener(mockConfigProvider, mockGormOpener)
+
+	assert.NotNil(t, provider)
+	assert.Equal(t, mockConfigProvider, provider.configProvider)
+	assert.Equal(t, mockGormOpener, provider.gormOpener)
 }
 
 func TestConstructDSN(t *testing.T) {
-	// Test that the DSN string is correctly constructed
-	conf := &config.Conf{
+	provider := &DefaultDBProvider{}
+
+	testCases := []struct {
+		name     string
+		config   *config.Conf
+		expected string
+	}{
+		{
+			name: "standard configuration",
+			config: &config.Conf{
+				DB: &config.DbConfig{
+					Host:     "localhost",
+					Port:     5432,
+					SslMode:  "disable",
+					User:     "postgres",
+					Password: "secret",
+					DbName:   "testdb",
+				},
+			},
+			expected: "host=localhost port=5432 sslmode=disable user=postgres password=secret dbname=testdb",
+		},
+		{
+			name: "empty password",
+			config: &config.Conf{
+				DB: &config.DbConfig{
+					Host:     "db.example.com",
+					Port:     5432,
+					SslMode:  "require",
+					User:     "appuser",
+					Password: "",
+					DbName:   "production",
+				},
+			},
+			expected: "host=db.example.com port=5432 sslmode=require user=appuser password= dbname=production",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			result := provider.constructDSN(tc.config)
+			assert.Equal(t, tc.expected, result)
+		})
+	}
+}
+
+func TestGetDB_Success(t *testing.T) {
+	// Setup mocks
+	mockConfigProvider := new(MockConfigProvider)
+	ctx := context.Background()
+	// Normal case (debug mode off)
+	testConf := &config.Conf{
+		DB: &config.DbConfig{
+			Host:        "testhost",
+			Port:        5432,
+			SslMode:     "disable",
+			User:        "testuser",
+			Password:    "testpass",
+			DbName:      "testdb",
+			IsDebugMode: false,
+		},
+	}
+	mockConfigProvider.On("GetConf").Return(testConf, nil)
+	provider := NewDefaultDBProviderWithCustomOpener(mockConfigProvider, &testGormOpener{})
+	db, err := provider.GetDB(ctx)
+	require.NoError(t, err)
+	assert.NotNil(t, db)
+	mockConfigProvider.AssertExpectations(t)
+}
+
+func TestGetDB_DebugMode(t *testing.T) {
+	// Setup mocks
+	mockConfigProvider := new(MockConfigProvider)
+	ctx := context.Background()
+	// Debug mode on case
+	testConf := &config.Conf{
+		DB: &config.DbConfig{
+			Host:        "testhost",
+			Port:        5432,
+			SslMode:     "disable",
+			User:        "testuser",
+			Password:    "testpass",
+			DbName:      "testdb",
+			IsDebugMode: true,
+		},
+	}
+	mockConfigProvider.On("GetConf").Return(testConf, nil)
+
+	provider := NewDefaultDBProviderWithCustomOpener(mockConfigProvider, &testGormOpener{})
+
+	db, err := provider.GetDB(ctx)
+
+	require.NoError(t, err)
+	assert.NotNil(t, db)
+	mockConfigProvider.AssertExpectations(t)
+}
+
+func TestGetDB_ConfigError(t *testing.T) {
+	// Setup mocks
+	mockConfigProvider := new(MockConfigProvider)
+	mockGormOpener := new(MockGormOpener)
+	ctx := context.Background()
+
+	// Config error case
+	configError := errors.New("config error")
+	mockConfigProvider.On("GetConf").Return(nil, configError)
+
+	provider := NewDefaultDBProviderWithCustomOpener(mockConfigProvider, mockGormOpener)
+
+	db, err := provider.GetDB(ctx)
+
+	assert.Nil(t, db)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "failed to load config")
+	mockConfigProvider.AssertExpectations(t)
+	mockGormOpener.AssertNotCalled(t, "Open")
+}
+
+func TestGetDB_DBConnectionError(t *testing.T) {
+	// Setup mocks
+	mockConfigProvider := new(MockConfigProvider)
+	mockGormOpener := new(MockGormOpener)
+	ctx := context.Background()
+
+	// DB connection error case
+	testConf := &config.Conf{
 		DB: &config.DbConfig{
 			Host:     "testhost",
 			Port:     5432,
@@ -52,62 +201,26 @@ func TestConstructDSN(t *testing.T) {
 			DbName:   "testdb",
 		},
 	}
-	provider := &DefaultDBProvider{configProvider: nil}
 
 	expectedDSN := "host=testhost port=5432 sslmode=disable user=testuser password=testpass dbname=testdb"
-	actualDSN := provider.constructDSN(conf)
+	dbError := errors.New("connection error")
 
-	assert.Equal(t, expectedDSN, actualDSN)
+	mockConfigProvider.On("GetConf").Return(testConf, nil)
+	mockGormOpener.On("Open", expectedDSN, mock.AnythingOfType("*gorm.Config")).Return(nil, dbError)
+
+	provider := NewDefaultDBProviderWithCustomOpener(mockConfigProvider, mockGormOpener)
+
+	db, err := provider.GetDB(ctx)
+
+	assert.Nil(t, db)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "failed to connect database")
+	mockConfigProvider.AssertExpectations(t)
+	mockGormOpener.AssertExpectations(t)
 }
 
-func TestGetDB_ConfigConstruction(t *testing.T) {
-	// Create mock config provider
-	mockConfig := new(MockConfigProvider)
-	dbConfig := &config.DbConfig{
-		Host:     "testhost",
-		Port:     5432,
-		SslMode:  "disable",
-		User:     "testuser",
-		Password: "testpassword",
-		DbName:   "testdb",
-	}
-	mockConfig.On("GetConf").Return(&config.Conf{DB: dbConfig}, nil)
-
-	// Create our provider with the mock config
-	provider := &DefaultDBProvider{
-		configProvider: mockConfig,
-		gormOpener:     &testGormOpener{},
-	}
-
-	_, err := provider.GetDB(context.Background())
-	require.NoError(t, err)
-
-	// Verify the mock was called
-	mockConfig.AssertExpectations(t)
-}
-
-func TestGetDB_Success(t *testing.T) {
-	// Create mock config provider
-	mockConfig := new(MockConfigProvider)
-	dbConfig := &config.DbConfig{
-		Host:     "testhost",
-		Port:     5432,
-		SslMode:  "disable",
-		User:     "testuser",
-		Password: "testpassword",
-		DbName:   "testdb",
-	}
-	mockConfig.On("GetConf").Return(&config.Conf{DB: dbConfig}, nil)
-
-	// Create provider with mock config
-	provider := &DefaultDBProvider{
-		configProvider: mockConfig,
-		gormOpener:     &testGormOpener{},
-	}
-
-	_, err := provider.GetDB(context.Background())
-	require.NoError(t, err)
-
-	// Verify our config provider was called as expected
-	mockConfig.AssertExpectations(t)
+func TestPostgresGormOpenerImplementation(t *testing.T) {
+	// Just verify that the struct implements the interface
+	var opener db_types.GormOpener = &postgresGormOpener{}
+	assert.NotNil(t, opener)
 }
