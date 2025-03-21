@@ -6,8 +6,12 @@ import (
 	"gorm.io/gorm"
 )
 
+type GormOpener interface {
+	Open(dsn string, config *gorm.Config) (*gorm.DB, error)
+}
+
 type DBProvider interface {
-	GetDB(ctx context.Context) *gorm.DB
+	GetDB(ctx context.Context) (*gorm.DB, error)
 }
 
 type FilterFunc func(db *gorm.DB) *gorm.DB

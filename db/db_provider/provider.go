@@ -3,49 +3,56 @@ package db_provider
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
 	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
-// Variable to allow mocking gorm.Open
-var gormOpen = func(dialector gorm.Dialector, config *gorm.Config) (*gorm.DB, error) {
-	return gorm.Open(dialector, config)
+type postgresGormOpener struct{}
+
+func (o *postgresGormOpener) Open(dsn string, config *gorm.Config) (*gorm.DB, error) {
+	return gorm.Open(postgres.Open(dsn), config)
 }
 
 type DefaultDBProvider struct {
 	configProvider config.ConfigProvider
+	gormOpener     db_types.GormOpener
 }
 
 func NewDefaultDBProvider() *DefaultDBProvider {
+	return NewDefaultDBProviderWithCustomOpener(
+		config.NewDefaultConfigProvider(),
+		&postgresGormOpener{},
+	)
+}
+
+func NewDefaultDBProviderWithCustomOpener(configProvider config.ConfigProvider, gormOpener db_types.GormOpener) *DefaultDBProvider {
 	return &DefaultDBProvider{
-		configProvider: config.NewDefaultConfigProvider(),
+		configProvider: configProvider,
+		gormOpener:     gormOpener,
 	}
 }
 
-func (o *DefaultDBProvider) GetDB(ctx context.Context) *gorm.DB {
+func (o *DefaultDBProvider) GetDB(ctx context.Context) (*gorm.DB, error) {
 	conf, err := o.configProvider.GetConf()
 	if err != nil {
-		log.Fatalf("can't load config: %v", err)
+		return nil, fmt.Errorf("failed to load config: %v", err)
 	}
 	dsn := o.constructDSN(conf)
-	db, err := gormOpen(postgres.Open(dsn), &gorm.Config{})
+	db, err := o.gormOpener.Open(dsn, &gorm.Config{})
 	if err != nil {
-		log.Fatalf("failed to connect database: %v", err)
-	}
-	if ctx == nil {
-		ctx = context.TODO()
+		return nil, fmt.Errorf("failed to connect database: %v", err)
 	}
 	if conf.DB.IsDebugMode {
 		db = db.Debug()
 	}
-	return db.WithContext(ctx)
+	return db.WithContext(ctx), nil
 }
 
-// constructDSN creates a PostgreSQL connection string from config
+// constructDSN creates a connection string from config
 func (o *DefaultDBProvider) constructDSN(conf *config.Conf) string {
 	return fmt.Sprintf("host=%s port=%d sslmode=%s user=%s password=%s dbname=%s",
 		conf.DB.Host, conf.DB.Port, conf.DB.SslMode, conf.DB.User, conf.DB.Password, conf.DB.DbName)
