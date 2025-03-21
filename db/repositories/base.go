@@ -17,7 +17,10 @@ type BaseRepository[DbModel any] struct {
 }
 
 func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []db_types.FilterFunc, sort db_types.SortData, pagination db_types.PaginationData) ([]*DbModel, int64, error) {
-	db := o.DBProvider.GetDB(ctx)
+	db, err := o.DBProvider.GetDB(ctx)
+	if err != nil {
+		return nil, 0, err
+	}
 	db = o.preload(db)
 	query := db.Model(new(DbModel))
 	if len(filters) > 0 {
@@ -27,7 +30,7 @@ func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []db_type
 	}
 	var total int64
 	// before setting the limit
-	if err := query.Count(&total).Error; err != nil {
+	if err = query.Count(&total).Error; err != nil {
 		return nil, 0, err
 	}
 	o.addSort(query, sort)
@@ -41,17 +44,23 @@ func (o *BaseRepository[DbModel]) GetList(ctx context.Context, filters []db_type
 }
 
 func (o *BaseRepository[DbModel]) Get(ctx context.Context, id uint64) (*DbModel, error) {
-	db := o.DBProvider.GetDB(ctx)
+	db, err := o.DBProvider.GetDB(ctx)
+	if err != nil {
+		return nil, err
+	}
 	db = o.preload(db)
 	var item DbModel
-	if err := db.First(&item, id).Error; err != nil {
+	if err = db.First(&item, id).Error; err != nil {
 		return nil, fmt.Errorf("item with ID %d not found: %w", id, err)
 	}
 	return &item, nil
 }
 
 func (o *BaseRepository[DbModel]) Create(ctx context.Context, newItem *DbModel) (*DbModel, error) {
-	db := o.DBProvider.GetDB(ctx)
+	db, err := o.DBProvider.GetDB(ctx)
+	if err != nil {
+		return nil, err
+	}
 
 	// Start a transaction
 	tx := db.Begin()
@@ -60,19 +69,19 @@ func (o *BaseRepository[DbModel]) Create(ctx context.Context, newItem *DbModel) 
 	}
 
 	// Create the item within the transaction
-	if err := tx.Create(newItem).Error; err != nil {
+	if err = tx.Create(newItem).Error; err != nil {
 		tx.Rollback()
 		return nil, fmt.Errorf("failed to create item: %w", err)
 	}
 
 	// Save associations using our common method
-	if err := o.saveAssociations(tx, newItem, newItem); err != nil {
+	if err = o.saveAssociations(tx, newItem, newItem); err != nil {
 		tx.Rollback()
 		return nil, err
 	}
 
 	// Commit the transaction
-	if err := tx.Commit().Error; err != nil {
+	if err = tx.Commit().Error; err != nil {
 		tx.Rollback()
 		return nil, fmt.Errorf("failed to commit transaction: %w", err)
 	}
@@ -91,7 +100,10 @@ func (o *BaseRepository[DbModel]) Update(ctx context.Context, id uint64, updated
 		return nil, err
 	}
 
-	db := o.DBProvider.GetDB(ctx)
+	db, err := o.DBProvider.GetDB(ctx)
+	if err != nil {
+		return nil, err
+	}
 	tx := db.Begin()
 	if tx.Error != nil {
 		return nil, fmt.Errorf("failed to begin transaction: %w", tx.Error)
@@ -115,7 +127,10 @@ func (o *BaseRepository[DbModel]) Update(ctx context.Context, id uint64, updated
 }
 
 func (o *BaseRepository[DbModel]) Delete(ctx context.Context, id uint64) error {
-	db := o.DBProvider.GetDB(ctx)
+	db, err := o.DBProvider.GetDB(ctx)
+	if err != nil {
+		return err
+	}
 	var dbItem DbModel
 	result := db.Delete(&dbItem, id)
 	if result.Error != nil {
