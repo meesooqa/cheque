@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 	"fmt"
+	"reflect"
 
 	"gorm.io/gorm"
 
@@ -51,10 +52,37 @@ func (o *BaseRepository[DbModel]) Get(ctx context.Context, id uint64) (*DbModel,
 
 func (o *BaseRepository[DbModel]) Create(ctx context.Context, newItem *DbModel) (*DbModel, error) {
 	db := o.DBProvider.GetDB(ctx)
-	if err := db.Create(&newItem).Error; err != nil {
+
+	// Start a transaction
+	tx := db.Begin()
+	if tx.Error != nil {
+		return nil, fmt.Errorf("failed to begin transaction: %w", tx.Error)
+	}
+
+	// Create the item within the transaction
+	if err := tx.Create(newItem).Error; err != nil {
+		tx.Rollback()
+		return nil, fmt.Errorf("failed to create item: %w", err)
+	}
+
+	// Save associations using our common method
+	if err := o.saveAssociations(tx, newItem, newItem); err != nil {
+		tx.Rollback()
 		return nil, err
 	}
-	return newItem, nil
+
+	// Commit the transaction
+	if err := tx.Commit().Error; err != nil {
+		tx.Rollback()
+		return nil, fmt.Errorf("failed to commit transaction: %w", err)
+	}
+
+	if field := reflect.ValueOf(newItem).Elem().FieldByName("ID"); field.IsValid() && field.CanUint() {
+		// Get fresh item with all associations loaded
+		return o.Get(ctx, field.Uint())
+	} else {
+		return newItem, nil
+	}
 }
 
 func (o *BaseRepository[DbModel]) Update(ctx context.Context, id uint64, updatedItem *DbModel) (*DbModel, error) {
@@ -73,12 +101,10 @@ func (o *BaseRepository[DbModel]) Update(ctx context.Context, id uint64, updated
 		tx.Rollback()
 		return nil, fmt.Errorf("failed to update item: %w", err)
 	}
-	if hasAssoc, ok := any(o.Self).(db_types.HasAssociations[DbModel]); ok {
-		err = hasAssoc.UpdateAssociations(tx, dbItem, updatedItem)
-		if err != nil {
-			tx.Rollback()
-			return nil, fmt.Errorf("failed to update associations: %w", err)
-		}
+
+	if err = o.saveAssociations(tx, dbItem, updatedItem); err != nil {
+		tx.Rollback()
+		return nil, err
 	}
 
 	if err = tx.Commit().Error; err != nil {
@@ -119,6 +145,17 @@ func (o *BaseRepository[DbModel]) addPagination(query *gorm.DB, pagination db_ty
 		offset := pagination.PageSize * (pagination.Page - 1)
 		query = query.Offset(offset)
 	}
+}
+
+// saveAssociations handles saving associations within a transaction
+func (o *BaseRepository[DbModel]) saveAssociations(tx *gorm.DB, item *DbModel, updatedItem *DbModel) error {
+	if hasAssoc, ok := any(o.Self).(db_types.HasAssociations[DbModel]); ok {
+		err := hasAssoc.UpdateAssociations(tx, item, updatedItem)
+		if err != nil {
+			return fmt.Errorf("failed to update associations: %w", err)
+		}
+	}
+	return nil
 }
 
 func (o *BaseRepository[DbModel]) preload(db *gorm.DB) *gorm.DB {
