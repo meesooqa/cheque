@@ -15,7 +15,8 @@ func FieldFilter(fieldName, value string) FilterFunc {
 // ExactFieldFilter creates a filter that applies an exact match condition on a field
 func ExactFieldFilter(fieldName string, value interface{}) FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
-		if value != nil && value != "" && value != 0 {
+		// TODO "value != false"?
+		if value != nil && value != "" && value != 0 && value != false {
 			return db.Where(fieldName+" = ?", value)
 		}
 		return db
