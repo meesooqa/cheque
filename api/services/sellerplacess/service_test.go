@@ -166,6 +166,7 @@ func TestFilterFunctions(t *testing.T) {
 	seller, _ := createTestData(t, db)
 
 	t.Run("SellerIDFilter filters by seller_id", func(t *testing.T) {
+		SellerIDFilter := db_types.ModelExactFieldFilter[DbModel]("seller_id")
 		filter := SellerIDFilter(uint64(seller.ID))
 
 		// Применяем фильтр
