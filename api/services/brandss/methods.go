@@ -3,7 +3,7 @@ package brandss
 import (
 	"context"
 
-	pb "receipt-002/api/gen/pb/brandpb/v1"
+	pb "github.com/meesooqa/cheque/api/gen/pb/brandpb/v1"
 )
 
 func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {

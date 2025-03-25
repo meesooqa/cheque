@@ -3,7 +3,7 @@ package sellerplacess
 import (
 	"context"
 
-	pb "receipt-002/api/gen/pb/sellerplacepb/v1"
+	pb "github.com/meesooqa/cheque/api/gen/pb/sellerplacepb/v1"
 )
 
 func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {

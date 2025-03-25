@@ -6,7 +6,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"receipt-002/db/models"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 // processSellerPlace processes Seller Place using unique combination seller_id, name and address

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	pb "receipt-002/api/gen/pb/imagepb/v1"
-	"receipt-002/common/config"
+	pb "github.com/meesooqa/cheque/api/gen/pb/imagepb/v1"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 type Converter struct {

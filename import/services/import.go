@@ -5,8 +5,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"receipt-002/import/dto"
-	"receipt-002/import/processors"
+	"github.com/meesooqa/cheque/import/dto"
+	"github.com/meesooqa/cheque/import/processors"
 )
 
 // ImporterService defines interface for importer service

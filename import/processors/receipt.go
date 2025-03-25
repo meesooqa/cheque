@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
-	"receipt-002/db/models"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 // ReceiptProcessorInterface defines the interface for receipt processors

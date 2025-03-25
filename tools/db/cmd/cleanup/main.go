@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"receipt-002/db/db_provider"
+	"github.com/meesooqa/cheque/db/db_provider"
 )
 
 func main() {

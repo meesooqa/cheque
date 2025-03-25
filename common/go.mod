@@ -1,4 +1,4 @@
-module receipt-002/common
+module github.com/meesooqa/cheque/common
 
 go 1.24.1
 

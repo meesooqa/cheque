@@ -3,7 +3,7 @@ package imagess
 import (
 	"context"
 
-	pb "receipt-002/api/gen/pb/imagepb/v1"
+	pb "github.com/meesooqa/cheque/api/gen/pb/imagepb/v1"
 )
 
 func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {

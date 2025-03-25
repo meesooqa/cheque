@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"gorm.io/gorm"
 
-	"receipt-002/common/config"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 type MockDBProvider struct {

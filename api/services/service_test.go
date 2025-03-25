@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"receipt-002/db/db_types"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
 // MockRepository is a mock for db_types.Repository

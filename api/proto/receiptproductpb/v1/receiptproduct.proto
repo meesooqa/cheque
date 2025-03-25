@@ -5,7 +5,7 @@ package receiptproductpb.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "receipt-002/api/pb/receiptproductpb/v1;receiptproductpb";
+option go_package = "github.com/meesooqa/cheque/api/pb/receiptproductpb/v1;receiptproductpb";
 
 message Model {
   uint64 id = 1;

@@ -11,7 +11,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"receipt-002/db/models"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 type ReceiptProcessorTestSuite struct {

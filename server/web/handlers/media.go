@@ -4,7 +4,7 @@ import (
 	"log/slog"
 	"net/http"
 
-	"receipt-002/common/config"
+	"github.com/meesooqa/cheque/common/config"
 )
 
 type Media struct {

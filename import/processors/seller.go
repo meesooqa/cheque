@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"receipt-002/db/models"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 // processSeller processes Seller and uses cache to avoid duplicates

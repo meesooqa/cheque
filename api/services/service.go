@@ -1,6 +1,6 @@
 package services
 
-import "receipt-002/db/db_types"
+import "github.com/meesooqa/cheque/db/db_types"
 
 type Converter[DbModel any, PbModel any] interface {
 	DataDbToPb(dbItem *DbModel) *PbModel

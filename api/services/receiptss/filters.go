@@ -4,8 +4,8 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gorm"
 
-	pb "receipt-002/api/gen/pb/receiptpb/v1"
-	"receipt-002/db/db_types"
+	pb "github.com/meesooqa/cheque/api/gen/pb/receiptpb/v1"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
 func GetFilters(req *pb.GetListRequest) []db_types.FilterFunc {

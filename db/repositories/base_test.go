@@ -7,7 +7,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"receipt-002/db/db_types"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
 // TestModel represents a model for testing the repository

@@ -5,7 +5,7 @@ package sellerplacepb.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "receipt-002/api/pb/sellerplacepb/v1;sellerplacepb";
+option go_package = "github.com/meesooqa/cheque/api/pb/sellerplacepb/v1;sellerplacepb";
 
 message Model {
   uint64 id = 1;

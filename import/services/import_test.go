@@ -13,8 +13,8 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"receipt-002/db/models"
-	"receipt-002/import/dto"
+	"github.com/meesooqa/cheque/db/models"
+	"github.com/meesooqa/cheque/import/dto"
 )
 
 // MockProcessor implements the ReceiptProcessorInterface for testing

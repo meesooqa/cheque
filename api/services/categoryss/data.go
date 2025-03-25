@@ -1,6 +1,6 @@
 package categoryss
 
-import pb "receipt-002/api/gen/pb/categorypb/v1"
+import pb "github.com/meesooqa/cheque/api/gen/pb/categorypb/v1"
 
 type Converter struct{}
 

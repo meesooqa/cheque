@@ -7,8 +7,8 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
-	"receipt-002/common/config"
-	"receipt-002/db/db_types"
+	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
 type postgresGormOpener struct{}

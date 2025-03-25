@@ -3,7 +3,7 @@ package services
 import (
 	"context"
 
-	"receipt-002/db/db_types"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
 func (o *BaseService[DbModel, PbModel]) GetList(ctx context.Context, filters []db_types.FilterFunc, sortBy, sortOrder string, pageSize, page int) ([]*PbModel, int64, error) {

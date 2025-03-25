@@ -5,10 +5,10 @@ import (
 	"log"
 	"os"
 
-	"receipt-002/common/config"
-	"receipt-002/db/db_provider"
-	"receipt-002/db/db_types"
-	"receipt-002/import/services"
+	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/db/db_provider"
+	"github.com/meesooqa/cheque/db/db_types"
+	"github.com/meesooqa/cheque/import/services"
 )
 
 func main() {

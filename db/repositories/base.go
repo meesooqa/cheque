@@ -7,7 +7,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"receipt-002/db/db_types"
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
 type BaseRepository[DbModel any] struct {

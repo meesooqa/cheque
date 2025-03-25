@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"receipt-002/db/db_provider"
-	"receipt-002/db/models"
+	"github.com/meesooqa/cheque/db/db_provider"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 func main() {

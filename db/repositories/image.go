@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"receipt-002/db/db_types"
-	"receipt-002/db/models"
+	"github.com/meesooqa/cheque/db/db_types"
+	"github.com/meesooqa/cheque/db/models"
 )
 
 type ImageRepository struct {

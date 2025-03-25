@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"receipt-002/common/config"
-	"receipt-002/server/web"
+	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/server/web"
 )
 
 type Server struct {

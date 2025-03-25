@@ -1,6 +1,6 @@
 package productss
 
-import pb "receipt-002/api/gen/pb/productpb/v1"
+import pb "github.com/meesooqa/cheque/api/gen/pb/productpb/v1"
 
 type Converter struct{}
 

@@ -4,15 +4,15 @@ import (
 	"log"
 	"log/slog"
 
-	"receipt-002/api"
-	"receipt-002/common/common_log"
-	"receipt-002/common/config"
-	"receipt-002/db/db_provider"
-	"receipt-002/server/grpc"
-	"receipt-002/server/web"
-	"receipt-002/server/web/handlers"
-	"receipt-002/server/web/middlewares"
-	"receipt-002/server/web/server"
+	"github.com/meesooqa/cheque/api"
+	"github.com/meesooqa/cheque/common/common_log"
+	"github.com/meesooqa/cheque/common/config"
+	"github.com/meesooqa/cheque/db/db_provider"
+	"github.com/meesooqa/cheque/server/grpc"
+	"github.com/meesooqa/cheque/server/web"
+	"github.com/meesooqa/cheque/server/web/handlers"
+	"github.com/meesooqa/cheque/server/web/middlewares"
+	"github.com/meesooqa/cheque/server/web/server"
 )
 
 func main() {
