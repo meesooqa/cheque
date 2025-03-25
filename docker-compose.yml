@@ -51,7 +51,7 @@ services:
   import_cat:
     build:
       context: .
-      dockerfile: import-cat/Dockerfile
+      dockerfile: import/Dockerfile.cat
     container_name: cheque_import_cat
     depends_on:
       postgres:
