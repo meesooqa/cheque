@@ -5,6 +5,7 @@ use (
 	./common
 	./db
 	./import
+	./import-cat
 	./server
 	./tools/db
 )
