@@ -13,7 +13,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/meesooqa/cheque/api v1.22.5
 	github.com/meesooqa/cheque/common v1.22.5
-	github.com/meesooqa/cheque/db v0.0.0-20250325075614-500f8fb1a6ac
+	github.com/meesooqa/cheque/db v1.24.1
 	google.golang.org/grpc v1.71.0
 )
 

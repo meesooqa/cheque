@@ -6,7 +6,7 @@ replace github.com/meesooqa/cheque/common => ../../common
 
 replace github.com/meesooqa/cheque/db => ../../db
 
-require github.com/meesooqa/cheque/db v0.0.0-20250325075614-500f8fb1a6ac
+require github.com/meesooqa/cheque/db v1.24.1
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
