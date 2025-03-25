@@ -145,6 +145,7 @@ func TestNameFilter(t *testing.T) {
 	})
 
 	t.Run("Returns all when value is empty", func(t *testing.T) {
+		NameFilter := db_types.ModelFieldFilter[DbModel]("name")
 		filter := NameFilter("")
 
 		db := db.Session(&gorm.Session{}).Table("brands")
