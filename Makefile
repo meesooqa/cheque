@@ -20,7 +20,6 @@ version:
 	git tag common/$(word 2,$(MAKECMDGOALS))
 	git tag db/$(word 2,$(MAKECMDGOALS))
 	git tag import/$(word 2,$(MAKECMDGOALS))
-	git tag import-cat/$(word 2,$(MAKECMDGOALS))
 	git tag server/$(word 2,$(MAKECMDGOALS))
 	git tag tools/db/$(word 2,$(MAKECMDGOALS))
 
