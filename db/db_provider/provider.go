@@ -46,6 +46,14 @@ func (o *DefaultDBProvider) GetDB(ctx context.Context) (*gorm.DB, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect database: %v", err)
 	}
+	// TODO "gorm.io/gorm/logger"
+	//gormLogger := logger.New(
+	//	log.New(os.Stdout, "\r\n", log.LstdFlags),
+	//	logger.Config{
+	//		LogLevel: logger.Info,
+	//	},
+	//)
+	//&gorm.Config{Logger: gormLogger})
 	if conf.DB.IsDebugMode {
 		db = db.Debug()
 	}
