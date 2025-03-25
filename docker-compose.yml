@@ -48,6 +48,20 @@ services:
     command: ["/usr/local/bin/app"]
     profiles: ["import"]
 
+  import_cat:
+    build:
+      context: .
+      dockerfile: import-cat/Dockerfile
+    container_name: cheque_import_cat
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./etc/config.yml:/etc/config.yml
+      - ./var/data:/var/data
+    command: ["/usr/local/bin/app"]
+    profiles: ["import_cat"]
+
   db_tools_scheme:
     build:
       context: .

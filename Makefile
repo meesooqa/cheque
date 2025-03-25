@@ -20,6 +20,7 @@ version:
 	git tag common/$(word 2,$(MAKECMDGOALS))
 	git tag db/$(word 2,$(MAKECMDGOALS))
 	git tag import/$(word 2,$(MAKECMDGOALS))
+	git tag import-cat/$(word 2,$(MAKECMDGOALS))
 	git tag server/$(word 2,$(MAKECMDGOALS))
 	git tag tools/db/$(word 2,$(MAKECMDGOALS))
 
@@ -54,4 +55,7 @@ db_cleanup:
 import:
 	docker compose --profile import run --rm import
 
-.PHONY: run lint test_race test version tidy db_backup db_retsore_from_backup db_scheme db_cleanup import
+import_cat:
+	docker compose --profile import_cat run --rm import_cat
+
+.PHONY: run lint test_race test version tidy db_backup db_retsore_from_backup db_scheme db_cleanup import import_cat
