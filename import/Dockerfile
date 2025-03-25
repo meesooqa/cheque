@@ -1,6 +1,5 @@
 FROM golang:1.24-alpine AS build
 WORKDIR /build
-WORKDIR /build
 COPY ./common ./common
 COPY ./db ./db
 COPY ./import ./import
