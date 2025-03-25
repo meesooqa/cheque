@@ -1,16 +1,21 @@
 package main
 
 import (
+	"context"
 	"log"
 
-	"github.com/meesooqa/cheque/db/db_provider"
-	"github.com/meesooqa/cheque/db/models"
+	"receipt-002/db/db_provider"
+	"receipt-002/db/models"
 )
 
 func main() {
 	dbProvider := db_provider.NewDefaultDBProvider()
-	db := dbProvider.GetDB(nil)
-	err := db.AutoMigrate(
+	db, err := dbProvider.GetDB(context.TODO())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = db.AutoMigrate(
 		&models.Seller{},
 		&models.SellerPlace{},
 		&models.Category{},

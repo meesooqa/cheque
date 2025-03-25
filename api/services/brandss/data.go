@@ -1,6 +1,6 @@
 package brandss
 
-import pb "github.com/meesooqa/cheque/api/pb/brandpb"
+import pb "receipt-002/api/gen/pb/brandpb/v1"
 
 type Converter struct{}
 

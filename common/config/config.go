@@ -13,6 +13,7 @@ type Conf struct {
 	GrpcServer   *GrpcServerConfig   `yaml:"grpc_server"`
 	DB           *DbConfig           `yaml:"db"`
 	GormGenProto *GormGenProtoConfig `yaml:"gorm_gen_proto"`
+	// TODO Log.Level, Log.OtputFormat (text, json)...
 }
 
 // GormGenProtoConfig stores GormGenProto parameters

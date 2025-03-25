@@ -3,8 +3,7 @@ package receiptss
 import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	pb "github.com/meesooqa/cheque/api/pb/receiptpb"
-	"github.com/meesooqa/cheque/api/pb/sellerplacepb"
+	pb "receipt-002/api/gen/pb/receiptpb/v1"
 )
 
 type Converter struct{}
@@ -29,16 +28,6 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 	if dbItem.SellerPlaceID != nil {
 		pbModel.SellerPlaceId = uint64(*dbItem.SellerPlaceID)
 	}
-	if dbItem.SellerPlace != nil {
-		pbModel.SellerPlace = &sellerplacepb.Model{
-			Id:       uint64(dbItem.SellerPlace.ID),
-			SellerId: uint64(dbItem.SellerPlace.SellerID),
-			Name:     dbItem.SellerPlace.Name,
-			Address:  dbItem.SellerPlace.Address,
-			Email:    dbItem.SellerPlace.Email,
-		}
-	}
-	// TODO products
 	return &pbModel
 }
 
@@ -54,7 +43,6 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 		BuyerPhoneOrAddress:  pbItem.BuyerPhoneOrAddress,
 		Operator:             pbItem.Operator,
 	}
-	// TODO products
 	uintItemSellerPlaceID := uint(pbItem.SellerPlaceId)
 	dbModel.SellerPlaceID = &uintItemSellerPlaceID
 	return &dbModel

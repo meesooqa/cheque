@@ -8,7 +8,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/meesooqa/cheque/db/models"
+	"receipt-002/db/models"
 )
 
 type DtoAdapter struct{}

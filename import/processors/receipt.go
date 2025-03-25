@@ -6,8 +6,13 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
-	"github.com/meesooqa/cheque/db/models"
+	"receipt-002/db/models"
 )
+
+// ReceiptProcessorInterface defines the interface for receipt processors
+type ReceiptProcessorInterface interface {
+	Process(db *gorm.DB, receipt *models.Receipt, sellerCache, sellerPlaceCache map[string]uint) error
+}
 
 type ReceiptProcessor struct{}
 

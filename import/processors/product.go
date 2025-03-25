@@ -3,7 +3,7 @@ package processors
 import (
 	"gorm.io/gorm"
 
-	"github.com/meesooqa/cheque/db/models"
+	"receipt-002/db/models"
 )
 
 // processProducts processes receipt products using receipt local cache.

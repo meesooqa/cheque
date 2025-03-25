@@ -1,6 +1,6 @@
 package sellerss
 
-import pb "github.com/meesooqa/cheque/api/pb/sellerpb"
+import pb "receipt-002/api/gen/pb/sellerpb/v1"
 
 type Converter struct{}
 
