@@ -8,21 +8,11 @@ import (
 
 // Conf from config yml
 type Conf struct {
-	System       *SystemConfig       `yaml:"system"`
-	Server       *ServerConfig       `yaml:"server"`
-	GrpcServer   *GrpcServerConfig   `yaml:"grpc_server"`
-	DB           *DbConfig           `yaml:"db"`
-	GormGenProto *GormGenProtoConfig `yaml:"gorm_gen_proto"`
+	System     *SystemConfig     `yaml:"system"`
+	Server     *ServerConfig     `yaml:"server"`
+	GrpcServer *GrpcServerConfig `yaml:"grpc_server"`
+	DB         *DbConfig         `yaml:"db"`
 	// TODO Log.Level, Log.OtputFormat (text, json)...
-}
-
-// GormGenProtoConfig stores GormGenProto parameters
-type GormGenProtoConfig struct {
-	PathMaps     string `yaml:"path_maps"`
-	PathTmpl     string `yaml:"path_tmpl"`
-	ProtoRoot    string `yaml:"proto_root"`
-	ProtocRoot   string `yaml:"protoc_root"`
-	ServicesRoot string `yaml:"services_root"`
 }
 
 // DbConfig - DB parameters

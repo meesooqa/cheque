@@ -17,9 +17,3 @@ db:
   user: "admin"
   password: "adminpw"
   dbname: "app_db"
-gorm_gen_proto:
-  path_maps: "example/maps"
-  path_tmpl: "example/templates"
-  proto_root: "example/proto"
-  protoc_root: "example/protoc"
-  services_root: "example/services"
