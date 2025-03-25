@@ -28,3 +28,10 @@ func ModelFieldFilter[DbModel any](field string) func(value string) FilterFunc {
 		return FieldFilter(field, value)
 	}
 }
+
+// ModelExactFieldFilter creates a type-safe exact field filter for a specific model
+func ModelExactFieldFilter[DbModel any](field string) func(value interface{}) FilterFunc {
+	return func(value interface{}) FilterFunc {
+		return ExactFieldFilter(field, value)
+	}
+}
