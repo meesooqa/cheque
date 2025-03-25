@@ -1,6 +1,8 @@
 package db_types
 
 import (
+	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -101,19 +103,19 @@ func ModelRangeFilter[T any, V Numeric](fieldName string) func(valueGt, valueLt 
 //}
 
 // ModelDateRangeFilter для фильтрации по диапазону дат
-//func ModelDateRangeFilter[T any](fieldName string) func(startDate, endDate time.Time) FilterFunc {
-//	return func(startDate, endDate time.Time) FilterFunc {
-//		return func(db *gorm.DB) *gorm.DB {
-//			zeroTime := time.Time{}
-//
-//			if startDate != zeroTime && endDate != zeroTime {
-//				return db.Where(fieldName+" BETWEEN ? AND ?", startDate, endDate)
-//			} else if startDate != zeroTime {
-//				return db.Where(fieldName+" >= ?", startDate)
-//			} else if endDate != zeroTime {
-//				return db.Where(fieldName+" <= ?", endDate)
-//			}
-//			return db
-//		}
-//	}
-//}
+func ModelDateRangeFilter[T any](fieldName string) func(startDate, endDate time.Time) FilterFunc {
+	return func(startDate, endDate time.Time) FilterFunc {
+		return func(db *gorm.DB) *gorm.DB {
+			zeroTime := time.Time{}
+
+			if startDate != zeroTime && endDate != zeroTime {
+				return db.Where(fieldName+" BETWEEN ? AND ?", startDate, endDate)
+			} else if startDate != zeroTime {
+				return db.Where(fieldName+" >= ?", startDate)
+			} else if endDate != zeroTime {
+				return db.Where(fieldName+" <= ?", endDate)
+			}
+			return db
+		}
+	}
+}
