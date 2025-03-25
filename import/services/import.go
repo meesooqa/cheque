@@ -5,13 +5,18 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/meesooqa/cheque/import/dto"
-	"github.com/meesooqa/cheque/import/processors"
+	"receipt-002/import/dto"
+	"receipt-002/import/processors"
 )
+
+// ImporterService defines interface for importer service
+type ImporterService interface {
+	SaveReceipt(db *gorm.DB, data []byte) error
+}
 
 type ImportService struct {
 	adapter   *dto.DtoAdapter
-	processor *processors.ReceiptProcessor
+	processor processors.ReceiptProcessorInterface
 }
 
 func NewImportService() *ImportService {

@@ -1,12 +1,6 @@
 package sellerplacess
 
-import (
-	"gorm.io/gorm"
-
-	"github.com/meesooqa/cheque/api/pb/sellerpb"
-	pb "github.com/meesooqa/cheque/api/pb/sellerplacepb"
-	"github.com/meesooqa/cheque/db/models"
-)
+import pb "receipt-002/api/gen/pb/sellerplacepb/v1"
 
 type Converter struct{}
 
@@ -21,11 +15,6 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 		Name:     dbItem.Name,
 		Address:  dbItem.Address,
 		Email:    dbItem.Email,
-		Seller: &sellerpb.Model{
-			Id:   uint64(dbItem.Seller.ID),
-			Name: dbItem.Seller.Name,
-			Inn:  dbItem.Seller.Inn,
-		},
 	}
 }
 
@@ -35,12 +24,5 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 		Name:     pbItem.Name,
 		Address:  pbItem.Address,
 		Email:    pbItem.Email,
-		Seller: models.Seller{
-			Model: gorm.Model{
-				ID: uint(pbItem.Seller.Id),
-			},
-			Name: pbItem.Seller.Name,
-			Inn:  pbItem.Seller.Inn,
-		},
 	}
 }

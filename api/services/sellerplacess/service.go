@@ -6,11 +6,11 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 
-	pb "github.com/meesooqa/cheque/api/pb/sellerplacepb"
-	"github.com/meesooqa/cheque/api/services"
-	"github.com/meesooqa/cheque/db/db_types"
-	"github.com/meesooqa/cheque/db/models"
-	"github.com/meesooqa/cheque/db/repositories"
+	pb "receipt-002/api/gen/pb/sellerplacepb/v1"
+	"receipt-002/api/services"
+	"receipt-002/db/db_types"
+	"receipt-002/db/models"
+	"receipt-002/db/repositories"
 )
 
 type DbModel = models.SellerPlace

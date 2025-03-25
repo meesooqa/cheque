@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"github.com/meesooqa/cheque/db/db_types"
-	"github.com/meesooqa/cheque/db/models"
+	"receipt-002/db/db_types"
+	"receipt-002/db/models"
 )
 
 type ReceiptRepository struct {

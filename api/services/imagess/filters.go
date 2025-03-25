@@ -3,8 +3,8 @@ package imagess
 import (
 	"gorm.io/gorm"
 
-	pb "github.com/meesooqa/cheque/api/pb/imagepb"
-	"github.com/meesooqa/cheque/db/db_types"
+	pb "receipt-002/api/gen/pb/imagepb/v1"
+	"receipt-002/db/db_types"
 )
 
 func GetFilters(req *pb.GetListRequest) []db_types.FilterFunc {
@@ -52,3 +52,5 @@ func IsMainFilter(value bool) db_types.FilterFunc {
 		return db
 	}
 }
+
+// TODO order

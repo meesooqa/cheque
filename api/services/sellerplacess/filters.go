@@ -3,8 +3,8 @@ package sellerplacess
 import (
 	"gorm.io/gorm"
 
-	pb "github.com/meesooqa/cheque/api/pb/sellerplacepb"
-	"github.com/meesooqa/cheque/db/db_types"
+	pb "receipt-002/api/gen/pb/sellerplacepb/v1"
+	"receipt-002/db/db_types"
 )
 
 func GetFilters(req *pb.GetListRequest) []db_types.FilterFunc {

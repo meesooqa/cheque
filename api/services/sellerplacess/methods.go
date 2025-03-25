@@ -3,8 +3,19 @@ package sellerplacess
 import (
 	"context"
 
-	pb "github.com/meesooqa/cheque/api/pb/sellerplacepb"
+	pb "receipt-002/api/gen/pb/sellerplacepb/v1"
 )
+
+func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {
+	items, total, err := o.BaseService.GetList(ctx, GetFilters(req), req.SortBy, req.SortOrder, int(req.PageSize), int(req.Page))
+	if err != nil {
+		return nil, err
+	}
+	return &pb.GetListResponse{
+		Total: total,
+		Items: items,
+	}, nil
+}
 
 func (o *ServiceServer) GetItem(ctx context.Context, req *pb.GetItemRequest) (*pb.GetItemResponse, error) {
 	item, err := o.BaseService.GetItem(ctx, req.Id)
@@ -36,15 +47,4 @@ func (o *ServiceServer) DeleteItem(ctx context.Context, req *pb.DeleteItemReques
 		return nil, err
 	}
 	return &pb.DeleteItemResponse{}, nil
-}
-
-func (o *ServiceServer) GetList(ctx context.Context, req *pb.GetListRequest) (*pb.GetListResponse, error) {
-	items, total, err := o.BaseService.GetList(ctx, GetFilters(req), req.SortBy, req.SortOrder, int(req.PageSize), int(req.Page))
-	if err != nil {
-		return nil, err
-	}
-	return &pb.GetListResponse{
-		Total: total,
-		Items: items,
-	}, nil
 }
