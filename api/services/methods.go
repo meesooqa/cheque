@@ -15,7 +15,7 @@ func (o *BaseService[DbModel, PbModel]) GetList(ctx context.Context, filters []d
 	}
 	var items []*PbModel
 	for _, dbItem := range dbItems {
-		items = append(items, o.converter.DataDbToPb(dbItem))
+		items = append(items, o.Converter.DataDbToPb(dbItem))
 	}
 	return items, total, nil
 }
@@ -25,25 +25,25 @@ func (o *BaseService[DbModel, PbModel]) GetItem(ctx context.Context, id uint64) 
 	if err != nil {
 		return nil, err
 	}
-	return o.converter.DataDbToPb(item), nil
+	return o.Converter.DataDbToPb(item), nil
 }
 
 func (o *BaseService[DbModel, PbModel]) CreateItem(ctx context.Context, item *PbModel) (*PbModel, error) {
-	newDbItem := o.converter.DataPbToDb(item)
+	newDbItem := o.Converter.DataPbToDb(item)
 	newItem, err := o.Repo.Create(ctx, newDbItem)
 	if err != nil {
 		return nil, err
 	}
-	return o.converter.DataDbToPb(newItem), nil
+	return o.Converter.DataDbToPb(newItem), nil
 }
 
 func (o *BaseService[DbModel, PbModel]) UpdateItem(ctx context.Context, id uint64, item *PbModel) (*PbModel, error) {
-	updatedDbItem := o.converter.DataPbToDb(item)
+	updatedDbItem := o.Converter.DataPbToDb(item)
 	updatedItem, err := o.Repo.Update(ctx, id, updatedDbItem)
 	if err != nil {
 		return nil, err
 	}
-	return o.converter.DataDbToPb(updatedItem), nil
+	return o.Converter.DataDbToPb(updatedItem), nil
 }
 
 func (o *BaseService[DbModel, PbModel]) DeleteItem(ctx context.Context, id uint64) error {
