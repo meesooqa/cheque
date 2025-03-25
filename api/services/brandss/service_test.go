@@ -389,8 +389,8 @@ func TestServiceServer_Register(t *testing.T) {
 	server.Register(grpcServer)
 
 	// Проверяем, что сервис был зарегистрирован
-	services := grpcServer.GetServiceInfo()
-	_, exists := services[pb.ModelService_ServiceDesc.ServiceName]
+	serviceInfo := grpcServer.GetServiceInfo()
+	_, exists := serviceInfo[pb.ModelService_ServiceDesc.ServiceName]
 	assert.True(t, exists, "Service should be registered")
 }
 
