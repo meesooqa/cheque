@@ -1,5 +1,6 @@
 //go:generateExample go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Entity -template service
 //go:generateExample go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Entity -template methods
+//go:generateExample go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Entity -template mocks
 //go:generateExample go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Entity -template data
 //go:generateExample go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Entity -template filters
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Brand -template service
