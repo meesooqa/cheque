@@ -1,0 +1,16 @@
+package {{.PkgEntity}}ss
+
+import (
+	pb "github.com/meesooqa/cheque/api/gen/pb/{{.PkgEntity}}pb/v1"
+	"github.com/meesooqa/cheque/db/db_types"
+)
+
+type FilterProvider struct{}
+
+func NewFilterProvider() *FilterProvider {
+	return &FilterProvider{}
+}
+
+func (o *FilterProvider) GetFilters(r *pb.GetListRequest) []db_types.FilterFunc {
+	return []db_types.FilterFunc{}
+}
