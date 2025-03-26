@@ -12,5 +12,7 @@ func NewFilterProvider() *FilterProvider {
 }
 
 func (o *FilterProvider) GetFilters(r *pb.GetListRequest) []db_types.FilterFunc {
-	return []db_types.FilterFunc{}
+	return []db_types.FilterFunc{
+	    // TODO add filters
+	}
 }
