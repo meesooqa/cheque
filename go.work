@@ -6,5 +6,6 @@ use (
 	./db
 	./import
 	./server
+	./tools/api
 	./tools/db
 )

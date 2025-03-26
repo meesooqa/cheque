@@ -21,6 +21,7 @@ version:
 	git tag db/$(word 2,$(MAKECMDGOALS))
 	git tag import/$(word 2,$(MAKECMDGOALS))
 	git tag server/$(word 2,$(MAKECMDGOALS))
+	git tag tools/api/$(word 2,$(MAKECMDGOALS))
 	git tag tools/db/$(word 2,$(MAKECMDGOALS))
 
 tidy:
