@@ -8,8 +8,8 @@ replace github.com/meesooqa/cheque/db => ../db
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/meesooqa/cheque/common v1.22.5
-	github.com/meesooqa/cheque/db v1.24.1
+	github.com/meesooqa/cheque/common v1.24.2
+	github.com/meesooqa/cheque/db v1.24.2
 	github.com/stretchr/testify v1.10.0
 	gorm.io/driver/sqlite v1.5.7
 	gorm.io/gorm v1.25.12
