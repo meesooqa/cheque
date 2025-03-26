@@ -7,7 +7,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"gorm.io/gorm"
 
-	"github.com/meesooqa/cheque/db/db_types"
+	pb "github.com/meesooqa/cheque/api/gen/pb/imagepb/v1"
+	
 )
 
 // MockDBProvider mocks DBProvider
@@ -24,33 +25,80 @@ type MockRepository struct {
 	mock.Mock
 }
 
-func (r *MockRepository) GetList(ctx context.Context, filters []db_types.FilterFunc, sort db_types.SortData, pagination db_types.PaginationData) ([]*DbModel, int64, error) {
-	args := r.Called(ctx, filters, sort, pagination)
-	return args.Get(0).([]*DbModel), args.Get(1).(int64), args.Error(2)
-}
-
-func (r *MockRepository) Get(ctx context.Context, id uint64) (*DbModel, error) {
-	args := r.Called(ctx, id)
-	if args.Get(0) == nil {
-		return nil, args.Error(1)
+func (m *MockRepository) GetList(ctx context.Context, filters []db_types.FilterFunc, sort db_types.SortData, pagination db_types.PaginationData) ([]*DbModel, int64, error) {
+	args := m.Called(ctx, filters, sort, pagination)
+	var result []*DbModel
+	if args.Get(0) != nil {
+		result = args.Get(0).([]*DbModel)
 	}
-	return args.Get(0).(*DbModel), args.Error(1)
+	return result, args.Get(1).(int64), args.Error(2)
 }
 
-func (r *MockRepository) Create(ctx context.Context, item *DbModel) (*DbModel, error) {
-	args := r.Called(ctx, item)
-	return args.Get(0).(*DbModel), args.Error(1)
-}
-
-func (r *MockRepository) Update(ctx context.Context, id uint64, item *DbModel) (*DbModel, error) {
-	args := r.Called(ctx, id, item)
-	if args.Get(0) == nil {
-		return nil, args.Error(1)
+func (m *MockRepository) Get(ctx context.Context, id uint64) (*DbModel, error) {
+	args := m.Called(ctx, id)
+	var result *DbModel
+	if args.Get(0) != nil {
+		result = args.Get(0).(*DbModel)
 	}
-	return args.Get(0).(*DbModel), args.Error(1)
+	return result, args.Error(1)
 }
 
-func (r *MockRepository) Delete(ctx context.Context, id uint64) error {
-	args := r.Called(ctx, id)
+func (m *MockRepository) Create(ctx context.Context, newItem *DbModel) (*DbModel, error) {
+	args := m.Called(ctx, newItem)
+	var result *DbModel
+	if args.Get(0) != nil {
+		result = args.Get(0).(*DbModel)
+	}
+	return result, args.Error(1)
+}
+
+func (m *MockRepository) Update(ctx context.Context, id uint64, updatedItem *DbModel) (*DbModel, error) {
+	args := m.Called(ctx, id, updatedItem)
+	var result *DbModel
+	if args.Get(0) != nil {
+		result = args.Get(0).(*DbModel)
+	}
+	return result, args.Error(1)
+}
+
+func (m *MockRepository) Delete(ctx context.Context, id uint64) error {
+	args := m.Called(ctx, id)
 	return args.Error(0)
+}
+
+// MockConverter is a mock for Converter[DbModel, pb.Model]
+type MockConverter struct {
+	mock.Mock
+}
+
+func (m *MockConverter) DataDbToPb(dbItem *DbModel) *pb.Model {
+	args := m.Called(dbItem)
+	var result *pb.Model
+	if args.Get(0) != nil {
+		result = args.Get(0).(*pb.Model)
+	}
+	return result
+}
+
+func (m *MockConverter) DataPbToDb(pbItem *pb.Model) *DbModel {
+	args := m.Called(pbItem)
+	var result *DbModel
+	if args.Get(0) != nil {
+		result = args.Get(0).(*DbModel)
+	}
+	return result
+}
+
+// MockFilterProvider is a mock for FilterProvider[pb.GetListRequest]
+type MockFilterProvider struct {
+	mock.Mock
+}
+
+func (m *MockFilterProvider) GetFilters(r *pb.GetListRequest) []db_types.FilterFunc {
+	args := m.Called(r)
+	var result []db_types.FilterFunc
+	if args.Get(0) != nil {
+		result = args.Get(0).([]db_types.FilterFunc)
+	}
+	return result
 }
