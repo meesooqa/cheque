@@ -7,7 +7,13 @@ import (
 	"github.com/meesooqa/cheque/db/db_types"
 )
 
-func GetFilters(req *pb.GetListRequest) []db_types.FilterFunc {
+type FilterProvider struct{}
+
+func NewFilterProvider() *FilterProvider {
+	return &FilterProvider{}
+}
+
+func (o *FilterProvider) GetFilters(r *pb.GetListRequest) []db_types.FilterFunc {
 	ExternalIdentifierFilter := db_types.ModelFieldFilter[DbModel]("external_identifier")
 	FiscalDriveNumberFilter := db_types.ModelFieldFilter[DbModel]("fiscal_drive_number")
 	FiscalDocumentNumberFilter := db_types.ModelFieldFilter[DbModel]("fiscal_document_number")
@@ -22,25 +28,25 @@ func GetFilters(req *pb.GetListRequest) []db_types.FilterFunc {
 	// "2022-01-01T00:00:00Z"
 	// "2022-12-31T23:59:59+03:00"
 	startDate := time.Time{}
-	if req.DateTimeStart != nil {
-		startDate = req.DateTimeStart.AsTime()
+	if r.DateTimeStart != nil {
+		startDate = r.DateTimeStart.AsTime()
 	}
 	endDate := time.Time{}
-	if req.DateTimeEnd != nil {
-		endDate = req.DateTimeEnd.AsTime()
+	if r.DateTimeEnd != nil {
+		endDate = r.DateTimeEnd.AsTime()
 	}
 	DateTimeFilter := db_types.ModelDateRangeFilter[DbModel]("date_time")
 
 	return []db_types.FilterFunc{
-		ExternalIdentifierFilter(req.ExternalIdentifier),
+		ExternalIdentifierFilter(r.ExternalIdentifier),
 		DateTimeFilter(startDate, endDate),
-		OperatorFilter(req.Operator),
-		SellerPlaceIDFilter(req.SellerPlaceId),
-		FiscalDocumentNumberFilter(req.FiscalDocumentNumber),
-		FiscalDriveNumberFilter(req.FiscalDriveNumber),
-		FiscalSignFilter(req.FiscalSign),
-		SumFilter(req.SumGt, req.SumLt),
-		KktRegFilter(req.KktReg),
-		BuyerPhoneOrAddressFilter(req.BuyerPhoneOrAddress),
+		OperatorFilter(r.Operator),
+		SellerPlaceIDFilter(r.SellerPlaceId),
+		FiscalDocumentNumberFilter(r.FiscalDocumentNumber),
+		FiscalDriveNumberFilter(r.FiscalDriveNumber),
+		FiscalSignFilter(r.FiscalSign),
+		SumFilter(r.SumGt, r.SumLt),
+		KktRegFilter(r.KktReg),
+		BuyerPhoneOrAddressFilter(r.BuyerPhoneOrAddress),
 	}
 }

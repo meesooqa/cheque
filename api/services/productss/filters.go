@@ -5,11 +5,17 @@ import (
 	"github.com/meesooqa/cheque/db/db_types"
 )
 
-func GetFilters(req *pb.GetListRequest) []db_types.FilterFunc {
+type FilterProvider struct{}
+
+func NewFilterProvider() *FilterProvider {
+	return &FilterProvider{}
+}
+
+func (o *FilterProvider) GetFilters(r *pb.GetListRequest) []db_types.FilterFunc {
 	BrandIDFilter := db_types.ModelExactFieldFilter[DbModel]("brand_id")
 	NameFilter := db_types.ModelFieldFilter[DbModel]("name")
 	return []db_types.FilterFunc{
-		BrandIDFilter(req.BrandId),
-		NameFilter(req.Name),
+		BrandIDFilter(r.BrandId),
+		NameFilter(r.Name),
 	}
 }
