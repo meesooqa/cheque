@@ -15,7 +15,8 @@ type Numeric interface {
 func FieldFilter(fieldName, value string) FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		if value != "" {
-			return db.Where(fieldName+" ILIKE ?", "%"+value+"%")
+			// return db.Where(fieldName+" ILIKE ?", "%"+value+"%")
+			return db.Where("LOWER("+fieldName+") LIKE LOWER(?)", "%"+value+"%")
 		}
 		return db
 	}
