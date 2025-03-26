@@ -19,65 +19,17 @@ import (
 	"github.com/meesooqa/cheque/db/models"
 )
 
-// MockDBProvider имитирует DBProvider для тестирования
-type MockDBProvider struct {
-	DB *gorm.DB
-}
-
-func (p *MockDBProvider) GetDB(ctx context.Context) (*gorm.DB, error) {
-	return p.DB, nil
-}
-
-// MockRepository имитирует Repository для тестирования
-type MockRepository struct {
-	mock.Mock
-}
-
-func (r *MockRepository) GetList(ctx context.Context, filters []db_types.FilterFunc, sort db_types.SortData, pagination db_types.PaginationData) ([]*models.SellerPlace, int64, error) {
-	args := r.Called(ctx, filters, sort, pagination)
-	return args.Get(0).([]*models.SellerPlace), args.Get(1).(int64), args.Error(2)
-}
-
-func (r *MockRepository) Get(ctx context.Context, id uint64) (*models.SellerPlace, error) {
-	args := r.Called(ctx, id)
-	if args.Get(0) == nil {
-		return nil, args.Error(1)
-	}
-	return args.Get(0).(*models.SellerPlace), args.Error(1)
-}
-
-func (r *MockRepository) Create(ctx context.Context, item *models.SellerPlace) (*models.SellerPlace, error) {
-	args := r.Called(ctx, item)
-	return args.Get(0).(*models.SellerPlace), args.Error(1)
-}
-
-func (r *MockRepository) Update(ctx context.Context, id uint64, item *models.SellerPlace) (*models.SellerPlace, error) {
-	args := r.Called(ctx, id, item)
-	if args.Get(0) == nil {
-		return nil, args.Error(1)
-	}
-	return args.Get(0).(*models.SellerPlace), args.Error(1)
-}
-
-func (r *MockRepository) Delete(ctx context.Context, id uint64) error {
-	args := r.Called(ctx, id)
-	return args.Error(0)
-}
-
-// setupTestDB устанавливает тестовую базу данных SQLite
+// setupTestDB sets up test database SQLite
 func setupTestDB(t *testing.T) *gorm.DB {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	require.NoError(t, err)
-
-	// SQLite не поддерживает полностью индексы PostgreSQL, поэтому упростим модель
-	err = db.AutoMigrate(&models.Seller{}, &models.SellerPlace{})
+	err = db.AutoMigrate(&models.Seller{}, &DbModel{})
 	require.NoError(t, err)
-
 	return db
 }
 
 // createTestData создает тестовые данные в базе
-func createTestData(t *testing.T, db *gorm.DB) (*models.Seller, []*models.SellerPlace) {
+func createTestData(t *testing.T, db *gorm.DB) (*models.Seller, []*DbModel) {
 	// Создаем продавца
 	seller := &models.Seller{
 		Name: "Test Seller",
@@ -88,7 +40,7 @@ func createTestData(t *testing.T, db *gorm.DB) (*models.Seller, []*models.Seller
 	require.NotZero(t, seller.ID)
 
 	// Создаем места продавца
-	places := []*models.SellerPlace{
+	places := []*DbModel{
 		{
 			SellerID: seller.ID,
 			Name:     "Place 1",
@@ -124,7 +76,7 @@ func TestConverter(t *testing.T) {
 
 	t.Run("DataDbToPb converts DB model to protobuf model", func(t *testing.T) {
 		// Создаем модель SellerPlace
-		dbItem := &models.SellerPlace{}
+		dbItem := &DbModel{}
 		dbItem.ID = 123
 		dbItem.SellerID = 456
 		dbItem.Name = "Test Place"
@@ -173,7 +125,7 @@ func TestFilterFunctions(t *testing.T) {
 		tx := db.Session(&gorm.Session{})
 		filteredDB := filter(tx)
 
-		var results []models.SellerPlace
+		var results []DbModel
 		err := filteredDB.Find(&results).Error
 		require.NoError(t, err)
 
@@ -186,7 +138,7 @@ func TestFilterFunctions(t *testing.T) {
 		tx := db.Session(&gorm.Session{})
 		filteredDB := tx.Where("name LIKE ?", "%Place%")
 
-		var results []models.SellerPlace
+		var results []DbModel
 		err := filteredDB.Find(&results).Error
 		require.NoError(t, err)
 
@@ -197,7 +149,7 @@ func TestFilterFunctions(t *testing.T) {
 		tx = db.Session(&gorm.Session{})
 		filteredDB = tx.Where("name LIKE ?", "%Another%")
 
-		results = []models.SellerPlace{}
+		results = []DbModel{}
 		err = filteredDB.Find(&results).Error
 		require.NoError(t, err)
 
@@ -213,7 +165,7 @@ func TestFilterFunctions(t *testing.T) {
 		tx := db.Session(&gorm.Session{})
 		filteredDB := tx.Where("address LIKE ?", "%Address%")
 
-		var results []models.SellerPlace
+		var results []DbModel
 		err := filteredDB.Find(&results).Error
 		require.NoError(t, err)
 
@@ -224,7 +176,7 @@ func TestFilterFunctions(t *testing.T) {
 		tx = db.Session(&gorm.Session{})
 		filteredDB = tx.Where("address LIKE ?", "%Another%")
 
-		results = []models.SellerPlace{}
+		results = []DbModel{}
 		err = filteredDB.Find(&results).Error
 		require.NoError(t, err)
 
@@ -240,7 +192,7 @@ func TestFilterFunctions(t *testing.T) {
 		tx := db.Session(&gorm.Session{})
 		filteredDB := tx.Where("email LIKE ?", "%@example.com%")
 
-		var results []models.SellerPlace
+		var results []DbModel
 		err := filteredDB.Find(&results).Error
 		require.NoError(t, err)
 
@@ -251,7 +203,7 @@ func TestFilterFunctions(t *testing.T) {
 		tx = db.Session(&gorm.Session{})
 		filteredDB = tx.Where("email LIKE ?", "%another%")
 
-		results = []models.SellerPlace{}
+		results = []DbModel{}
 		err = filteredDB.Find(&results).Error
 		require.NoError(t, err)
 
@@ -263,6 +215,7 @@ func TestFilterFunctions(t *testing.T) {
 
 // TestGetFilters тестирует функцию GetFilters
 func TestGetFilters(t *testing.T) {
+	filterProvider := NewFilterProvider()
 	t.Run("Returns correct filters based on request", func(t *testing.T) {
 		req := &pb.GetListRequest{
 			SellerId: 1,
@@ -270,19 +223,12 @@ func TestGetFilters(t *testing.T) {
 			Address:  "Address",
 			Email:    "email",
 		}
-
-		filters := GetFilters(req)
-
-		// Должен вернуть 4 фильтра
+		filters := filterProvider.GetFilters(req)
 		assert.Equal(t, 4, len(filters))
 	})
-
 	t.Run("Empty request returns empty filters", func(t *testing.T) {
 		req := &pb.GetListRequest{}
-
-		filters := GetFilters(req)
-
-		// Все еще 4 фильтра, но они не будут применены
+		filters := filterProvider.GetFilters(req)
 		assert.Equal(t, 4, len(filters))
 	})
 }
@@ -291,12 +237,13 @@ func TestGetFilters(t *testing.T) {
 func TestServiceServer_Using_Mocks(t *testing.T) {
 	mockRepo := new(MockRepository)
 	converter := NewConverter()
-
+	filterProvider := NewFilterProvider()
 	// Создаем ServiceServer с моком репозитория
 	server := &ServiceServer{
-		BaseService: &services.BaseService[models.SellerPlace, pb.Model]{
-			Repo:      mockRepo,
-			Converter: converter,
+		BaseService: &services.BaseService[DbModel, pb.Model, pb.GetListRequest]{
+			Repo:           mockRepo,
+			Converter:      converter,
+			FilterProvider: filterProvider,
 		},
 	}
 
@@ -316,7 +263,7 @@ func TestServiceServer_Using_Mocks(t *testing.T) {
 		}
 
 		// Ожидаемые результаты
-		dbPlaces := []*models.SellerPlace{
+		dbPlaces := []*DbModel{
 			{
 				Name:     "Test Place 1",
 				SellerID: 1,
@@ -374,7 +321,7 @@ func TestServiceServer_Using_Mocks(t *testing.T) {
 		}
 
 		// Создаем тестовое место продавца
-		dbPlace := &models.SellerPlace{
+		dbPlace := &DbModel{
 			SellerID: 1,
 			Name:     "Test Place",
 			Address:  "Test Address",
@@ -436,7 +383,7 @@ func TestServiceServer_Using_Mocks(t *testing.T) {
 		}
 
 		// Создаем результат создания
-		createdDbModel := &models.SellerPlace{
+		createdDbModel := &DbModel{
 			SellerID: 1,
 			Name:     "New Place",
 			Address:  "New Address",
@@ -476,7 +423,7 @@ func TestServiceServer_Using_Mocks(t *testing.T) {
 		}
 
 		// Создаем результат обновления
-		updatedDbModel := &models.SellerPlace{
+		updatedDbModel := &DbModel{
 			SellerID: 1,
 			Name:     "Updated Place",
 			Address:  "Updated Address",
@@ -503,60 +450,41 @@ func TestServiceServer_Using_Mocks(t *testing.T) {
 	})
 
 	t.Run("DeleteItem calls repository", func(t *testing.T) {
-		// Готовим запрос
 		req := &pb.DeleteItemRequest{
 			Id: 1,
 		}
-
-		// Настраиваем мок репозитория
 		mockRepo.On("Delete", ctx, uint64(1)).Return(nil)
-
-		// Вызываем метод сервиса
 		resp, err := server.DeleteItem(ctx, req)
-
-		// Проверяем результаты
 		require.NoError(t, err)
 		assert.NotNil(t, resp)
-
-		// Проверяем, что вызов мока был выполнен
 		mockRepo.AssertExpectations(t)
 	})
 }
 
-// TestServiceServer_Register тестирует метод Register
+// TestServiceServer_Register tests Register
 func TestServiceServer_Register(t *testing.T) {
-	// Создаем мок gRPC сервера
 	grpcServer := grpc.NewServer()
-
-	// Создаем сервис
 	mockRepo := new(MockRepository)
 	converter := NewConverter()
+	filterProvider := NewFilterProvider()
 	server := &ServiceServer{
-		BaseService: &services.BaseService[models.SellerPlace, pb.Model]{
-			Repo:      mockRepo,
-			Converter: converter,
+		BaseService: &services.BaseService[DbModel, pb.Model, pb.GetListRequest]{
+			Repo:           mockRepo,
+			Converter:      converter,
+			FilterProvider: filterProvider,
 		},
 	}
-
-	// Вызываем метод Register
 	server.Register(grpcServer)
-
-	// Проверяем, что сервис был зарегистрирован
 	serviceInfo := grpcServer.GetServiceInfo()
 	_, exists := serviceInfo[pb.ModelService_ServiceDesc.ServiceName]
 	assert.True(t, exists, "Service should be registered")
 }
 
-// TestNewServiceServer тестирует функцию создания нового сервера
+// TestNewServiceServer tests NewServiceServer
 func TestNewServiceServer(t *testing.T) {
-	// Создаем тестовую базу данных и DBProvider
 	db := setupTestDB(t)
 	dbProvider := &MockDBProvider{DB: db}
-
-	// Создаем сервер
 	server := NewServiceServer(dbProvider)
-
-	// Проверяем, что сервер создан правильно
 	assert.NotNil(t, server)
 	assert.NotNil(t, server.BaseService)
 }
