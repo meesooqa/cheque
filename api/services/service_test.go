@@ -75,6 +75,19 @@ func (m *MockConverter[DbModel, PbModel]) DataPbToDb(pbItem *PbModel) *DbModel {
 	return args.Get(0).(*DbModel)
 }
 
+// MockFilterProvider is a mock for FilterProvider
+type MockFilterProvider[PbGetListRequest any] struct {
+	mock.Mock
+}
+
+func (m *MockFilterProvider[PbGetListRequest]) GetFilters(r *PbGetListRequest) []db_types.FilterFunc {
+	args := m.Called(r)
+	if args.Get(0) == nil {
+		return nil
+	}
+	return args.Get(0).([]db_types.FilterFunc)
+}
+
 // Define test models
 type TestDbModel struct {
 	ID   uint64
@@ -86,13 +99,19 @@ type TestPbModel struct {
 	Name string
 }
 
+type TestPbGetListRequest struct {
+	ID   uint64
+	Name string
+}
+
 func TestNewBaseService(t *testing.T) {
 	// Arrange
 	repo := new(MockRepository[TestDbModel])
 	converter := new(MockConverter[TestDbModel, TestPbModel])
+	filterProvider := new(MockFilterProvider[TestPbGetListRequest])
 
 	// Act
-	service := NewBaseService[TestDbModel, TestPbModel](repo, converter)
+	service := NewBaseService[TestDbModel, TestPbModel, TestPbGetListRequest](repo, converter, filterProvider)
 
 	// Assert
 	assert.NotNil(t, service)
@@ -105,7 +124,8 @@ func TestBaseService_GetList(t *testing.T) {
 	ctx := context.Background()
 	repo := new(MockRepository[TestDbModel])
 	converter := new(MockConverter[TestDbModel, TestPbModel])
-	service := NewBaseService[TestDbModel, TestPbModel](repo, converter)
+	filterProvider := new(MockFilterProvider[TestPbGetListRequest])
+	service := NewBaseService[TestDbModel, TestPbModel, TestPbGetListRequest](repo, converter, filterProvider)
 
 	filters := []db_types.FilterFunc{}
 	sortBy := "name"
@@ -184,7 +204,8 @@ func TestBaseService_GetItem(t *testing.T) {
 	ctx := context.Background()
 	repo := new(MockRepository[TestDbModel])
 	converter := new(MockConverter[TestDbModel, TestPbModel])
-	service := NewBaseService[TestDbModel, TestPbModel](repo, converter)
+	filterProvider := new(MockFilterProvider[TestPbGetListRequest])
+	service := NewBaseService[TestDbModel, TestPbModel, TestPbGetListRequest](repo, converter, filterProvider)
 
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
@@ -228,7 +249,8 @@ func TestBaseService_CreateItem(t *testing.T) {
 	ctx := context.Background()
 	repo := new(MockRepository[TestDbModel])
 	converter := new(MockConverter[TestDbModel, TestPbModel])
-	service := NewBaseService[TestDbModel, TestPbModel](repo, converter)
+	filterProvider := new(MockFilterProvider[TestPbGetListRequest])
+	service := NewBaseService[TestDbModel, TestPbModel, TestPbGetListRequest](repo, converter, filterProvider)
 
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
@@ -277,7 +299,8 @@ func TestBaseService_UpdateItem(t *testing.T) {
 	ctx := context.Background()
 	repo := new(MockRepository[TestDbModel])
 	converter := new(MockConverter[TestDbModel, TestPbModel])
-	service := NewBaseService[TestDbModel, TestPbModel](repo, converter)
+	filterProvider := new(MockFilterProvider[TestPbGetListRequest])
+	service := NewBaseService[TestDbModel, TestPbModel, TestPbGetListRequest](repo, converter, filterProvider)
 
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
@@ -328,7 +351,8 @@ func TestBaseService_DeleteItem(t *testing.T) {
 	ctx := context.Background()
 	repo := new(MockRepository[TestDbModel])
 	converter := new(MockConverter[TestDbModel, TestPbModel])
-	service := NewBaseService[TestDbModel, TestPbModel](repo, converter)
+	filterProvider := new(MockFilterProvider[TestPbGetListRequest])
+	service := NewBaseService[TestDbModel, TestPbModel, TestPbGetListRequest](repo, converter, filterProvider)
 
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
