@@ -14,7 +14,6 @@ import (
 	pb "github.com/meesooqa/cheque/api/gen/pb/receiptpb/v1"
 	"github.com/meesooqa/cheque/api/services"
 	"github.com/meesooqa/cheque/db/db_types"
-	"github.com/meesooqa/cheque/db/models"
 )
 
 func TestNewService(t *testing.T) {
@@ -24,7 +23,7 @@ func TestNewService(t *testing.T) {
 	filterProvider := new(MockFilterProvider)
 
 	// Act
-	service := services.NewBaseService[models.Receipt, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
+	service := services.NewBaseService[DbModel, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
 
 	// Assert
 	assert.NotNil(t, service)
@@ -39,7 +38,7 @@ func TestService_GetList(t *testing.T) {
 	repo := new(MockRepository)
 	converter := new(MockConverter)
 	filterProvider := new(MockFilterProvider)
-	service := services.NewBaseService[models.Receipt, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
+	service := services.NewBaseService[DbModel, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
 
 	filters := []db_types.FilterFunc{}
 	sortBy := "datetime"
@@ -52,7 +51,7 @@ func TestService_GetList(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
 		now := time.Now()
-		dbItems := []*models.Receipt{
+		dbItems := []*DbModel{
 			{
 				Model:                gorm.Model{ID: 1},
 				ExternalIdentifier:   "EXT-001",
@@ -130,7 +129,7 @@ func TestService_GetList(t *testing.T) {
 
 	t.Run("Empty List", func(t *testing.T) {
 		// Arrange
-		var dbItems []*models.Receipt
+		var dbItems []*DbModel
 		var total int64 = 0
 
 		repo.On("GetList", ctx, filters, expectedSort, expectedPagination).Return(dbItems, total, nil).Once()
@@ -168,13 +167,13 @@ func TestService_GetItem(t *testing.T) {
 	repo := new(MockRepository)
 	converter := new(MockConverter)
 	filterProvider := new(MockFilterProvider)
-	service := services.NewBaseService[models.Receipt, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
+	service := services.NewBaseService[DbModel, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
 
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
 		var id uint64 = 1
 		now := time.Now()
-		dbItem := &models.Receipt{
+		dbItem := &DbModel{
 			Model:                gorm.Model{ID: uint(id)},
 			ExternalIdentifier:   "EXT-001",
 			DateTime:             now,
@@ -238,7 +237,7 @@ func TestService_CreateItem(t *testing.T) {
 	repo := new(MockRepository)
 	converter := new(MockConverter)
 	filterProvider := new(MockFilterProvider)
-	service := services.NewBaseService[models.Receipt, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
+	service := services.NewBaseService[DbModel, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
 
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
@@ -255,7 +254,7 @@ func TestService_CreateItem(t *testing.T) {
 			Operator:             "Operator 1",
 			Comment:              "Comment 1",
 		}
-		dbItemToCreate := &models.Receipt{
+		dbItemToCreate := &DbModel{
 			ExternalIdentifier:   "EXT-001",
 			DateTime:             now,
 			FiscalDocumentNumber: "FDN001",
@@ -267,7 +266,7 @@ func TestService_CreateItem(t *testing.T) {
 			Operator:             "Operator 1",
 			Comment:              "Comment 1",
 		}
-		createdDbItem := &models.Receipt{
+		createdDbItem := &DbModel{
 			Model:                gorm.Model{ID: 1},
 			ExternalIdentifier:   "EXT-001",
 			DateTime:             now,
@@ -323,7 +322,7 @@ func TestService_CreateItem(t *testing.T) {
 			Operator:             "Operator 1",
 			Comment:              "Comment 1",
 		}
-		dbItemToCreate := &models.Receipt{
+		dbItemToCreate := &DbModel{
 			ExternalIdentifier:   "EXT-001",
 			DateTime:             now,
 			FiscalDocumentNumber: "FDN001",
@@ -358,7 +357,7 @@ func TestService_UpdateItem(t *testing.T) {
 	repo := new(MockRepository)
 	converter := new(MockConverter)
 	filterProvider := new(MockFilterProvider)
-	service := services.NewBaseService[models.Receipt, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
+	service := services.NewBaseService[DbModel, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
 
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
@@ -377,7 +376,7 @@ func TestService_UpdateItem(t *testing.T) {
 			Operator:             "Operator 1",
 			Comment:              "Updated Comment",
 		}
-		dbItemToUpdate := &models.Receipt{
+		dbItemToUpdate := &DbModel{
 			Model:                gorm.Model{ID: uint(id)},
 			ExternalIdentifier:   "EXT-001-UPDATED",
 			DateTime:             now,
@@ -390,7 +389,7 @@ func TestService_UpdateItem(t *testing.T) {
 			Operator:             "Operator 1",
 			Comment:              "Updated Comment",
 		}
-		updatedDbItem := &models.Receipt{
+		updatedDbItem := &DbModel{
 			Model:                gorm.Model{ID: uint(id)},
 			ExternalIdentifier:   "EXT-001-UPDATED",
 			DateTime:             now,
@@ -448,7 +447,7 @@ func TestService_UpdateItem(t *testing.T) {
 			Operator:             "Operator 1",
 			Comment:              "Updated Comment",
 		}
-		dbItemToUpdate := &models.Receipt{
+		dbItemToUpdate := &DbModel{
 			Model:                gorm.Model{ID: uint(id)},
 			ExternalIdentifier:   "EXT-001-UPDATED",
 			DateTime:             now,
@@ -484,7 +483,7 @@ func TestService_DeleteItem(t *testing.T) {
 	repo := new(MockRepository)
 	converter := new(MockConverter)
 	filterProvider := new(MockFilterProvider)
-	service := services.NewBaseService[models.Receipt, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
+	service := services.NewBaseService[DbModel, pb.Model, pb.GetListRequest](repo, converter, filterProvider)
 
 	t.Run("Success", func(t *testing.T) {
 		// Arrange
