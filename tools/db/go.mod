@@ -6,7 +6,7 @@ replace github.com/meesooqa/cheque/common => ../../common
 
 replace github.com/meesooqa/cheque/db => ../../db
 
-require github.com/meesooqa/cheque/db v1.24.2
+require github.com/meesooqa/cheque/db v1.24.3
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
@@ -15,7 +15,7 @@ require (
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/meesooqa/cheque/common v1.24.2 // indirect
+	github.com/meesooqa/cheque/common v1.24.3 // indirect
 	golang.org/x/crypto v0.36.0 // indirect
 	golang.org/x/sync v0.12.0 // indirect
 	golang.org/x/text v0.23.0 // indirect

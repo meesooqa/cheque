@@ -11,9 +11,9 @@ replace github.com/meesooqa/cheque/db => ../db
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
 	github.com/joho/godotenv v1.5.1
-	github.com/meesooqa/cheque/api v1.24.2
-	github.com/meesooqa/cheque/common v1.24.2
-	github.com/meesooqa/cheque/db v1.24.2
+	github.com/meesooqa/cheque/api v1.24.3
+	github.com/meesooqa/cheque/common v1.24.3
+	github.com/meesooqa/cheque/db v1.24.3
 	google.golang.org/grpc v1.71.0
 )
 

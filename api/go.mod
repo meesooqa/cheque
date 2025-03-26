@@ -8,8 +8,8 @@ replace github.com/meesooqa/cheque/db => ../db
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.3
-	github.com/meesooqa/cheque/common v1.24.2
-	github.com/meesooqa/cheque/db v1.24.2
+	github.com/meesooqa/cheque/common v1.24.3
+	github.com/meesooqa/cheque/db v1.24.3
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20250324211829-b45e905df463
 	google.golang.org/grpc v1.71.0
