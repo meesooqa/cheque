@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 
 	pb "github.com/meesooqa/cheque/api/gen/pb/brandpb/v1"
-	
+	"github.com/meesooqa/cheque/db/db_types"
 )
 
 // MockDBProvider mocks DBProvider
