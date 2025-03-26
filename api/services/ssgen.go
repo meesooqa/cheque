@@ -4,18 +4,26 @@
 //go:generateExample go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Entity -template filters
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Brand -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Brand -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Brand -template mocks
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Category -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Category -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Category -template mocks
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Image -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Image -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Image -template mocks
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Product -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Product -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Product -template mocks
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ReceiptProduct -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ReceiptProduct -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ReceiptProduct -template mocks
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Receipt -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Receipt -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Receipt -template mocks
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity SellerPlace -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity SellerPlace -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity SellerPlace -template mocks
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Seller -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Seller -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Seller -template mocks
 package services
