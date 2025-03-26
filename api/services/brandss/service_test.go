@@ -18,23 +18,12 @@ import (
 	"github.com/meesooqa/cheque/db/db_types"
 )
 
-// setupTestDB устанавливает тестовую базу данных SQLite
+// setupTestDB sets up test database SQLite
 func setupTestDB(t *testing.T) *gorm.DB {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	require.NoError(t, err)
-
-	// SQLite не поддерживает полностью индексы PostgreSQL, поэтому упростим модель
-	err = db.Exec(`
-		CREATE TABLE brands (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			created_at DATETIME,
-			updated_at DATETIME,
-			deleted_at DATETIME,
-			name TEXT NOT NULL
-		)
-	`).Error
+	err = db.AutoMigrate(&DbModel{})
 	require.NoError(t, err)
-
 	return db
 }
 
@@ -42,17 +31,17 @@ func setupTestDB(t *testing.T) *gorm.DB {
 func TestConverter(t *testing.T) {
 	converter := NewConverter()
 	t.Run("DataDbToPb converts DB model to protobuf model", func(t *testing.T) {
-		dbItem := &DbModel{Name: "Test Brand"}
+		dbItem := &DbModel{Name: "Test Item"}
 		dbItem.ID = 123
 		pbItem := converter.DataDbToPb(dbItem)
 		assert.Equal(t, uint64(123), pbItem.Id)
-		assert.Equal(t, "Test Brand", pbItem.Name)
+		assert.Equal(t, "Test Item", pbItem.Name)
 	})
 	t.Run("DataPbToDb converts protobuf model to DB model", func(t *testing.T) {
-		pbItem := &pb.Model{Id: 456, Name: "PB Brand"}
+		pbItem := &pb.Model{Id: 456, Name: "PB Item"}
 		dbItem := converter.DataPbToDb(pbItem)
 		assert.Equal(t, uint(0), dbItem.ID)
-		assert.Equal(t, "PB Brand", dbItem.Name)
+		assert.Equal(t, "PB Item", dbItem.Name)
 	})
 }
 
@@ -91,7 +80,7 @@ func TestNameFilter(t *testing.T) {
 	})
 }
 
-// TestServiceServer_Using_Mocks тестирует сервис с использованием моков
+// TestServiceServer_Using_Mocks tests ServiceServer using mocks
 func TestServiceServer_Using_Mocks(t *testing.T) {
 	mockRepo := new(MockRepository)
 	converter := NewConverter()
@@ -113,8 +102,8 @@ func TestServiceServer_Using_Mocks(t *testing.T) {
 			Page:      1,
 		}
 		dbBrands := []*DbModel{
-			{Name: "Test Brand 1"},
-			{Name: "Test Brand 2"},
+			{Name: "Test Item 1"},
+			{Name: "Test Item 2"},
 		}
 		dbBrands[0].ID = 1
 		dbBrands[1].ID = 2
@@ -133,29 +122,29 @@ func TestServiceServer_Using_Mocks(t *testing.T) {
 		assert.Equal(t, int64(2), resp.Total)
 		assert.Equal(t, 2, len(resp.Items))
 		assert.Equal(t, uint64(1), resp.Items[0].Id)
-		assert.Equal(t, "Test Brand 1", resp.Items[0].Name)
+		assert.Equal(t, "Test Item 1", resp.Items[0].Name)
 		assert.Equal(t, uint64(2), resp.Items[1].Id)
-		assert.Equal(t, "Test Brand 2", resp.Items[1].Name)
+		assert.Equal(t, "Test Item 2", resp.Items[1].Name)
 		mockRepo.AssertExpectations(t)
 	})
 	t.Run("GetItem calls repository and returns result", func(t *testing.T) {
 		req := &pb.GetItemRequest{
 			Id: 1,
 		}
-		dbBrand := &DbModel{Name: "Test Brand"}
+		dbBrand := &DbModel{Name: "Test Item"}
 		dbBrand.ID = 1
 		mockRepo.On("Get", ctx, uint64(1)).Return(dbBrand, nil)
 		resp, err := server.GetItem(ctx, req)
 		require.NoError(t, err)
 		assert.Equal(t, uint64(1), resp.Item.Id)
-		assert.Equal(t, "Test Brand", resp.Item.Name)
+		assert.Equal(t, "Test Item", resp.Item.Name)
 		mockRepo.AssertExpectations(t)
 	})
 	t.Run("GetItem returns error when repository fails", func(t *testing.T) {
 		req := &pb.GetItemRequest{
 			Id: 999,
 		}
-		mockErr := status.Error(codes.NotFound, "brand not found")
+		mockErr := status.Error(codes.NotFound, "item not found")
 		mockRepo.On("Get", ctx, uint64(999)).Return(nil, mockErr)
 		_, err := server.GetItem(ctx, req)
 		require.Error(t, err)
@@ -166,39 +155,39 @@ func TestServiceServer_Using_Mocks(t *testing.T) {
 	})
 	t.Run("CreateItem calls repository and returns result", func(t *testing.T) {
 		pbModel := &pb.Model{
-			Name: "New Brand",
+			Name: "New Item",
 		}
 		req := &pb.CreateItemRequest{
 			Item: pbModel,
 		}
 		createdDbModel := &DbModel{
-			Name: "New Brand",
+			Name: "New Item",
 		}
 		createdDbModel.ID = 1
 		mockRepo.On("Create", ctx, mock.Anything).Return(createdDbModel, nil)
 		resp, err := server.CreateItem(ctx, req)
 		require.NoError(t, err)
 		assert.Equal(t, uint64(1), resp.Item.Id)
-		assert.Equal(t, "New Brand", resp.Item.Name)
+		assert.Equal(t, "New Item", resp.Item.Name)
 		mockRepo.AssertExpectations(t)
 	})
 	t.Run("UpdateItem calls repository and returns result", func(t *testing.T) {
 		pbModel := &pb.Model{
-			Name: "Updated Brand",
+			Name: "Updated Item",
 		}
 		req := &pb.UpdateItemRequest{
 			Id:   1,
 			Item: pbModel,
 		}
 		updatedDbModel := &DbModel{
-			Name: "Updated Brand",
+			Name: "Updated Item",
 		}
 		updatedDbModel.ID = 1
 		mockRepo.On("Update", ctx, uint64(1), mock.Anything).Return(updatedDbModel, nil)
 		resp, err := server.UpdateItem(ctx, req)
 		require.NoError(t, err)
 		assert.Equal(t, uint64(1), resp.Item.Id)
-		assert.Equal(t, "Updated Brand", resp.Item.Name)
+		assert.Equal(t, "Updated Item", resp.Item.Name)
 		mockRepo.AssertExpectations(t)
 	})
 	t.Run("DeleteItem calls repository", func(t *testing.T) {
