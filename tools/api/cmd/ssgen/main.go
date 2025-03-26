@@ -14,6 +14,7 @@ import (
 var templateFS embed.FS
 
 // cd api/ && go generate ./...
+// see api/services/ssgen.go
 func main() {
 	var (
 		entityName   = flag.String("entity", "", "Entity type name")
