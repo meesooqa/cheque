@@ -116,7 +116,8 @@ func TestNewBaseService(t *testing.T) {
 	// Assert
 	assert.NotNil(t, service)
 	assert.Equal(t, repo, service.Repo)
-	// Note: converter is private, so we can't directly check it
+	assert.Equal(t, converter, service.Converter)           // check Converter
+	assert.Equal(t, filterProvider, service.FilterProvider) // check FilterProvider
 }
 
 func TestBaseService_GetList(t *testing.T) {
