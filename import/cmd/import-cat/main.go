@@ -42,7 +42,7 @@ func cleanLine(line string) string {
 }
 
 // ImportFromFile imports categories from a file
-func (ci *CategoryImporter) ImportFromFile(fileName string) error {
+func (ci *CategoryImporter) ImportFromFile(fileName string, isEn bool) error {
 	file, err := os.Open(fileName)
 	if err != nil {
 		return fmt.Errorf("failed to open file: %w", err)
@@ -94,9 +94,9 @@ func (ci *CategoryImporter) ImportFromFile(fileName string) error {
 	}
 
 	// Clear the database to ensure clean import
-	if err := ci.db.Exec("DELETE FROM categories").Error; err != nil {
-		return fmt.Errorf("failed to clear categories table: %w", err)
-	}
+	//if err := ci.db.Exec("DELETE FROM categories").Error; err != nil {
+	//	return fmt.Errorf("failed to clear categories table: %w", err)
+	//}
 
 	// Process categories in the order they appeared in the file
 	processedPaths := make(map[string]uint)    // Maps category path to ID
@@ -160,7 +160,11 @@ func (ci *CategoryImporter) ImportFromFile(fileName string) error {
 
 				if result.Error == nil {
 					// Update
-					category.Name = part
+					if isEn {
+						category.NameEn = part
+					} else {
+						category.Name = part
+					}
 					category.ParentID = parentID
 					if err := ci.db.Save(&category).Error; err != nil {
 						return fmt.Errorf("failed to update category: %w", err)
@@ -211,7 +215,11 @@ func (ci *CategoryImporter) ImportFromFile(fileName string) error {
 
 		if result.Error == nil {
 			// Update existing category
-			category.Name = finalName
+			if isEn {
+				category.NameEn = finalName
+			} else {
+				category.Name = finalName
+			}
 			category.ParentID = parentID
 			if err := ci.db.Save(&category).Error; err != nil {
 				return fmt.Errorf("failed to update final category: %w", err)
@@ -255,9 +263,14 @@ func main() {
 		log.Fatal(err)
 	}
 	filePath := conf.System.DataPath + "/cat/taxonomy-with-ids.ru-RU.txt"
-	err = importer.ImportFromFile(filePath)
+	err = importer.ImportFromFile(filePath, false)
 	if err != nil {
 		log.Fatalf("failed to import categories: %v", err)
+	}
+	filePath = conf.System.DataPath + "/cat/taxonomy-with-ids.en-US.txt"
+	err = importer.ImportFromFile(filePath, true)
+	if err != nil {
+		log.Fatalf("failed to import ENG categories: %v", err)
 	}
 
 	log.Println("categories imported successfully!")
