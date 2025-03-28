@@ -11,6 +11,7 @@ message Model {
   uint64 id = 1;
   uint64 parent_id = 2;
   string name = 3;
+  string name_en = 4;
 }
 
 message GetListRequest {
@@ -21,6 +22,7 @@ message GetListRequest {
   // filters
   uint64 parent_id = 5;
   string name = 6;
+  string name_en = 7;
 }
 
 message GetListResponse {
