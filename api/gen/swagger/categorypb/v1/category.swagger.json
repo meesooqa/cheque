@@ -73,6 +73,12 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "nameEn",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -321,6 +327,9 @@
           "format": "uint64"
         },
         "name": {
+          "type": "string"
+        },
+        "nameEn": {
           "type": "string"
         }
       }
