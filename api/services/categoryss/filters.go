@@ -14,8 +14,10 @@ func NewFilterProvider() *FilterProvider {
 func (o *FilterProvider) GetFilters(r *pb.GetListRequest) []db_types.FilterFunc {
 	ParentIDFilter := db_types.ModelExactFieldFilter[DbModel]("parent_id")
 	NameFilter := db_types.ModelFieldFilter[DbModel]("name")
+	NameEnFilter := db_types.ModelFieldFilter[DbModel]("name_en")
 	return []db_types.FilterFunc{
 		NameFilter(r.Name),
+		NameEnFilter(r.NameEn),
 		ParentIDFilter(r.ParentId),
 	}
 }
