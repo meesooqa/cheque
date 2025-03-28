@@ -26,7 +26,8 @@ func FieldFilter(fieldName, value string) FilterFunc {
 func ExactFieldFilter(fieldName string, value interface{}) FilterFunc {
 	return func(db *gorm.DB) *gorm.DB {
 		// TODO "value != false"?
-		if value != nil && value != "" && value != 0 && value != false {
+		// TODO value != 0
+		if value != nil && value != "" && value != false && value != uint64(0) {
 			return db.Where(fieldName+" = ?", value)
 		}
 		return db
