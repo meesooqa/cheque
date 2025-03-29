@@ -30,6 +30,22 @@ message GetListResponse {
   repeated Model items = 2;
 }
 
+message GetChildrenRequest {
+  int32 page_size = 1;
+  int32 page = 2;
+  string sort_by = 3;
+  string sort_order = 4;
+  // filters
+  uint64 id = 5; // parent_id
+  string name = 6;
+  string name_en = 7;
+}
+
+message GetChildrenResponse {
+  int64 total = 1;
+  repeated Model items = 2;
+}
+
 message GetItemRequest {
   uint64 id = 1;
 }
@@ -63,6 +79,11 @@ message DeleteItemResponse {
 }
 
 service ModelService {
+  rpc GetChildren (GetChildrenRequest) returns (GetChildrenResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/categories/{id}/children"
+    };
+  }
   rpc GetList (GetListRequest) returns (GetListResponse) {
     option (google.api.http) = {
       get: "/api/v1/categories"
