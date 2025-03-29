@@ -12,8 +12,5 @@ type SellerRepository struct {
 func NewSellerRepository(dbProvider db_types.DBProvider) *SellerRepository {
 	return &SellerRepository{BaseRepository[models.Seller]{
 		DBProvider: dbProvider,
-		Preloads: []string{
-			"SellerPlaces",
-		},
 	}}
 }
