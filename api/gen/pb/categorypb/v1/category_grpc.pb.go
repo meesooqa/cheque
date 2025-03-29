@@ -21,17 +21,19 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ModelService_GetList_FullMethodName    = "/categorypb.v1.ModelService/GetList"
-	ModelService_GetItem_FullMethodName    = "/categorypb.v1.ModelService/GetItem"
-	ModelService_CreateItem_FullMethodName = "/categorypb.v1.ModelService/CreateItem"
-	ModelService_UpdateItem_FullMethodName = "/categorypb.v1.ModelService/UpdateItem"
-	ModelService_DeleteItem_FullMethodName = "/categorypb.v1.ModelService/DeleteItem"
+	ModelService_GetChildren_FullMethodName = "/categorypb.v1.ModelService/GetChildren"
+	ModelService_GetList_FullMethodName     = "/categorypb.v1.ModelService/GetList"
+	ModelService_GetItem_FullMethodName     = "/categorypb.v1.ModelService/GetItem"
+	ModelService_CreateItem_FullMethodName  = "/categorypb.v1.ModelService/CreateItem"
+	ModelService_UpdateItem_FullMethodName  = "/categorypb.v1.ModelService/UpdateItem"
+	ModelService_DeleteItem_FullMethodName  = "/categorypb.v1.ModelService/DeleteItem"
 )
 
 // ModelServiceClient is the client API for ModelService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ModelServiceClient interface {
+	GetChildren(ctx context.Context, in *GetChildrenRequest, opts ...grpc.CallOption) (*GetChildrenResponse, error)
 	GetList(ctx context.Context, in *GetListRequest, opts ...grpc.CallOption) (*GetListResponse, error)
 	GetItem(ctx context.Context, in *GetItemRequest, opts ...grpc.CallOption) (*GetItemResponse, error)
 	CreateItem(ctx context.Context, in *CreateItemRequest, opts ...grpc.CallOption) (*CreateItemResponse, error)
@@ -45,6 +47,16 @@ type modelServiceClient struct {
 
 func NewModelServiceClient(cc grpc.ClientConnInterface) ModelServiceClient {
 	return &modelServiceClient{cc}
+}
+
+func (c *modelServiceClient) GetChildren(ctx context.Context, in *GetChildrenRequest, opts ...grpc.CallOption) (*GetChildrenResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetChildrenResponse)
+	err := c.cc.Invoke(ctx, ModelService_GetChildren_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *modelServiceClient) GetList(ctx context.Context, in *GetListRequest, opts ...grpc.CallOption) (*GetListResponse, error) {
@@ -101,6 +113,7 @@ func (c *modelServiceClient) DeleteItem(ctx context.Context, in *DeleteItemReque
 // All implementations must embed UnimplementedModelServiceServer
 // for forward compatibility.
 type ModelServiceServer interface {
+	GetChildren(context.Context, *GetChildrenRequest) (*GetChildrenResponse, error)
 	GetList(context.Context, *GetListRequest) (*GetListResponse, error)
 	GetItem(context.Context, *GetItemRequest) (*GetItemResponse, error)
 	CreateItem(context.Context, *CreateItemRequest) (*CreateItemResponse, error)
@@ -116,6 +129,9 @@ type ModelServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedModelServiceServer struct{}
 
+func (UnimplementedModelServiceServer) GetChildren(context.Context, *GetChildrenRequest) (*GetChildrenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChildren not implemented")
+}
 func (UnimplementedModelServiceServer) GetList(context.Context, *GetListRequest) (*GetListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetList not implemented")
 }
@@ -150,6 +166,24 @@ func RegisterModelServiceServer(s grpc.ServiceRegistrar, srv ModelServiceServer)
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&ModelService_ServiceDesc, srv)
+}
+
+func _ModelService_GetChildren_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChildrenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ModelServiceServer).GetChildren(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ModelService_GetChildren_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ModelServiceServer).GetChildren(ctx, req.(*GetChildrenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ModelService_GetList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -249,6 +283,10 @@ var ModelService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "categorypb.v1.ModelService",
 	HandlerType: (*ModelServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetChildren",
+			Handler:    _ModelService_GetChildren_Handler,
+		},
 		{
 			MethodName: "GetList",
 			Handler:    _ModelService_GetList_Handler,
