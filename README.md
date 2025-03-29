@@ -31,7 +31,7 @@ make import
 - http://localhost:8080/api/v1/categories
 - http://localhost:8080/api/v1/brands
 - http://localhost:8080/api/v1/products
-- http://localhost:8080/api/v1/productscategories
+- http://localhost:8080/api/v1/productcategories
 - http://localhost:8080/api/v1/images
 - http://localhost:8080/api/v1/receiptproducts
 

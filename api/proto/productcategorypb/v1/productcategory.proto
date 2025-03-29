@@ -63,33 +63,33 @@ message DeleteItemResponse {
 service ModelService {
   rpc GetList (GetListRequest) returns (GetListResponse) {
     option (google.api.http) = {
-      get: "/api/v1/productscategories"
+      get: "/api/v1/productcategories"
     };
   }
   rpc GetItem (GetItemRequest) returns (GetItemResponse) {
     option (google.api.http) = {
-      get: "/api/v1/productscategories/{id}"
+      get: "/api/v1/productcategories/{id}"
     };
   }
   rpc CreateItem (CreateItemRequest) returns (CreateItemResponse) {
     option (google.api.http) = {
-      post: "/api/v1/productscategories"
+      post: "/api/v1/productcategories"
       body: "item"
     };
   }
   rpc UpdateItem (UpdateItemRequest) returns (UpdateItemResponse) {
     option (google.api.http) = {
-      post: "/api/v1/productscategories/{id}"
+      post: "/api/v1/productcategories/{id}"
       body: "item"
       additional_bindings {
-        patch: "/api/v1/productscategories/{id}"
+        patch: "/api/v1/productcategories/{id}"
         body: "item"
       }
     };
   }
   rpc DeleteItem (DeleteItemRequest) returns (DeleteItemResponse) {
     option (google.api.http) = {
-      delete: "/api/v1/productscategories/{id}"
+      delete: "/api/v1/productcategories/{id}"
     };
   }
 }
