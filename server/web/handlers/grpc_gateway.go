@@ -8,6 +8,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/meesooqa/cheque/common/common_api"
 	"github.com/meesooqa/cheque/common/config"
@@ -30,7 +31,11 @@ func NewGrpcGateway(logger *slog.Logger, conf *config.GrpcServerConfig, serviceS
 func (o *GrpcGateway) Handle(mux *http.ServeMux) error {
 	ctx := context.Background()
 	// grpc-gateway
-	apiMux := runtime.NewServeMux()
+	apiMux := runtime.NewServeMux(runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
+		MarshalOptions: protojson.MarshalOptions{
+			UseProtoNames: true, // use orig names (in snake_case)
+		},
+	}))
 	if len(o.serviceServers) > 0 {
 		opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
 		for _, grpcServiceServer := range o.serviceServers {
