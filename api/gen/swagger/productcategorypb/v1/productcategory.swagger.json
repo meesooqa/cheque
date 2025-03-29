@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/productscategories": {
+    "/api/v1/productcategories": {
       "get": {
         "operationId": "ModelService_GetList",
         "responses": {
@@ -111,7 +111,7 @@
         ]
       }
     },
-    "/api/v1/productscategories/{id}": {
+    "/api/v1/productcategories/{id}": {
       "get": {
         "operationId": "ModelService_GetItem",
         "responses": {
