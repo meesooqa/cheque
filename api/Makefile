@@ -1,4 +1,5 @@
 PROTO_FILES = $(shell find proto -name "*.proto")
+# PROTO_FILES = proto/productcategorypb/v1/productcategory.proto
 TARGET_DIR = gen/pb
 SWAGGER_DIR = gen/swagger
 
