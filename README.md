@@ -33,7 +33,7 @@ make import
 - http://localhost:8080/api/v1/products
 - http://localhost:8080/api/v1/productscategories
 - http://localhost:8080/api/v1/images
-- http://localhost:8080/api/v1/receiptsproducts
+- http://localhost:8080/api/v1/receiptproducts
 
 7.
 ```bash
