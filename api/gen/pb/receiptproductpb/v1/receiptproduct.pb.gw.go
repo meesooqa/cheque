@@ -259,7 +259,7 @@ func RegisterModelServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/GetList", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/GetList", runtime.WithHTTPPathPattern("/api/v1/receiptproducts"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -279,7 +279,7 @@ func RegisterModelServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/GetItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts/{id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/GetItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -299,7 +299,7 @@ func RegisterModelServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/CreateItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/CreateItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -319,7 +319,7 @@ func RegisterModelServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/UpdateItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts/{id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/UpdateItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -339,7 +339,7 @@ func RegisterModelServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/UpdateItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts/{id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/UpdateItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -359,7 +359,7 @@ func RegisterModelServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/DeleteItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts/{id}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/DeleteItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -417,7 +417,7 @@ func RegisterModelServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/GetList", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/GetList", runtime.WithHTTPPathPattern("/api/v1/receiptproducts"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -434,7 +434,7 @@ func RegisterModelServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/GetItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts/{id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/GetItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -451,7 +451,7 @@ func RegisterModelServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/CreateItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/CreateItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -468,7 +468,7 @@ func RegisterModelServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/UpdateItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts/{id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/UpdateItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -485,7 +485,7 @@ func RegisterModelServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/UpdateItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts/{id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/UpdateItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -502,7 +502,7 @@ func RegisterModelServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/DeleteItem", runtime.WithHTTPPathPattern("/api/v1/receiptsproducts/{id}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/receiptproductpb.v1.ModelService/DeleteItem", runtime.WithHTTPPathPattern("/api/v1/receiptproducts/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -519,12 +519,12 @@ func RegisterModelServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 }
 
 var (
-	pattern_ModelService_GetList_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "receiptsproducts"}, ""))
-	pattern_ModelService_GetItem_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "receiptsproducts", "id"}, ""))
-	pattern_ModelService_CreateItem_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "receiptsproducts"}, ""))
-	pattern_ModelService_UpdateItem_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "receiptsproducts", "id"}, ""))
-	pattern_ModelService_UpdateItem_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "receiptsproducts", "id"}, ""))
-	pattern_ModelService_DeleteItem_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "receiptsproducts", "id"}, ""))
+	pattern_ModelService_GetList_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "receiptproducts"}, ""))
+	pattern_ModelService_GetItem_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "receiptproducts", "id"}, ""))
+	pattern_ModelService_CreateItem_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "receiptproducts"}, ""))
+	pattern_ModelService_UpdateItem_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "receiptproducts", "id"}, ""))
+	pattern_ModelService_UpdateItem_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "receiptproducts", "id"}, ""))
+	pattern_ModelService_DeleteItem_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "receiptproducts", "id"}, ""))
 )
 
 var (

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/receiptsproducts": {
+    "/api/v1/receiptproducts": {
       "get": {
         "operationId": "ModelService_GetList",
         "responses": {
@@ -153,7 +153,7 @@
         ]
       }
     },
-    "/api/v1/receiptsproducts/{id}": {
+    "/api/v1/receiptproducts/{id}": {
       "get": {
         "operationId": "ModelService_GetItem",
         "responses": {
