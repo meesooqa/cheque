@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package productpb.v1;
 
+//import "imagepb/v1/image.proto";
 import "google/api/annotations.proto";
 
 option go_package = "github.com/meesooqa/cheque/api/pb/productpb/v1;productpb";
@@ -10,6 +11,8 @@ message Model {
   uint64 id = 1;
   string name = 2;
   uint64 brand_id = 3;
+  repeated uint64 categories_id = 4;
+//  repeated imagepb.v1.Model images = 5;
 }
 
 message GetListRequest {
