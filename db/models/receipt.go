@@ -53,11 +53,11 @@ type Image struct {
 // Product – item with unique name
 type Product struct {
 	gorm.Model
-	Name       string     `gorm:"uniqueIndex:idx_product_name,where:deleted_at IS NULL;not null"`
-	BrandID    *uint      `gorm:"index"`
-	Brand      *Brand     `gorm:"constraint:OnDelete:SET NULL;"`
-	Categories []Category `gorm:"many2many:product_categories;"`
-	Images     []Image    `gorm:"constraint:OnDelete:CASCADE;"`
+	Name       string      `gorm:"uniqueIndex:idx_product_name,where:deleted_at IS NULL;not null"`
+	BrandID    *uint       `gorm:"index"`
+	Brand      *Brand      `gorm:"constraint:OnDelete:SET NULL;"`
+	Categories []*Category `gorm:"many2many:product_categories;"`
+	Images     []Image     `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 // ProductCategory stores product category relations
