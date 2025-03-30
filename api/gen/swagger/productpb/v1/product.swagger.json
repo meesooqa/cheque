@@ -322,6 +322,14 @@
         "brandId": {
           "type": "string",
           "format": "uint64"
+        },
+        "categoriesId": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          },
+          "title": "repeated imagepb.v1.Model images = 5;"
         }
       }
     },
