@@ -57,7 +57,7 @@ type Product struct {
 	BrandID    *uint       `gorm:"index"`
 	Brand      *Brand      `gorm:"constraint:OnDelete:SET NULL;"`
 	Categories []*Category `gorm:"many2many:product_categories;"`
-	Images     []Image     `gorm:"constraint:OnDelete:CASCADE;"`
+	Images     []*Image    `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
 // ProductCategory stores product category relations

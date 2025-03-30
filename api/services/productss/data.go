@@ -12,12 +12,14 @@ import (
 
 type Converter struct {
 	categoryRepo db_types.Repository[models.Category]
+	imageRepo    db_types.Repository[models.Image]
 }
 
 func NewConverter() *Converter {
 	dbProvider := db_provider.NewDefaultDBProvider()
 	return &Converter{
 		categoryRepo: repositories.NewCategoryRepository(dbProvider),
+		imageRepo:    repositories.NewImageRepository(dbProvider),
 	}
 }
 
@@ -35,6 +37,13 @@ func (o *Converter) DataDbToPb(dbItem *DbModel) *pb.Model {
 			categoriesId = append(categoriesId, uint64(category.ID))
 		}
 		pbModel.CategoriesId = categoriesId
+	}
+	if len(dbItem.Images) > 0 {
+		var imagesId []uint64
+		for _, image := range dbItem.Images {
+			imagesId = append(imagesId, uint64(image.ID))
+		}
+		pbModel.ImagesId = imagesId
 	}
 	return &pbModel
 }
@@ -54,6 +63,14 @@ func (o *Converter) DataPbToDb(pbItem *pb.Model) *DbModel {
 			categories = append(categories, category)
 		}
 		dbModel.Categories = categories
+	}
+	if len(pbItem.ImagesId) > 0 {
+		var images []*models.Image
+		for _, imageId := range pbItem.ImagesId {
+			image, _ := o.imageRepo.Get(context.TODO(), imageId)
+			images = append(images, image)
+		}
+		dbModel.Images = images
 	}
 	return &dbModel
 }
