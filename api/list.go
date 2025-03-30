@@ -4,6 +4,7 @@ import (
 	"github.com/meesooqa/cheque/api/services/brandss"
 	"github.com/meesooqa/cheque/api/services/categoryss"
 	"github.com/meesooqa/cheque/api/services/imagess"
+	"github.com/meesooqa/cheque/api/services/productcategoryss"
 	"github.com/meesooqa/cheque/api/services/productss"
 	"github.com/meesooqa/cheque/api/services/receiptproductss"
 	"github.com/meesooqa/cheque/api/services/receiptss"
@@ -23,5 +24,6 @@ func GetServiceServers(dbProvider db_types.DBProvider) []common_api.ServiceServe
 		imagess.NewServiceServer(dbProvider),
 		receiptss.NewServiceServer(dbProvider),
 		receiptproductss.NewServiceServer(dbProvider),
+		productcategoryss.NewServiceServer(dbProvider),
 	}
 }

@@ -15,6 +15,9 @@
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Product -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Product -template methods
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity Product -template mocks
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ProductCategory -template service
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ProductCategory -template methods
+//go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ProductCategory -template mocks
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ReceiptProduct -template service
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ReceiptProduct -template methods
 //go:generate go run github.com/meesooqa/cheque/tools/api/cmd/ssgen -entity ReceiptProduct -template mocks

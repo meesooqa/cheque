@@ -60,6 +60,12 @@ type Product struct {
 	Images     []Image    `gorm:"constraint:OnDelete:CASCADE;"`
 }
 
+// ProductCategory stores product category relations
+type ProductCategory struct {
+	ProductID  uint `gorm:"primarykey"`
+	CategoryID uint `gorm:"primarykey"`
+}
+
 // Receipt – receipt with unique ExternalIdentifier
 type Receipt struct {
 	gorm.Model
