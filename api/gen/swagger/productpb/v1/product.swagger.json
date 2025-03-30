@@ -328,8 +328,14 @@
           "items": {
             "type": "string",
             "format": "uint64"
-          },
-          "title": "repeated imagepb.v1.Model images = 5;"
+          }
+        },
+        "imagesId": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          }
         }
       }
     },
