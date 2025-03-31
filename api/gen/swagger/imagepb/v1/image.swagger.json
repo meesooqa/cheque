@@ -122,6 +122,13 @@
             "schema": {
               "$ref": "#/definitions/v1Model"
             }
+          },
+          {
+            "name": "file",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "byte"
           }
         ],
         "tags": [
