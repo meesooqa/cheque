@@ -43,6 +43,7 @@ message GetItemResponse {
 
 message CreateItemRequest {
   Model item = 1;
+  bytes file = 2;
 }
 
 message CreateItemResponse {
