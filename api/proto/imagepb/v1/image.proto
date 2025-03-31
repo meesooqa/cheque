@@ -80,7 +80,7 @@ service ModelService {
   rpc CreateItem (CreateItemRequest) returns (CreateItemResponse) {
     option (google.api.http) = {
       post: "/api/v1/images"
-      body: "item"
+      body: "*"
     };
   }
   rpc UpdateItem (UpdateItemRequest) returns (UpdateItemResponse) {
