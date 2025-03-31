@@ -1,6 +1,7 @@
 system:
   data_path: "test/data"
   upload_path: "test/upload"
+  max_upload_file_size: 10
 server:
   host: "localhost"
   port: 4321

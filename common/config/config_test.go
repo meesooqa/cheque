@@ -15,6 +15,7 @@ func TestLoad(t *testing.T) {
 	assert.IsType(t, &SystemConfig{}, c.System)
 	assert.Equal(t, "test/data", c.System.DataPath)
 	assert.Equal(t, "test/upload", c.System.UploadPath)
+	assert.Equal(t, 10, c.System.MaxUploadFileSize)
 
 	assert.IsType(t, &ServerConfig{}, c.Server)
 	assert.Equal(t, "localhost", c.Server.Host)

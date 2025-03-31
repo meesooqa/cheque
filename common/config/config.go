@@ -40,8 +40,9 @@ type GrpcServerConfig struct {
 
 // SystemConfig - system parameters
 type SystemConfig struct {
-	DataPath   string `yaml:"data_path"`
-	UploadPath string `yaml:"upload_path"`
+	DataPath          string `yaml:"data_path"`
+	UploadPath        string `yaml:"upload_path"`
+	MaxUploadFileSize int    `yaml:"max_upload_file_size"`
 }
 
 // load config from file
