@@ -43,7 +43,6 @@ message GetItemResponse {
 
 message CreateItemRequest {
   Model item = 1;
-  bytes file = 2;
 }
 
 message CreateItemResponse {
@@ -80,7 +79,7 @@ service ModelService {
   rpc CreateItem (CreateItemRequest) returns (CreateItemResponse) {
     option (google.api.http) = {
       post: "/api/v1/images"
-      body: "*"
+      body: "item"
     };
   }
   rpc UpdateItem (UpdateItemRequest) returns (UpdateItemResponse) {

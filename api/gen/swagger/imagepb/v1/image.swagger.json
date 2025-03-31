@@ -116,11 +116,11 @@
         },
         "parameters": [
           {
-            "name": "body",
+            "name": "item",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CreateItemRequest"
+              "$ref": "#/definitions/v1Model"
             }
           }
         ],
@@ -290,18 +290,6 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
-        }
-      }
-    },
-    "v1CreateItemRequest": {
-      "type": "object",
-      "properties": {
-        "item": {
-          "$ref": "#/definitions/v1Model"
-        },
-        "file": {
-          "type": "string",
-          "format": "byte"
         }
       }
     },
