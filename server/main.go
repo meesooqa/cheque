@@ -37,6 +37,8 @@ func main() {
 		handlers.NewGrpcGateway(logger, conf.GrpcServer, ss),
 		// swagger
 		handlers.NewSwagger(logger),
+		// save photos
+		handlers.NewUpload(logger, conf.System),
 		// product photos
 		handlers.NewMedia(logger, conf.System),
 	}
