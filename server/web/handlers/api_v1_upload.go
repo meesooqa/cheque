@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -11,26 +10,27 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"github.com/google/uuid"
 
-	"github.com/meesooqa/cheque/api/gen/pb/imagepb/v1"
+	pb "github.com/meesooqa/cheque/api/gen/pb/imagepb/v1"
 	"github.com/meesooqa/cheque/common/config"
 )
 
 type Upload struct {
-	logger *slog.Logger
-	conf   *config.SystemConfig
-	method string
-	route  string
+	logger             *slog.Logger
+	conf               *config.SystemConfig
+	method             string
+	route              string
+	imageServiceClient pb.ModelServiceClient
 }
 
-func NewUpload(logger *slog.Logger, conf *config.SystemConfig) *Upload {
+func NewUpload(logger *slog.Logger, conf *config.SystemConfig, imageServiceClient pb.ModelServiceClient) *Upload {
 	return &Upload{
-		logger: logger,
-		conf:   conf,
-		method: http.MethodPost,
-		route:  "/api/v1/upload",
+		logger:             logger,
+		conf:               conf,
+		method:             http.MethodPost,
+		route:              "/api/v1/upload",
+		imageServiceClient: imageServiceClient,
 	}
 }
 
@@ -41,49 +41,48 @@ func (o *Upload) Handle(mux *http.ServeMux) error {
 
 func (o *Upload) handleRoute(w http.ResponseWriter, r *http.Request) {
 	if r.Method != o.method {
-		http.Error(w, "Upload.handlePage(): method is not allowed", http.StatusMethodNotAllowed)
+		o.logger.Error("method is not allowed", slog.Int("httpStatus", http.StatusMethodNotAllowed), slog.String("handler", "Upload"))
+		http.Error(w, "method is not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	// max request size 10 Mb
-	r.Body = http.MaxBytesReader(w, r.Body, 10<<20) // TODO o.conf.MaxFileSize
-	if err := r.ParseMultipartForm(10 << 20); err != nil {
-		http.Error(w, "Ошибка парсинга формы: "+err.Error(), http.StatusBadRequest)
+
+	limitInBytes := int64(o.conf.MaxUploadFileSize) << 20 // MiB
+	r.Body = http.MaxBytesReader(w, r.Body, limitInBytes)
+	if err := r.ParseMultipartForm(limitInBytes); err != nil {
+		o.logger.Error("form parsing", slog.Any("error", err), slog.Int("httpStatus", http.StatusBadRequest), slog.String("handler", "Upload"))
+		http.Error(w, "form parsing: "+err.Error(), http.StatusBadRequest)
 		return
 	}
+
 	pbItem, httpStatus, err := o.saveFile(r)
 	if err != nil {
+		o.logger.Error("form parsing", slog.Any("error", err), slog.Int("httpStatus", httpStatus), slog.String("handler", "Upload"))
 		http.Error(w, err.Error(), httpStatus)
 		return
 	}
-	// w.Write([]byte("Файл успешно загружен и сохранён"))
+	// the file has saved
 	// TODO imagess.Create or imagess.Update
-	req := &imagepb.CreateItemRequest{
+	req := &pb.CreateItemRequest{
 		Item: pbItem,
 	}
-	// Создаём gRPC клиент (адрес и опции подключение настраиваются по необходимости)
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// call CreateItem by gRPC
+	responseData, err := o.imageServiceClient.CreateItem(r.Context(), req)
 	if err != nil {
-		http.Error(w, "Ошибка подключения к gRPC серверу: "+err.Error(), http.StatusInternalServerError)
+		o.logger.Error("gRPC calling", slog.Any("error", err), slog.Int("httpStatus", http.StatusInternalServerError), slog.String("handler", "Upload"))
+		http.Error(w, "gRPC calling: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	defer conn.Close()
-	grpcClient := imagepb.NewModelServiceClient(conn)
-	// Вызываем метод CreateItem через gRPC
-	resp, err := grpcClient.CreateItem(context.Background(), req)
-	if err != nil {
-		http.Error(w, "Ошибка вызова gRPC: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-	// Ответ можно обработать и вернуть клиенту, например, в JSON-формате
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	responseData := fmt.Sprintf(`{"id": %d, "name": "%s", "url": "%s"}`, resp.Item.Id, resp.Item.Name, resp.Item.Url)
-	w.Write([]byte(responseData))
+	if err = json.NewEncoder(w).Encode(responseData); err != nil {
+		// log error, но вероятно уже поздно отправлять http.Error
+		o.logger.Error("encoding response", slog.Any("error", err), slog.String("handler", "Upload"))
+	}
 }
 
 // saveFile saves file from form to filesystem
-func (o *Upload) saveFile(r *http.Request) (*imagepb.Model, int, error) {
-	var pbItem imagepb.Model
+func (o *Upload) saveFile(r *http.Request) (*pb.Model, int, error) {
+	var pbItem pb.Model
 	itemJSON := r.FormValue("item")
 	if itemJSON == "" {
 		return nil, http.StatusBadRequest, fmt.Errorf("form field 'item' not found")
@@ -103,7 +102,9 @@ func (o *Upload) saveFile(r *http.Request) (*imagepb.Model, int, error) {
 		return nil, http.StatusInternalServerError, fmt.Errorf("dir creating: %v", err)
 	}
 
-	path := filepath.Join(dir, header.Filename)
+	fileExt := filepath.Ext(header.Filename)
+	newFilename := uuid.NewString() + fileExt
+	path := filepath.Join(dir, newFilename)
 	dst, err := os.Create(path)
 	if err != nil {
 		return nil, http.StatusInternalServerError, fmt.Errorf("file creating: %v", err)
@@ -114,5 +115,7 @@ func (o *Upload) saveFile(r *http.Request) (*imagepb.Model, int, error) {
 		return nil, http.StatusInternalServerError, fmt.Errorf("file saving: %v", err)
 	}
 
+	pbItem.Name = header.Filename
+	pbItem.Url = newFilename
 	return &pbItem, 0, nil
 }

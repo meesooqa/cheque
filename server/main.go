@@ -4,11 +4,15 @@ import (
 	"log"
 	"log/slog"
 
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+
 	"github.com/meesooqa/cheque/api"
+	pbImage "github.com/meesooqa/cheque/api/gen/pb/imagepb/v1"
 	"github.com/meesooqa/cheque/common/common_log"
 	"github.com/meesooqa/cheque/common/config"
 	"github.com/meesooqa/cheque/db/db_provider"
-	"github.com/meesooqa/cheque/server/grpc"
+	grpcServer "github.com/meesooqa/cheque/server/grpc"
 	"github.com/meesooqa/cheque/server/web"
 	"github.com/meesooqa/cheque/server/web/handlers"
 	"github.com/meesooqa/cheque/server/web/middlewares"
@@ -26,11 +30,20 @@ func main() {
 	}
 
 	ss := api.GetServiceServers(db_provider.NewDefaultDBProvider())
-	grpcSrv := grpc.NewServer(logger, conf.GrpcServer, ss)
+	grpcSrv := grpcServer.NewServer(logger, conf.GrpcServer, ss)
 	err = grpcSrv.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// отдельное соединение для Upload
+	// @see docs/upload.md
+	conn, err := grpc.NewClient(conf.GrpcServer.Endpoint, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("failed to create grpc client: %v", err)
+	}
+	defer conn.Close()
+	imageServiceClient := pbImage.NewModelServiceClient(conn)
 
 	hh := []web.Handler{
 		// grpc-gateway (REST)
@@ -38,7 +51,7 @@ func main() {
 		// swagger
 		handlers.NewSwagger(logger),
 		// save photos
-		handlers.NewUpload(logger, conf.System),
+		handlers.NewUpload(logger, conf.System, imageServiceClient),
 		// product photos
 		handlers.NewMedia(logger, conf.System),
 	}
